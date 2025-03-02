@@ -24,3 +24,7 @@ production:
   queue:
     <<: *default
     database: <%= ENV['SUPABASE_QUEUE_DATABASE'] || 'postgres' %>
+
+  cache:
+    <<: *default
+    database: <%= ENV['SUPABASE_CACHE_DATABASE'] || 'postgres' %>
