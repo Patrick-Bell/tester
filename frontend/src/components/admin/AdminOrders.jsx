@@ -17,7 +17,7 @@ const AdminOrders = () => {
 
     const fetchOrders = async () => {
         try {
-            const response = await axios.get("http://localhost:3000/orders");
+            const response = await axios.get("http://localhost:3000/api/orders");
             setOrders(response.data);
         } catch (e) {
             console.log(e);

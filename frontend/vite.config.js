@@ -14,6 +14,9 @@ export default defineConfig({
     tailwindcss(),
     svgr()
   ],
+  server: {
+    historyApiFallback: true,
+  },
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),

@@ -12,7 +12,7 @@ const AdminInventory = () => {
   const [products, setProducts] = useState([]);
 
   const fetchProducts = async () => {
-    const response = await axios.get("http://localhost:3000/products");
+    const response = await axios.get("http://localhost:3000/api/products");
     setProducts(response.data);
   };
 

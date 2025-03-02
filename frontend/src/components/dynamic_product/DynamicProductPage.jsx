@@ -31,7 +31,7 @@ const DynamicProductPage = () => {
       const [product, setProduct] = useState(null)
 
       const fetchProduct = async () => {
-        const response = await axios.get(`http://localhost:3000/products/${id}`)
+        const response = await axios.get(`http://localhost:3000/api/products/${id}`)
         setProduct(response.data)
       }
 
