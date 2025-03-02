@@ -17,5 +17,6 @@ test:
   database: <%= ENV['SUPABASE_DATABASE'] || 'postgres' %>  # Use the same database name for testing
 
 production:
-  <<: *default
-  database: <%= ENV['SUPABASE_DATABASE'] || 'postgres' %>  # Use the same database name for production
+  primary:
+    <<: *default
+    database: <%= ENV['SUPABASE_DATABASE'] || 'postgres' %>
