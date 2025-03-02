@@ -20,3 +20,7 @@ production:
   primary:
     <<: *default
     database: <%= ENV['SUPABASE_DATABASE'] || 'postgres' %>
+
+  queue:
+    <<: *default
+    database: <%= ENV['SUPABASE_QUEUE_DATABASE'] || 'postgres' %>
