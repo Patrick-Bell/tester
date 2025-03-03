@@ -17,7 +17,7 @@ const ShoppingCartSide = ({ open, setOpen }) => {
     try{
       console.log('Checking out...')
       console.log(cart, 'cart to checkout')
-      const response = await axios.post('http://localhost:3000/create-checkout-session', { cart: cart } )
+      const response = await axios.post('http://localhost:3000/api/create-checkout-session', { cart: cart } )
       console.log(response.data)
 
       window.location.href = response.data.url
