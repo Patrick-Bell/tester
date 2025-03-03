@@ -17,7 +17,8 @@ const AdminOrders = () => {
 
     const fetchOrders = async () => {
         try {
-            const response = await axios.get("http://localhost:3000/api/orders");
+            const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/orders`);
+
             setOrders(response.data);
         } catch (e) {
             console.log(e);

@@ -35,7 +35,8 @@ const AdminInventory = () => {
   const [addProductSection, setAddProductSection] = useState(false);
 
   const fetchProducts = async () => {
-    const response = await axios.get("http://localhost:3000/api/products");
+    const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/products`);
+
     setProducts(response.data);
   };
 
@@ -45,7 +46,8 @@ const AdminInventory = () => {
   }
   
   const deleteProduct = async () => {
-    const response = await axios.delete(`http://localhost:3000/api/products/${seletedProduct.id}`);
+    const response = await axios.delete(`${import.meta.env.VITE_API_BASE_URL}/api/products/${seletedProduct.id}`);
+
     await fetchProducts();
     setShowModal(false)
   }
@@ -72,7 +74,7 @@ const AdminInventory = () => {
 
   const addProduct = async () => {
     try{
-      const response = await axios.post('http://localhost:3000/api/products', newProduct);
+      const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/products`, newProduct);
       console.log(response.data);
       toast.success('Product added successfully');
       setNewProduct({

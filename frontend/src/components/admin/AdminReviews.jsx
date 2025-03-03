@@ -15,7 +15,8 @@ const AdminReviews = () => {
 
     const fetchReviews = async () => {
         try {
-            const response = await axios.get("http://localhost:3000/api/reviews");
+            const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/reviews`);
+
             setReviews(response.data);
         } catch (e) {
             console.log(e);
@@ -28,7 +29,8 @@ const AdminReviews = () => {
 
     const findReviewedProduct = async (id) => {
         try {
-            const response = await axios.get(`http://localhost:3000/api/products/${seleectedReview.product_id}`);
+            const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/products/${seleectedReview.product_id}`);
+
             setReviewedProduct(response.data);
         } catch (e) {
             console.log(e);
@@ -41,7 +43,8 @@ const AdminReviews = () => {
 
     const handleReviewStatusChange = async (reviewId, newStatus) => {
         try {
-            await axios.put(`http://localhost:3000/api/reviews/${reviewId}`, { reviewed: newStatus });
+            await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/reviews/${reviewId}`, { reviewed: newStatus });
+
             setReviews((prevReviews) => 
                 prevReviews.map((review) => 
                     review.id === reviewId ? { ...review, reviewed: newStatus } : review

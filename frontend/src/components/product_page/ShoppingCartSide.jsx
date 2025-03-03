@@ -84,7 +84,7 @@ const ShoppingCartSide = ({ open, setOpen }) => {
                                 <p className="text-gray-500">Qty {product.quantity}</p>
 
                                 <div className="flex">
-                                  <button onClick={() => removeItemFromCart(product.id)} type="button" className="font-medium text-indigo-600 hover:text-indigo-500">
+                                  <button onClick={() => removeItemFromCart(product.id)} type="button" className="font-medium text-indigo-600 hover:text-indigo-500 cursor-pointer">
                                     Remove
                                   </button>
                                 </div>
@@ -117,7 +117,7 @@ const ShoppingCartSide = ({ open, setOpen }) => {
                       <button
                         type="button"
                         onClick={() => setOpen(false)}
-                        className="font-medium text-indigo-600 hover:text-indigo-500"
+                        className="font-medium text-indigo-600 hover:text-indigo-500 cursor-pointer"
                       >
                         Continue Shopping
                         <span aria-hidden="true"> &rarr;</span>
