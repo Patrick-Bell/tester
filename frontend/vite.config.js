@@ -1,17 +1,23 @@
+// vite.config.js
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react-swc'; // or '@vitejs/plugin-react'
+import tailwindcss from '@tailwindcss/vite'
 import path from 'path';
 import svgr from "vite-plugin-svgr";
+
+
+
 
 export default defineConfig({
   plugins: [
     react(),
-    svgr(),
+    tailwindcss(),
+    svgr()
   ],
-  base: '/', // ✅ Ensure correct path for production
   server: {
-    middlewareMode: true, // ✅ Allows backend to handle routing
+    historyApiFallback: true,
   },
+  base: '/',  // ✅ Ensure correct path
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),

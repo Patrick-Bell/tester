@@ -77,9 +77,9 @@ const AdminOrders = () => {
                 <div className="flex justify-between items-middle">
                 <span className="text-indigo-600 font-bold text-2xl">£{(calculateTotal(selectedOrder.products) + Number(selectedOrder.shipping_fee))}</span>
                 <div className="flex gap-2">
-                <button className="px-4 py-2 rounded-md border mb-4 border-[#e9ebee]"><GrPrint /></button>
-                <button className="px-4 py-2 rounded-md border mb-4 border-[#e9ebee]"><FaRegFilePdf /></button>
-                <button onClick={() => setSelectedOrder(null)} className="px-4 py-2 rounded-md border mb-4 border-[#e9ebee]">Back</button>
+                <button className="px-4 py-2 rounded-md border mb-4 border-[#e9ebee] hover:bg-gray-50 cursor-pointer"><GrPrint /></button>
+                <button className="px-4 py-2 rounded-md border mb-4 border-[#e9ebee] hover:bg-gray-50 cursor-pointer"><FaRegFilePdf /></button>
+                <button onClick={() => setSelectedOrder(null)} className="px-4 py-2 rounded-md border mb-4 border-[#e9ebee] hover:bg-gray-50 cursor-pointer">Back</button>
                 </div>
                 </div>
                 <div className="p-4 rounded-md border border-gray-200">

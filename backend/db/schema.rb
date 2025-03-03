@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_02_180849) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_03_130939) do
   create_schema "auth"
   create_schema "extensions"
   create_schema "graphql"
@@ -55,5 +55,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_02_180849) do
     t.datetime "updated_at", null: false
     t.string "team"
     t.string "category"
+    t.float "sale_price"
+    t.float "height"
+    t.float "weight"
+    t.string "tag"
   end
 end

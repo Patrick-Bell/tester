@@ -1,8 +1,8 @@
 class CheckoutController < ApplicationController
     require 'stripe'
-  
-    STRIPE_API_KEY = ENV['STRIPE_API_KEY']
-  
+
+    Stripe.api_key = ENV['STRIPE_API_KEY']
+    
     def create_checkout_session
       cart = params[:cart] || []
       Rails.logger.info("Received cart: #{cart.inspect}")
