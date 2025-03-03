@@ -14,7 +14,7 @@ const App = () => {
   return (
 
     <Routes>
-    <Route path="/" element={<MainPage />}></Route>
+    <Route path="/" element={<ProductFilter />}></Route>
     <Route path="/products" element={<ProductFilter />}></Route>
     <Route path="/products/:id" element={<DynamicProductPage />}></Route>
     <Route path="/cancel" element={<Cancel />}></Route>

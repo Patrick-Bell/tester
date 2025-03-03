@@ -38,10 +38,6 @@ class OrdersController < ApplicationController
     @order.destroy!
   end
 
-  def stripe_webhook
-  end
-
-
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -51,6 +47,6 @@ class OrdersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def order_params
-      params.expect(order: [ :user_id, :products, :total_price, :status, :date, :address, :payment_method, :delivery_date, :paid, :shipping_fee, :float ])
+      params.expect(order: [ :user_id, :products, :total_price, :status, :date, :address, :payment_method, :delivery_date, :paid, :shipping_fee, :tracking_id, :order_id ])
     end
 end

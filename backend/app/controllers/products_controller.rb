@@ -10,7 +10,7 @@ class ProductsController < ApplicationController
 
   # GET /products/1
   def show
-    render json: @product
+    render json: @product, include: :reviews
   end
 
   # POST /products
@@ -46,6 +46,6 @@ class ProductsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def product_params
-      params.expect(product: [ :name, :image, :price, :stock ])
+      params.expect(product: [ :name, :image, :price, :stock, :category, :height, :weight, :tag, :sale_price, :accessories ])
     end
 end

@@ -16,10 +16,34 @@ const ProductCard = ({ product }) => {
       window.location.href = `/products/${id}`
     }
 
+    const displayTag = (product) => {
+      switch (product?.tag) {
+        case 'new':
+          return <span className="bg-green-500 p-1 font-bold rounded-md text-white text-xs">New</span>
+        case 'sale':
+          return <span className="bg-black font-bold p-1 rounded-md text-white text-xs">Sale</span>
+          case 'limited':
+          return <span className="bg-yellow-800 font-bold p-1 rounded-md text-white text-xs">Limited</span>
+          case 'popular':
+          return <span className="bg-red-500 font-bold p-1 rounded-md text-white text-xs">Popular</span>
+        default:
+          return null
+      }
+    }
+
+    const inStock = (product) => {
+      if(product.stock > 0) {
+        return <p className="mt-1 text-sm text-green-500 font-bold">In Stock</p>
+      } else {
+        return <p className="mt-1 text-sm text-red-500 font-bold">Out of Stock</p>
+      }
+    }
+
     return (
 
 <>
 <div key={product.id} className="relative flex flex-col h-full pointer-events-auto">
+  <div className="absolute top-1 right-1">{displayTag(product)}</div>
           <img
             alt={product.name}
             src={product.image}
@@ -35,11 +59,11 @@ const ProductCard = ({ product }) => {
               </h3>
             <p className="text-sm font-medium text-gray-900">£{product.price}</p>
             </div>
-              <p className="mt-1 text-sm text-gray-500">{product.color}</p>
-              <p className="mt-1 text-sm text-green-500 font-bold">In Stock</p>
+              {inStock(product)}
           </div>
           <button
           onClick={() => handleClick(product)}
+          disabled={product.stock === 0}
           className="text-sm bg-indigo-500 w-full p-1 rounded-sm hover:bg-indigo-800 text-white mt-auto pointer-events-auto z-50 cursor-pointer">
           Add to cart
           </button>

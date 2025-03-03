@@ -1,11 +1,13 @@
 import { useState } from "react";
-import { Menu, X, Home, Settings, User } from "lucide-react";
+import { Menu, X, Home, Settings, User, Calendar, ToyBrick, PiggyBank, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import AdminDashboard from "./AdminDashboard";
 import AdminInventory from "./AdminInventory";
 import AdminCalendar from "./AdminCalendar";
 import SidebarItem from "./SidebarItem";
 import AdminOrders from "./AdminOrders";
+import AdminReviews from "./AdminReviews";
+
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -21,15 +23,18 @@ const Sidebar = () => {
         return <AdminCalendar />
         case 'Orders':
         return <AdminOrders />
+        case 'Reviews':
+        return <AdminReviews />
     }
   }
 
   const navMenu = [
     { id: 1, section: 'Dashboard', icon: <Home /> },
-    { id: 2, section: 'Inventory', icon: <User /> },
-    { id: 3, section: 'Calendar', icon: <User /> },
-    { id: 4, section: 'Orders', icon: <User /> },
-    { id: 5, section: 'Users', icon: <User /> }
+    { id: 2, section: 'Inventory', icon: <ToyBrick /> },
+    { id: 3, section: 'Calendar', icon: <Calendar /> },
+    { id: 4, section: 'Orders', icon: <PiggyBank /> },
+    { id: 5, section: 'Users', icon: <User /> },
+    { id: 6, section: 'Reviews', icon: <Star /> }
   ]
 
 

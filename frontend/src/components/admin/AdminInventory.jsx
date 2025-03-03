@@ -10,6 +10,7 @@ import { GrPrint, GrUpdate } from "react-icons/gr";
 import { PaperClipIcon } from '@heroicons/react/20/solid'
 import { FaCircle } from "react-icons/fa";
 import AdminUpdateOrderSelect from "./AdminUpdateOrderSelect";
+import { Toaster, toast } from 'sonner';
 
 
 const AdminInventory = () => {
@@ -26,6 +27,9 @@ const AdminInventory = () => {
     category: "",
     tag: "",
     image: "",
+    height: 4,
+    weight: 2.5,
+    accessories: ""
   });
 
   const [addProductSection, setAddProductSection] = useState(false);
@@ -65,9 +69,33 @@ const AdminInventory = () => {
   }).length;
   const outOfStock = products.filter(product => product.stock === 0).length;
 
+
+  const addProduct = async () => {
+    try{
+      const response = await axios.post('http://localhost:3000/api/products', newProduct);
+      console.log(response.data);
+      toast.success('Product added successfully');
+      setNewProduct({
+        name: "",
+        price: "",
+        sale_price: "",
+        stock: "",
+        category: "",
+        tag: "",
+        image: "",
+        height: 4,
+        weight: 2.5,
+        accessories: ""
+      });
+    }catch(e){
+      console.log(e)
+    }
+  }
+
   return (
     <div className="p-6 bg-white rounded-lg border border-[#e9ebee]">
       <AdminDeleteProductModal open={showModal} setOpen={setShowModal} deleteProduct={deleteProduct} product={seletedProduct} />
+      <Toaster />
       {/* Stats Cards */}
       {editProduct ? (
         <>
@@ -137,6 +165,9 @@ const AdminInventory = () => {
               type="text"
               className="mt-1 text-sm text-gray-700 sm:col-span-2 sm:mt-0 border border-gray-300 rounded-md p-2"
               placeholder="accessory1, accessory2 & accessory3"
+              value={editProduct.accessories || ''}  // ✅ Ensures it doesn't crash on undefined values
+              onChange={(e) => setEditProduct({ ...editProduct, accessories: e.target.value })}  // ✅ Updates state on change
+
             />
           </div>
           <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
@@ -193,6 +224,24 @@ const AdminInventory = () => {
               className="mt-1 text-sm text-gray-700 sm:col-span-2 sm:mt-0 border border-gray-300 rounded-md p-2"
               value={newProduct.name || ''}  // ✅ Ensures it doesn't crash on undefined values
               onChange={(e) => setNewProduct({ ...newProduct, name: e.target.value })}  // ✅ Updates state on change
+            />
+          </div>
+          <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+            <p className="text-sm/6 font-medium text-gray-900">Height</p>
+            <input 
+              type="text"
+              className="mt-1 text-sm text-gray-700 sm:col-span-2 sm:mt-0 border border-gray-300 rounded-md p-2"
+              value={newProduct.height || ''}  // ✅ Ensures it doesn't crash on undefined values
+              onChange={(e) => setNewProduct({ ...newProduct, height: e.target.value })}  // ✅ Updates state on change
+            />
+          </div>
+          <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+            <p className="text-sm/6 font-medium text-gray-900">Weight</p>
+            <input 
+              type="text"
+              className="mt-1 text-sm text-gray-700 sm:col-span-2 sm:mt-0 border border-gray-300 rounded-md p-2"
+              value={newProduct.weight || ''}  // ✅ Ensures it doesn't crash on undefined values
+              onChange={(e) => setNewProduct({ ...newProduct, weight: e.target.value })}  // ✅ Updates state on change
             />
           </div>
           <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
@@ -264,6 +313,8 @@ const AdminInventory = () => {
               type="text"
               className="mt-1 text-sm text-gray-700 sm:col-span-2 sm:mt-0 border border-gray-300 rounded-md p-2"
               placeholder="accessory1, accessory2 & accessory3"
+              value={newProduct.accessories || ''}  // ✅ Ensures it doesn't crash on undefined values
+              onChange={(e) => setNewProduct({ ...newProduct, accessories: e.target.value })}  // ✅ Updates state on change
             />
           </div>
           <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
@@ -278,7 +329,7 @@ const AdminInventory = () => {
           </div>
         </dl>
       </div>
-      <button className="w-full bg-indigo-600 p-2 rounded-md text-white hover:bg-indigo-700 cursor-pointer transition-all">Confirm</button>
+      <button onClick={() => addProduct()} className="w-full bg-indigo-600 p-2 rounded-md text-white hover:bg-indigo-700 cursor-pointer transition-all">Confirm</button>
     </div>
     </>
           </>

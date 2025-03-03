@@ -8,18 +8,14 @@ import {
   Disclosure,
   DisclosureButton,
   DisclosurePanel,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuItems,
 } from '@headlessui/react'
-import { MinusIcon, PlusIcon, TruckIcon, CheckIcon, ArrowsRightLeftIcon } from '@heroicons/react/20/solid'
+import { MinusIcon, PlusIcon, TruckIcon, CheckIcon } from '@heroicons/react/20/solid'
 import Footer from "../front_page/Footer";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useCart } from "../context/CartContext";
 import FAQSection from "./FAQ";
-import { TbTruckReturn } from "react-icons/tb";
+import Reviews from "./Reviews";
 
 
 
@@ -44,7 +40,7 @@ const DynamicProductPage = () => {
           id: 1,
           name: 'Description',
           icon: <CheckIcon />,
-          message: [`${product?.name} custom minifigure`,'This is NOT official LEGO', 'Compatible with LEGO', 'Weight: 0.5g', 'Height: 4.5cm', 'Includes trophy, football and miniture figure',]
+          message: [`${product?.name} custom minifigure`,'This is NOT official LEGO', 'Compatible with LEGO', `Weight: ${product?.weight}g`, `Height: ${product?.height}cm`, `Accessories: ${product?.accessories}.`,]
         },
         {
           id: 2,
@@ -62,31 +58,40 @@ const DynamicProductPage = () => {
       const tabs = ["Reviews", "FAQ", "Other"];
       const [activeTab, setActiveTab] = useState(tabs[0]);
 
+      const goBack = () => {
+        window.history.back()
+      }
+
+      const validReviews = product?.reviews?.filter(review => review.reviewed === true) || [];
+      const rating = validReviews.length
+      ? validReviews.reduce((acc, item) => acc + item.rating, 0) / validReviews.length
+      : 0; 
 
 
     return (
         <>
-    
-
-
+  
             <Navbar />
             <div className="flex flex-col md:flex-row justify-center p-6 mx-auto gap-6">
                 {/* Product Image */}
                 <div className="">
-                    <img className="rounded-lg" src={product?.image} alt={product?.name} />
+                    <img className="rounded-lg max-w-[533px]" src={product?.image} alt={product?.name} />
                 </div>
                 
                 {/* Product Details */}
                 <div className="w-full md:w-1/2 flex flex-col gap-4">
+                <div className="flex justify-between items-center">
                     <h1 className="text-2xl font-bold">{product?.name}</h1>
+                    <button onClick={() => goBack()} className="px-4 py-2 rounded-md border mb-4 border-[#e9ebee] hover:bg-gray-50 cursor-pointer">Back</button>
+                    </div>
                     <p className="text-gray-700 text-2xl">£{product?.price}</p>
                     <div className="flex items-center">
-                        <StarIcon className="h-4 text-yellow-500" />
-                        <StarIcon className="h-4 text-yellow-500"  />
-                        <StarIcon className="h-4 text-yellow-500" />
-                        <StarIcon className="h-4 text-yellow-500" />
-                        <StarIcon className="h-4 text-yellow-500" />
-                        <p className="ml-2 cursor-pointer">(23)</p>
+                      {[...Array(5)].map((_, i) => (
+                        <svg key={i} xmlns="http://www.w3.org/2000/svg" className={`h-5 w-5 ${i < Math.floor(rating) ? 'text-yellow-400' : 'text-gray-300'}`} viewBox="0 0 20 20" fill="currentColor">
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                      <p className="ml-2 text-sm text-gray-600">({validReviews.length})</p>
                     </div>
                     <p className="text-sm text-gray-500">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quibusdam tempore numquam quo ratione reiciendis animi modi dolor quasi aspernatur ullam, porro soluta corporis deleniti. Consectetur minus omnis ipsam accusantium quisquam?</p>
                     <button 
@@ -167,136 +172,10 @@ const DynamicProductPage = () => {
                 <div className="mt-4">
 
                 {activeTab === 'Reviews' && (
-              <div>
-                <div className="flex items-center justify-between mb-6">
-                  <h3 className="text-lg font-medium">Customer Reviews</h3>
-                </div>
-                
-                <div className="flex flex-col md:flex-row mb-8">
-                  <div className="md:w-1/3 mb-6 md:mb-0">
-                    <div className="text-center">
-                      <div className="text-5xl font-bold text-gray-900 mb-2">{product?.rating || 4.3}</div>
-                      <div className="flex justify-center mb-2">
-                        {[...Array(5)].map((_, i) => (
-                          <svg key={i} xmlns="http://www.w3.org/2000/svg" className={`h-5 w-5 ${i < Math.floor(product?.rating || 3) ? 'text-yellow-400' : 'text-gray-300'}`} viewBox="0 0 20 20" fill="currentColor">
-                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                          </svg>
-                        ))}
-                      </div>
-                      <p className="text-gray-600">56 reviews</p>
-                    </div>
-                    
-                    <div className="mt-6 px-4">
-                      {[5, 4, 3, 2, 1].map((rating) => (
-                        <div key={rating} className="flex items-center mb-2">
-                          <div className="w-10 text-right text-gray-600">{rating}</div>
-                          <div className="ml-2 flex-1">
-                            <div className="h-2 bg-gray-200 rounded-full">
-                              <div 
-                                className="h-2 bg-yellow-400 rounded-full" 
-                                style={{ width: `${rating === 5 ? 70 : rating === 4 ? 20 : rating === 3 ? 7 : rating === 2 ? 2 : 1}%` }}
-                              ></div>
-                            </div>
-                          </div>
-                          <div className="ml-2 w-10 text-gray-600 text-sm">
-                            {rating === 5 ? 70 : rating === 4 ? 20 : rating === 3 ? 7 : rating === 2 ? 2 : 1}%
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                  
-                  <div className="md:w-2/3 md:pl-8 md:border-l md:border-gray-200">
-                    <div className="mb-8 pb-8 border-b border-gray-200">
-                      <div className="flex items-start mb-2">
-                        <img 
-                          src="/api/placeholder/40/40" 
-                          alt="User"
-                          className="w-10 h-10 rounded-full mr-4"
-                        />
-                        <div>
-                          <h4 className="font-medium">John D.</h4>
-                          <div className="flex items-center text-sm text-gray-600">
-                            <div className="flex mr-2">
-                              {[...Array(5)].map((_, i) => (
-                                <svg key={i} xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
-                                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                </svg>
-                              ))}
-                            </div>
-                            <span>2 months ago</span>
-                          </div>
-                        </div>
-                      </div>
-                      <h5 className="font-semibold mb-2">Amazing LEGO Set!</h5>
-                      <p className="text-gray-700">
-                        This Millennium Falcon is an incredible build! The details are fantastic and it really captures the look of the ship from the films. Building it was challenging but very enjoyable. Highly recommended for any Star Wars fan.
-                      </p>
-                    </div>
-
-
-                    <div className="mb-8 pb-8 border-b border-gray-200">
-                      <div className="flex items-start mb-2">
-                        <img 
-                          src="/api/placeholder/40/40" 
-                          alt="User"
-                          className="w-10 h-10 rounded-full mr-4"
-                        />
-                        <div>
-                          <h4 className="font-medium">John D.</h4>
-                          <div className="flex items-center text-sm text-gray-600">
-                            <div className="flex mr-2">
-                              {[...Array(5)].map((_, i) => (
-                                <svg key={i} xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
-                                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                </svg>
-                              ))}
-                            </div>
-                            <span>2 months ago</span>
-                          </div>
-                        </div>
-                      </div>
-                      <h5 className="font-semibold mb-2">Amazing LEGO Set!</h5>
-                      <p className="text-gray-700">
-                        This Millennium Falcon is an incredible build! The details are fantastic and it really captures the look of the ship from the films. Building it was challenging but very enjoyable. Highly recommended for any Star Wars fan.
-                      </p>
-                    </div>
-
-
-                    <div className="mb-8 pb-8 border-b border-gray-200">
-                      <div className="flex items-start mb-2">
-                        <img 
-                          src="/api/placeholder/40/40" 
-                          alt="User"
-                          className="w-10 h-10 rounded-full mr-4"
-                        />
-                        <div>
-                          <h4 className="font-medium">John D.</h4>
-                          <div className="flex items-center text-sm text-gray-600">
-                            <div className="flex mr-2">
-                              {[...Array(5)].map((_, i) => (
-                                <svg key={i} xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
-                                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                </svg>
-                              ))}
-                            </div>
-                            <span>2 months ago</span>
-                          </div>
-                        </div>
-                      </div>
-                      <h5 className="font-semibold mb-2">Amazing LEGO Set!</h5>
-                      <p className="text-gray-700">
-                        This Millennium Falcon is an incredible build! The details are fantastic and it really captures the look of the ship from the films. Building it was challenging but very enjoyable. Highly recommended for any Star Wars fan.
-                      </p>
-                    </div>
-                  </div>
-                  
-                </div>
-              </div>
+                <Reviews product={product} />
             )}
                     
-                 
-
+          
                     {activeTab === "FAQ" && 
                     <FAQSection />
                 }

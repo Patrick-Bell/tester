@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_03_130939) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_03_174243) do
   create_schema "auth"
   create_schema "extensions"
   create_schema "graphql"
@@ -44,6 +44,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_03_130939) do
     t.decimal "shipping_fee", precision: 10, scale: 2, default: "0.0"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "order_id"
+    t.string "tracking_id"
   end
 
   create_table "products", force: :cascade do |t|
@@ -59,5 +61,21 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_03_130939) do
     t.float "height"
     t.float "weight"
     t.string "tag"
+    t.string "accessories"
   end
+
+  create_table "reviews", force: :cascade do |t|
+    t.string "name"
+    t.string "header"
+    t.string "text"
+    t.integer "rating", default: 5
+    t.string "platform"
+    t.boolean "reviewed", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "product_id", null: false
+    t.index ["product_id"], name: "index_reviews_on_product_id"
+  end
+
+  add_foreign_key "reviews", "products"
 end

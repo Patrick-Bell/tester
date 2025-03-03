@@ -28,12 +28,14 @@ const ProductFilter = () => {
   const [show, setShow] = useState(20)
   const [allFilters, setAllFilters] = useState({
     category: [],
-    tags: [],
+    tag: [],
   })
 
   const allCategories = products.map(product => product.category)
   const uniqueCategories = [...new Set(allCategories)]
-  console.log(uniqueCategories)
+
+  const allTags = products.map(product => product.tag)
+  const uniqueTags = [...new Set(allTags)]
 
   const fetchProducts = async () => {
     try{
@@ -80,6 +82,17 @@ const ProductFilter = () => {
             })),
           ],
         },
+        {
+          id: 'tag',
+          name: 'Tag',
+          options: [
+            ...uniqueTags.map((tag) => ({
+              value: tag?.toLowerCase(),
+              label: tag,
+              checked: allFilters.tag.includes(tag?.toLowerCase()), // Keep checked state
+            })),
+          ],
+        },
       ]
       
       function classNames(...classes) {
@@ -100,32 +113,35 @@ const ProductFilter = () => {
       }
 
 
-      const handleFilterChange = (event) => {
-        const { value, checked } = event.target
+      const handleFilterChange = (event, filterType) => {
+        const { value, checked } = event.target;
+        
         setAllFilters(prevFilters => {
-          const updatedCategories = checked
-            ? [...prevFilters.category, value?.toLowerCase()] // Add category
-            : prevFilters.category.filter(item => item !== value?.toLowerCase()) // Remove category
-    
-            console.log('Updated Filters:', updatedCategories); // Check if it updates
-
-          return { ...prevFilters, category: updatedCategories }
-        })
-      }
+          const updatedFilters = checked
+            ? [...prevFilters[filterType], value?.toLowerCase()] // Add item
+            : prevFilters[filterType].filter(item => item !== value?.toLowerCase()); // Remove item
+      
+          console.log(`Updated ${filterType}:`, updatedFilters);
+          
+          return { ...prevFilters, [filterType]: updatedFilters };
+        });
+      };
+      
+      
 
       useEffect(() => {
         const filtered = products.filter(product =>
-          allFilters.category.length === 0 || allFilters.category.includes(product.category?.toLowerCase())
-        )
-        console.log('Filtered Products:', filtered); // Check if filtering is working
-        setFilteredProducts(filtered)
-      }, [allFilters, products])
-
+          (allFilters.category.length === 0 || allFilters.category.includes(product.category?.toLowerCase())) &&
+          (allFilters.tag.length === 0 || allFilters.tag.includes(product.tag?.toLowerCase()))
+        );
+        setFilteredProducts(filtered);
+        setShow(20); // Reset show to initial value
+        setShowMoreBtn('Show more'); // Reset button text
+      }, [allFilters, products]);
+      
 
 
     return (
-
-
     <div className="bg-white">
       <Navbar />
       <div>
@@ -166,10 +182,6 @@ const ProductFilter = () => {
                   ))}
                 </ul>
 
-
-
-                
-
                 {filters.map((section) => (
                   <Disclosure key={section.id} as="div" className="border-t border-gray-200 px-4 py-6">
                     <h3 className="-mx-2 -my-3 flow-root">
@@ -189,7 +201,7 @@ const ProductFilter = () => {
                               <div className="group grid size-4 grid-cols-1">
                                 <input
                                   checked={option.checked}
-                                  onChange={handleFilterChange}
+                                  onChange={() => handleFilterChange(event, section.id)}
                                   id={`filter-mobile-${section.id}-${optionIdx}`}
                                   name={`${section.id}[]`}
                                   type="checkbox"
@@ -325,7 +337,7 @@ const ProductFilter = () => {
                               <div className="group grid size-4 grid-cols-1">
                                 <input
                                   checked={option.checked}
-                                  onChange={handleFilterChange}
+                                  onChange={() => handleFilterChange(event, section.id)}
                                   id={`filter-mobile-${section.id}-${optionIdx}`}
                                   name={`${section.id}[]`}
                                   type="checkbox"
