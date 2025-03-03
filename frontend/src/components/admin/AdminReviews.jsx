@@ -51,6 +51,10 @@ const AdminReviews = () => {
             console.error("Error updating review status:", error);
         }
     };
+
+    const totalReviews = reviews.length;
+    const acceptedReviews = reviews.filter((review) => review.reviewed).length;
+    const pendingReviews = reviews.filter((review) => !review.reviewed).length;
     
 
 
@@ -122,7 +126,7 @@ const AdminReviews = () => {
                     </div>
                     <div>
                         <h3 className="text-sm font-semibold text-gray-600">Total Reviews</h3>
-                        <p className="text-2xl font-bold text-gray-900">1</p>
+                        <p className="text-2xl font-bold text-gray-900">{totalReviews}</p>
                     </div>
                 </div>
 
@@ -142,7 +146,7 @@ const AdminReviews = () => {
                     </div>
                     <div>
                         <h3 className="text-sm font-semibold text-gray-600">Accepted Reviews</h3>
-                        <p className="text-2xl font-bold text-gray-900">3</p>
+                        <p className="text-2xl font-bold text-gray-900">{acceptedReviews}</p>
                     </div>
                 </div>
 
@@ -152,7 +156,7 @@ const AdminReviews = () => {
                     </div>
                     <div>
                         <h3 className="text-sm font-semibold text-gray-600">Pending Reviews</h3>
-                        <p className="text-2xl font-bold text-gray-900">4</p>
+                        <p className="text-2xl font-bold text-gray-900">{pendingReviews}</p>
                     </div>
                 </div>
             </div>
