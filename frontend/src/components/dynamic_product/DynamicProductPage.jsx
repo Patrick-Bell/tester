@@ -75,7 +75,7 @@ const DynamicProductPage = () => {
             <div className="flex flex-col md:flex-row justify-center p-6 mx-auto gap-6">
                 {/* Product Image */}
                 <div className="">
-                    <img className="rounded-lg max-w-[533px]" src={product?.image} alt={product?.name} />
+                    <img className="rounded-lg max-w-[300px] m-auto sm:max-w-[533px]" src={product?.image} alt={product?.name} />
                 </div>
                 
                 {/* Product Details */}
