@@ -10,12 +10,12 @@ Rails.application.routes.draw do
   resources :reviews
   
   post 'create-checkout-session', to: 'checkout#create_checkout_session', as: 'create_checkout_session'
-  post 'webhook', to: 'checkout#stripe_webhook', as: 'stripe_webhook'
+  post 'webhooks', to: 'checkout#stripe_webhook', as: 'stripe_webhook'
 
   end
 
 
-  get '*path', to: 'application#index', constraints: ->(req) { !req.xhr? && req.format.html? }
+  get '*path', to: 'home#index', constraints: ->(req) { !req.xhr? && req.format.html? }
 
 
   

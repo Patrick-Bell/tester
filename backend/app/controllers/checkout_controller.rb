@@ -35,8 +35,8 @@ class CheckoutController < ApplicationController
     def stripe_webhook
       payload = request.body.read
       sig_header = request.env['HTTP_STRIPE_SIGNATURE']
-      signing_secret = ENV['STRIPE_SIGNING_SECRET'] # ✅ Fix
-  
+      signing_secret = ENV['STRIPE_SIGNING_SECRET']
+    
       begin
         event = Stripe::Webhook.construct_event(payload, sig_header, signing_secret)
       rescue JSON::ParserError
@@ -46,21 +46,36 @@ class CheckoutController < ApplicationController
         Rails.logger.error("❌ Invalid Stripe Signature")
         return head :bad_request
       end
-  
+    
       Rails.logger.info("🔔 Received Stripe event: #{event.type}")
-  
+    
       case event.type
-      when 'checkout.session.completed'
-        session = event.data.object
-        Order.create!(paid: true)
-        Rails.logger.info("✅ Order successfully created")
+      when 'payment_intent.succeeded'
+        payment_intent = event.data.object
+        order_id = payment_intent.metadata['order_id']
+        
+        Rails.logger.info("💳 PaymentIntent succeeded for Order: #{order_id}")
+        Rails.logger.info("Amount: #{payment_intent.amount} #{payment_intent.currency.upcase}")
+        Rails.logger.info("Customer: #{payment_intent.customer}")
+        Rails.logger.info("Payment Method: #{payment_intent.payment_method}")
+        Rails.logger.info("Status: #{payment_intent.status}")
+    
+        # Update order status in your database
+        order = Order.find_by(id: order_id)
+        if order
+          order.update!(status: 'paid')
+          Rails.logger.info("✅ Order ##{order.id} marked as paid.")
+        else
+          Rails.logger.warn("⚠️ Order ##{order_id} not found.")
+        end
+    
       else
         Rails.logger.info("Unhandled event type: #{event.type}")
       end
-  
+    
       head :ok
     end
-
+    
 
   end
   

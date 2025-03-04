@@ -7,6 +7,7 @@ import AdminCalendar from "./AdminCalendar";
 import SidebarItem from "./SidebarItem";
 import AdminOrders from "./AdminOrders";
 import AdminReviews from "./AdminReviews";
+import AdminUsers from "./AdminUsers";
 
 
 const Sidebar = () => {
@@ -25,6 +26,8 @@ const Sidebar = () => {
         return <AdminOrders />
         case 'Reviews':
         return <AdminReviews />
+        case 'Users':
+        return <AdminUsers />
     }
   }
 

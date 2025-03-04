@@ -29,7 +29,7 @@ const AdminReviews = () => {
 
     const findReviewedProduct = async (id) => {
         try {
-            const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/products/${seleectedReview.product_id}`);
+            const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/products/${id}}`);
 
             setReviewedProduct(response.data);
         } catch (e) {
@@ -43,7 +43,7 @@ const AdminReviews = () => {
 
     const handleReviewStatusChange = async (reviewId, newStatus) => {
         try {
-            await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/reviews/${reviewId}`, { reviewed: newStatus });
+            await axios.put(`${import.meta.env.VITE_API_BASE_URL}/api/reviews/${reviewId}`, { reviewed: newStatus });
 
             setReviews((prevReviews) => 
                 prevReviews.map((review) => 
