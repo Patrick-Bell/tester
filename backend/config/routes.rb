@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
 
-  get 'home/index'
+  root "home#index"  # Set the root path to home#index
+  
+  get "home/index"
 
   scope :api do
     # Devise authentication routes (No need to define manually)
