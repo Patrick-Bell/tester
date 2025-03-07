@@ -17,7 +17,7 @@ export default defineConfig({
   server: {
     historyApiFallback: true,
   },
-  base: '/',  // ✅ Ensure correct path
+  base: './',  // ✅ Ensure correct path
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
