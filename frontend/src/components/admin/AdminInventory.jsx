@@ -54,7 +54,7 @@ const AdminInventory = () => {
 
   useEffect(() => {
     fetchProducts();
-  }, []);
+  }, [seletedProduct, newProduct, editProduct]);
 
   const openAddProduct = () => {
     setAddProductSection(true);
@@ -74,7 +74,7 @@ const AdminInventory = () => {
 
   const addProduct = async () => {
     try{
-      const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/products`, newProduct);
+      const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/products`, newProduct);
       console.log(response.data);
       toast.success('Product added successfully');
       setNewProduct({
@@ -93,6 +93,35 @@ const AdminInventory = () => {
       console.log(e)
     }
   }
+
+  const editOneProduct = async (id) => {
+    try{
+      const response = await axios.put(`${import.meta.env.VITE_API_BASE_URL}/api/products/${id}`, editProduct);
+      toast.success('Product editted successfully', {
+        description: `${editProduct?.name} has been changed.`
+      });
+    }catch(e){
+      console.log(e)
+    }
+  }
+
+
+  const handleProductActiveChange = async (productId, newStatus) => {
+    try {
+        await axios.put(`${import.meta.env.VITE_API_BASE_URL}/api/products/${productId}`, { active: newStatus });
+        toast.success(`Product is now ${newStatus === true ? 'active' : 'deactive'}`)
+
+        setProducts((prevProducts) => 
+            prevProducts.map((product) => 
+                product.id === productId ? { ...product, active: newStatus } : product
+            )
+        );
+    } catch (error) {
+        console.error("Error updating review status:", error);
+    }
+};
+
+
 
   return (
     <div className="p-6 bg-white rounded-lg border border-[#e9ebee]">
@@ -198,7 +227,7 @@ const AdminInventory = () => {
           </div>
         </dl>
       </div>
-      <button className="w-full bg-indigo-600 p-2 rounded-md text-white hover:bg-indigo-700 cursor-pointer transition-all">Confirm</button>
+      <button onClick={() => editOneProduct(editProduct?.id)} className="w-full bg-indigo-600 p-2 rounded-md text-white hover:bg-indigo-700 cursor-pointer transition-all">Confirm</button>
     </div>
     </>
       ): addProductSection ? (
@@ -396,22 +425,26 @@ const AdminInventory = () => {
               <th className="px-6 py-3 border-b border-[#e9ebee]">Price</th>
               <th className="px-6 py-3 border-b border-[#e9ebee]">Stock</th>
               <th className="px-6 py-3 border-b border-[#e9ebee]">Actions</th>
+              <th className="px-6 py-3 border-b border-[#e9ebee]">Active</th>
             </tr>
           </thead>
           <tbody>
             {products.length > 0 ? (
               products.map((product, i) => (
-                <tr key={i} className="hover:bg-gray-50 transition">
-                  <td className="px-6 py-4 border-b border-[#e9ebee] flex items-center gap-3">
+                    <tr key={i} className={`hover:bg-gray-50 transition ${product.stock === 0 ? 'bg-red-50' : ''}`}>
+                    <td className="px-6 py-4 border-b border-[#e9ebee] flex items-center gap-3">
                     <img className="w-10 h-10 object-cover rounded" src={product.image} alt={product.name} />
                     <span className="text-gray-700 font-medium">{product.name}</span>
                   </td>
                   <td className="px-6 py-4 border-b border-[#e9ebee]">{product.category || "N/A"}</td>
-                  <td className="px-6 py-4 border-b border-[#e9ebee]">£{product.price.toFixed(2)}</td>
+                  <td className="px-6 py-4 border-b border-[#e9ebee]">£{(product?.price)}</td>
                   <td className="px-6 py-4 border-b border-[#e9ebee]">{product.stock}</td>
                   <td className="px-6 py-4 border-b border-[#e9ebee]">
                     <span onClick={(() => setEditProduct(product))} className="text-indigo-600 cursor-pointer hover:text-indigo-700">Edit</span>
                     <span onClick={() => openDeleteModal(product)} className="ml-3 text-red-600 cursor-pointer hover:text-red-700">Delete</span>
+                  </td>
+                  <td className="px-6 py-4 border-b border-[#e9ebee]">
+                  <input type="checkbox" checked={product?.active} onChange={() => handleProductActiveChange(product?.id, !product?.active)}/>
                   </td>
                 </tr>
               ))

@@ -20,6 +20,7 @@ import Hero from './Hero'
 import ShoppingCartSide from '../product_page/ShoppingCartSide'
 import Login from '../modals/Login'
 import { useCart } from '../context/CartContext'
+import Register from '../modals/Register'
 
 
 const navigation = {
@@ -85,6 +86,7 @@ const Navbar = () => {
   const [open, setOpen] = useState(false)
   const [openCart, setOpenCart] = useState(false)
   const [openLoginModal, setOpenLoginModal] = useState(false)
+  const [openRegisterModal, setOpenRegisterModal] = useState(false)
 
   const { cart, cartNumber } = useCart()
 
@@ -98,10 +100,15 @@ const Navbar = () => {
     setOpenLoginModal(true)
   }
 
+  const handleOpenRegister = () => {
+    setOpenRegisterModal(true)
+  }
+
   return (
     <>
     <ShoppingCartSide open={openCart} setOpen={setOpenCart} />
-    <Login isOpen={openLoginModal} setIsOpen={setOpenLoginModal}/>
+    <Login isOpen={openLoginModal} setIsOpen={setOpenLoginModal} setRegisterModalOpen={setOpenRegisterModal}/>
+    <Register isOpen={openRegisterModal} setIsOpen={setOpenRegisterModal} setOpenLogin={setOpenLoginModal} />
    <div className="bg-white">
       {/* Mobile menu */}
       <Dialog open={open} onClose={setOpen} className="relative z-60 lg:hidden">
@@ -110,7 +117,7 @@ const Navbar = () => {
           className="fixed inset-0 bg-black/25 transition-opacity duration-300 ease-linear data-closed:opacity-0"
         />
 
-        <div className="fixed inset-0 z-60 flex">
+        <div className="fixed inset-0 z-200 flex">
           <DialogPanel
             transition
             className="relative flex w-full max-w-xs transform flex-col overflow-y-auto bg-white pb-12 shadow-xl transition duration-300 ease-in-out data-closed:-translate-x-full"
@@ -205,7 +212,7 @@ const Navbar = () => {
               </div>
       
               <div className="flow-root">
-                <a href="#" className="-m-2 block p-2 font-medium text-gray-900">
+                <a onClick={() => handleOpenRegister()} href="#" className="-m-2 block p-2 font-medium text-gray-900">
                   Create account
                 </a>
               </div>
@@ -342,7 +349,7 @@ const Navbar = () => {
                     Sign in
                   </a>
                   <span aria-hidden="true" className="h-6 w-px bg-gray-200" />
-                  <a href="#" className="text-sm font-medium text-gray-700 hover:text-gray-800">
+                  <a onClick={() => handleOpenRegister()} href="#" className="text-sm font-medium text-gray-700 hover:text-gray-800">
                     Create account
                   </a>
                 </div>

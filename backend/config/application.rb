@@ -35,6 +35,9 @@ module Backend
     config.api_only = true
     config.action_dispatch.cookies_same_site_protection = :lax
 
+    config.session_store :cookie_store, key: '_your_app_session'
+
+
 
     config.middleware.use ActionDispatch::Cookies
     config.middleware.use ActionDispatch::Session::CookieStore

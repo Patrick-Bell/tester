@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
+  resources :events
 
   root "home#index"  # Set the root path to home#index
-  
+
   get "home/index"
 
   scope :api do
@@ -12,7 +13,8 @@ Rails.application.routes.draw do
       registration: 'signup'
     },
     controllers: {
-      sessions: 'sessions'
+      sessions: 'sessions',
+      registrations: 'registrations'  # ✅ Add this line
     }
 
     # Check auth status (Custom route)
@@ -22,6 +24,8 @@ Rails.application.routes.draw do
     resources :orders
     resources :products
     resources :reviews
+    resources :users
+    resources :events
 
     # Stripe Checkout
     post 'create-checkout-session', to: 'checkout#create_checkout_session', as: 'create_checkout_session'

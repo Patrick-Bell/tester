@@ -1,47 +1,35 @@
-Review.create([
-  { 
-    name: 'Alice', 
-    header: 'Great Purchase!', 
-    text: "Absolutely love it! The quality is amazing.",
-    rating: 5,
-    platform: 'website',
-    reviewed: false,
-    product_id: 412
-  },
-  { 
-    name: 'Bob', 
-    header: 'Fast Delivery', 
-    text: "Received my order quicker than expected. Great service!",
-    rating: 4,
-    platform: 'ebay',
-    reviewed: false,
-    product_id: 412
-  },
-  { 
-    name: 'Charlie', 
-    header: 'Not Bad', 
-    text: "The product is decent, but I had higher expectations.",
-    rating: 3,
-    platform: 'vinted',
-    reviewed: false,
-    product_id: 412
-  },
-  { 
-    name: 'Diana', 
-    header: 'Perfect Gift', 
-    text: "Bought this as a gift and they absolutely loved it!",
-    rating: 5,
-    platform: 'etsy',
-    reviewed: false,
-    product_id: 412
-  },
-  { 
-    name: 'Ethan', 
-    header: 'Could Be Better', 
-    text: "Item is okay, but packaging was damaged upon arrival.",
-    rating: 2,
-    platform: 'website',
-    reviewed: false,
-    product_id: 412
-  }
-])
+Order.create({
+        products: [
+          {
+            name: "Saka",
+            image: "https://minifigurebricks.com/cdn/shop/files/93d1a581-535b-4125-a678-dfe0ec2b1170.jpg",
+            price: 9.99,
+            quantity: 1,
+          },
+          {
+            name: "Ronaldo",
+            image: "https://minifigurebricks.com/cdn/shop/files/Sport-Soccer-Cristiano-Ronaldo-TV7033-Minifigurescopy.jpg?crop=center&height=533&v=1733505241&width=533",
+            price: 5.99,
+            quantity: 2,
+          },
+          {
+            name: "Bellingham",
+            image: "https://minifigurebricks.com/cdn/shop/files/8ecb4db7-1a59-4123-92cd-e11812aba668.jpg?crop=center&height=720&v=1729176922&width=720",
+            price: 5.99,
+            quantity: 2,
+          },
+          {
+            name: "Leonardo",
+            image: "https://minifigurebricks.com/cdn/shop/files/id0_c60753_u1.jpg",
+            price: 5.99,
+            quantity: 2,
+          }
+        ],
+        total_price: "21.97",
+        status: "pending",
+        date: "2025-03-03T13:28:44.660Z",
+        address: "123 Main Street, New York, NY 10001",
+        payment_method: "credit_card",
+        shipping_fee: "1.50",
+        paid: false
+})

@@ -8,6 +8,7 @@ import { TbTruckDelivery, TbCircleCheck, TbCircleX } from "react-icons/tb";
 import { MdPendingActions, MdLocalShipping } from "react-icons/md";
 import { FaRegFilePdf } from "react-icons/fa6";
 import { GrPrint } from "react-icons/gr";
+import { toast } from 'sonner'
 
 
 const AdminOrders = () => {
@@ -27,16 +28,16 @@ const AdminOrders = () => {
 
     useEffect(() => {
         fetchOrders();
-    }, []);
+    }, [selectedOrder, updatedOrder]);
 
     const showPay = (order) => {
         if (order.paid) {
             return (
-                <span className="text-green-700 bg-green-200 p-1 rounded-md font-bold">PAID</span>
+                <span className="text-green-700 bg-green-200 p-1 rounded-md font-bold text-xs">PAID</span>
             )
         } else {
             return (
-                <span className="text-red-700 bg-red-200 p-1 rounded-md font-bold">NOT PAID</span>
+                <span className="text-red-700 bg-red-200 p-1 rounded-md font-bold text-xs">NOT PAID</span>
             )
     }
 }
@@ -45,29 +46,48 @@ const AdminOrders = () => {
         switch (status) {
             case "pending":
                 return (
-                    <span className="text-gray-700 bg-gray-200 p-1 rounded-md font-bold">Pending</span>
+                    <span className="text-gray-700 bg-gray-200 p-1 rounded-md font-bold text-xs">Pending</span>
                 );
             case "processing":
                 return (
-                    <span className="text-blue-700 bg-blue-200 p-1 rounded-md font-bold">Processing</span>
+                    <span className="text-blue-700 bg-blue-200 p-1 rounded-md font-bold text-xs">Processing</span>
                 );
             case "shipped":
                 return (
-                    <span className="text-orange-700 bg-orange-200 p-1 rounded-md font-bold">Shipped</span>
+                    <span className="text-orange-700 bg-orange-200 p-1 rounded-md font-bold text-xs">Shipped</span>
                 );
                 case "delivered":
                 return (
-                    <span className="text-green-700 bg-green-200 p-1 rounded-md font-bold">Delivered</span>
+                    <span className="text-green-700 bg-green-200 p-1 rounded-md font-bold text-xs">Delivered</span>
                 );
             case "cancelled":
                 return (
-                    <span className="text-red-700 bg-red-200 p-1 rounded-md font-bold">Cancelled</span>
+                    <span className="text-red-700 bg-red-200 p-1 rounded-md font-bold text-xs">Cancelled</span>
                 );
         }
     }
 
     const calculateTotal = (products) => {
         return products.reduce((sum, pro) => sum + pro.price * pro.quantity, 0);
+    }
+
+    const ordersValue = orders?.reduce(
+        (sum, order) => sum + order.products?.reduce(
+            (orderSum, item) => orderSum + (item.quantity * item.price), 0
+        ) || 0, 
+        0
+    ).toFixed(2);
+    
+    const avgOrder = ordersValue / orders.length
+
+
+    const editOneOrder = async (id) => {
+        try {
+            const response = await axios.put(`${import.meta.env.VITE_API_BASE_URL}/api/orders/${id}`,  { order: updatedOrder } )
+            toast.success('Order successfully updated!')
+        }catch(e){
+            console.log(e)
+        }
     }
 
     return (
@@ -178,17 +198,17 @@ const AdminOrders = () => {
                 <AdminUpdateOrderSelect 
                     label="Update Payment Status"
                     options={[
-                        { value: "not_paid", label: "Not Paid", icon: <TbCircleX className="text-red-600" /> },
-                        { value: "paid", label: "Paid", icon: <TbCircleCheck className="text-green-600" /> }
+                        { value: false, label: "Not Paid", icon: <TbCircleX className="text-red-600" /> },
+                        { value: true, label: "Paid", icon: <TbCircleCheck className="text-green-600" /> }
                     ]}
-                    selected={updatedOrder?.paid ? "Paid" : "Not Paid"}
-                    setSelected={(value) => setUpdatedOrder({ ...updatedOrder, paid: value === "paid" })}
+                    selected={updatedOrder?.paid ? true : false}
+                    setSelected={(value) => setUpdatedOrder({ ...updatedOrder, paid: value === true })}
                 />
             </div>
             
                 {/* Confirm Button */}
                 <button 
-                    onClick={() => console.log("Order Updated:", updatedOrder)} 
+                    onClick={() => editOneOrder(updatedOrder?.id)} 
                     className="mt-6 w-full bg-indigo-600 text-white font-medium p-3 rounded-md hover:bg-indigo-700 transition hover:cursor-pointer"
                 >
                     Confirm Changes
@@ -213,8 +233,8 @@ const AdminOrders = () => {
                         <CiCalendarDate className="w-6 h-6" />
                     </div>
                     <div>
-                        <h3 className="text-sm font-semibold text-gray-600">Recent Orders</h3>
-                        <p className="text-2xl font-bold text-gray-900"></p>
+                        <h3 className="text-sm font-semibold text-gray-600">Average Order</h3>
+                        <p className="text-2xl font-bold text-gray-900">£{(avgOrder).toFixed(2)}</p>
                     </div>
                 </div>
 

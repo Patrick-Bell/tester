@@ -9,10 +9,12 @@ import Cancel from "./components/stripe/Cancel"
 import Success from "./components/stripe/Success"
 import Sidebar from "./components/admin/Sidebar"
 import AdminTest from './components/admin/AdminTest'
+import { Toaster } from "sonner"
 const App = () => {
 
   return (
-
+<>
+<Toaster />
     <Routes>
     <Route path="/" element={<MainPage />}></Route>
     <Route path="/products" element={<ProductFilter />}></Route>
@@ -24,6 +26,7 @@ const App = () => {
     <Route path="/admin-test" element={<AdminTest />}></Route>
     
   </Routes>
+  </>
 
   
   )

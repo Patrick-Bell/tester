@@ -1,37 +1,87 @@
 'use client'
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
+import axios from 'axios';
+import { toast } from 'sonner'
 
 const AdminCalendar = () => {
-  const [events, setEvents] = useState([
-    
-  ]);
-
+  const [events, setEvents] = useState([]);
   const [showModal, setShowModal] = useState(false);
-  const [newEvent, setNewEvent] = useState({ title: "", date: null });
+  const [newEvent, setNewEvent] = useState({ title: "", description: "", deadline: '' });
   const [selectedEvent, setSelectedEvent] = useState(null);
+  const [orders, setOrders] = useState([]);
 
+  // Fetch orders from API
+  const fetchOrders = async () => {
+    try {
+      const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/orders`);
+      const fetchedOrders = response.data;  // Assuming response.data is the list of orders
+      setOrders(
+        fetchedOrders.map(order => ({
+          title: `Order #${order.id}`,  // Assuming each order has an `id` and `date`
+          start: order.created_at, // Assuming order has a `date` field
+          description: `Customer: ${order.id}`, // Assuming customer info is available
+          color: "#6366F1"  // Use a different color for orders
+        }))
+      );
+    } catch (error) {
+      console.error("Error fetching orders:", error);
+    }
+  }
+
+  const fetchEvents = async () => {
+    try {
+      const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/events`);
+      const fetchedEvents = response.data;  // Assuming response.data is the list of orders
+      setEvents(
+        fetchedEvents.map(event => ({
+          title: `${event.title}`,  // Assuming each order has an `id` and `date`
+          start: event.deadline, // Assuming order has a `date` field
+          description: `${event.description}`, // Assuming customer info is available
+          color: "#6366F1"  // Use a different color for orders
+        }))
+      );
+    } catch (error) {
+      console.error("Error fetching orders:", error);
+    }
+  }
+
+  useEffect(() => {
+    fetchOrders();
+    fetchEvents()
+  }, []);
+
+  // Handle date click (add event)
   const handleDateClick = (info) => {
-    setNewEvent({ title: "", date: info.dateStr });
+    setNewEvent({ title: "", description: "", deadline: info.dateStr });
     setSelectedEvent(null);
     setShowModal(true);
   };
 
+  // Handle event click (view event details)
   const handleEventClick = (info) => {
     setSelectedEvent(info.event);
     setShowModal(true);
   };
 
-  const handleAddEvent = () => {
-    if (newEvent.title.trim()) {
-      setEvents([...events, { title: newEvent.title, start: newEvent.date, color: "#6366F1" }]);
-      setShowModal(false);
-      setNewEvent({ title: "", date: null });
+  // Handle adding new event
+  const handleAddEvent = async () => {
+    try{
+      if (newEvent.title.trim()) {
+        const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/events`, { event: newEvent })
+        setEvents([...events, { title: newEvent.title, description: newEvent.description, start: newEvent.deadline, color: "#6366F1" }]);
+        setShowModal(false);
+        setNewEvent({ title: "", description: '', deadline: null });
+        toast.success('Event successfully added!')
+      }
+    }catch(e){
+      console.log(e)
     }
+   
   };
 
   return (
@@ -40,7 +90,7 @@ const AdminCalendar = () => {
       <FullCalendar
         plugins={[dayGridPlugin, interactionPlugin]}
         initialView="dayGridMonth"
-        events={events}
+        events={[...orders, ...events]}  // Combine both orders and events
         dateClick={handleDateClick}
         eventClick={handleEventClick}
         height="auto"
@@ -88,12 +138,23 @@ const AdminCalendar = () => {
                     </div>
 
                     <div>
+                      <label className="text-sm font-semibold block text-left">Event Description</label>
+                      <input
+                        type="text"
+                        placeholder="Enter description"
+                        className="w-full border border-gray-300 p-2 rounded-md"
+                        value={newEvent.description}
+                        onChange={(e) => setNewEvent({ ...newEvent, description: e.target.value })}
+                      />
+                    </div>
+
+                    <div>
                       <label className="text-sm font-semibold block text-left">Date</label>
                       <input
                         type="date"
                         className="w-full border border-gray-300 p-2 rounded-md"
-                        value={newEvent.date}
-                        onChange={(e) => setNewEvent({ ...newEvent, date: e.target.value })}
+                        value={newEvent.deadline}
+                        onChange={(e) => setNewEvent({ ...newEvent, deadline: e.target.value })}
                       />
                     </div>
                   </div>

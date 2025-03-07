@@ -40,8 +40,8 @@ const ProductFilter = () => {
   const fetchProducts = async () => {
     try{
       const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/products`);
-      setProducts(response.data)
-      setFilteredProducts(response.data)
+      setProducts(response.data.filter(product => product.active))
+      setFilteredProducts(response.data.filter(product => product.active))
       console.log(response, 'data', response.data)
     }catch(e){
       console.log(e)

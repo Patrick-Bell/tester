@@ -1,8 +1,36 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
+import { toast } from "sonner";
 
-const Login = ({ isOpen, setIsOpen }) => {
+const Login = ({ isOpen, setIsOpen, setRegisterModalOpen }) => {
+
+  const [formData, setFormData] = useState({
+    email: '',
+    password: ''
+  })
+
+  const handleOpenRegister = () => {
+    setIsOpen(false)
+    setRegisterModalOpen(true)
+  }
+
+  const handleLogin = async () => {
+    e.preventDefault()
+    
+    try{
+      const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/login`,
+        { user: formData },
+        { withCredentials: true }
+      )
+      console.log(response.data)
+      toast.success('Successfully Logged in')
+    }catch(e){
+      console.log(e)
+    }
+  }
+
+
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog as="div" className="relative z-50" onClose={setIsOpen}>
@@ -59,10 +87,10 @@ const Login = ({ isOpen, setIsOpen }) => {
                   />
                 </div>
 
-                <button className="w-full bg-indigo-600 text-white py-2 rounded-lg mt-2 hover:bg-indigo-700">
+                <button className="w-full bg-indigo-600 text-white py-2 rounded-lg mt-2 hover:bg-indigo-700 cursor-pointer">
                   Log In
                 </button>
-                <button class="w-full mt-2 px-4 py-2 border rounded-lg flex justify-center gap-2">
+                <button class="w-full mt-2 px-4 py-2 border rounded-lg flex justify-center gap-2 cursor-pointer hover:bg-gray-100">
                     <img class="w-6 h-6" src="https://www.svgrepo.com/show/475656/google-color.svg" loading="lazy" alt="google logo"/>
                     <span>Login with Google</span>
                 </button>
@@ -76,7 +104,7 @@ const Login = ({ isOpen, setIsOpen }) => {
               </div>
 
               {/* Sign Up Button */}
-              <button className="w-full border py-2 rounded-lg text-gray-700 hover:bg-gray-100">
+              <button onClick={() => handleOpenRegister()} className="w-full border py-2 rounded-lg text-gray-700 hover:bg-gray-100 cursor-pointer">
                 Sign Up
               </button>
             </Dialog.Panel>
