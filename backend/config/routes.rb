@@ -1,8 +1,6 @@
 Rails.application.routes.draw do
   resources :events
 
-  root "home#index"  # Set the root path to home#index
-
   get "home/index"
 
   scope :api do
@@ -33,5 +31,6 @@ Rails.application.routes.draw do
   end
 
   # Catch-all for React Frontend Routing
+  root "home#index"  # Set the root path to home#index
   get '*path', to: 'home#index', constraints: ->(req) { !req.xhr? && req.format.html? }
 end

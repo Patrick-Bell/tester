@@ -30,6 +30,12 @@ Rails.application.configure do
 
   config.public_file_server.enabled = true
 
+  config.assets.compile = false  # Since Vite is handling this
+
+  config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
+
+
+
 
   # Skip http-to-https redirect for the default health check endpoint.
   # config.ssl_options = { redirect: { exclude: ->(request) { request.path == "/up" } } }
