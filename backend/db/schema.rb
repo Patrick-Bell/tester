@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_05_151319) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_09_133106) do
   create_schema "auth"
   create_schema "extensions"
   create_schema "graphql"
@@ -49,12 +49,12 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_05_151319) do
     t.string "payment_method", null: false
     t.datetime "delivery_date"
     t.boolean "paid", default: false
-    t.decimal "shipping_fee", precision: 10, scale: 2, default: "0.0"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "order_id"
     t.string "tracking_id"
     t.bigint "user_id"
+    t.decimal "shipping_fee", precision: 10, scale: 2, default: "0.0", null: false
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 

@@ -1,6 +1,6 @@
 'use client'
 
-import { Fragment, useState } from 'react'
+import { Fragment, useState, useEffect } from 'react'
 import {
   Dialog,
   DialogBackdrop,
@@ -21,6 +21,7 @@ import ShoppingCartSide from '../product_page/ShoppingCartSide'
 import Login from '../modals/Login'
 import { useCart } from '../context/CartContext'
 import Register from '../modals/Register'
+import axios from 'axios'
 
 
 const navigation = {
@@ -87,6 +88,9 @@ const Navbar = () => {
   const [openCart, setOpenCart] = useState(false)
   const [openLoginModal, setOpenLoginModal] = useState(false)
   const [openRegisterModal, setOpenRegisterModal] = useState(false)
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [products, setProducts] = useState([])
 
   const { cart, cartNumber } = useCart()
 
@@ -104,12 +108,31 @@ const Navbar = () => {
     setOpenRegisterModal(true)
   }
 
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") {
+        setIsSearchOpen(false);
+      }
+    };
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, []);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/products`)
+      setProducts(res.data.filter(product => product.active === true))
+    }
+    fetchProducts()
+  }, [])
+
+
   return (
     <>
     <ShoppingCartSide open={openCart} setOpen={setOpenCart} />
     <Login isOpen={openLoginModal} setIsOpen={setOpenLoginModal} setRegisterModalOpen={setOpenRegisterModal}/>
     <Register isOpen={openRegisterModal} setIsOpen={setOpenRegisterModal} setOpenLogin={setOpenLoginModal} />
-   <div className="bg-white">
+   <div className="bg-white w-full">
       {/* Mobile menu */}
       <Dialog open={open} onClose={setOpen} className="relative z-60 lg:hidden">
         <DialogBackdrop
@@ -238,7 +261,7 @@ const Navbar = () => {
           Over 50 products to choose from!
         </p>
 
-        <nav aria-label="Top" className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <nav aria-label="Top" className="mx-auto w-full px-4 sm:px-6 lg:px-8">
           <div className="border-b border-gray-200">
             <div className="flex h-16 items-center">
               <button
@@ -345,11 +368,11 @@ const Navbar = () => {
 
               <div className="ml-auto flex items-center">
                 <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                  <a onClick={() => handleOpenLogin()} href="#" className="text-sm font-medium text-gray-700 hover:text-gray-800">
+                  <a onClick={() => handleOpenLogin()} href="#" className="text-sm font-medium text-gray-700 hover:text-gray-800 z-60">
                     Sign in
                   </a>
                   <span aria-hidden="true" className="h-6 w-px bg-gray-200" />
-                  <a onClick={() => handleOpenRegister()} href="#" className="text-sm font-medium text-gray-700 hover:text-gray-800">
+                  <a onClick={() => handleOpenRegister()} href="#" className="text-sm font-medium text-gray-700 hover:text-gray-800 z-60">
                     Create account
                   </a>
                 </div>
@@ -367,12 +390,67 @@ const Navbar = () => {
                 </div>
 
                 {/* Search */}
-                <div className="flex lg:ml-6">
-                  <a href="#" className="p-2 text-gray-400 hover:text-gray-500">
+                <div onClick={() => setIsSearchOpen(true)} className="flex lg:ml-6">
+                  <a href="#" className="p-2 text-gray-400 hover:text-gray-500 z-60">
                     <span className="sr-only">Search</span>
-                    <MagnifyingGlassIcon aria-hidden="true" className="size-6" />
+                    <MagnifyingGlassIcon aria-hidden="true" className="size-6 z-60" />
                   </a>
                 </div>
+
+                {isSearchOpen && (
+  <div 
+    className="fixed inset-0 backdrop-blur-xl flex justify-center items-start pt-10 z-120 transition-all"
+    onClick={() => setIsSearchOpen(false)} // Click outside to close
+  >
+    {/* Search box */}
+    <div 
+      className="relative bg-white p-6 rounded-lg shadow-lg w-3/4 sm:w-1/2 lg:w-1/3"
+      onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside
+    >
+      {/* Input Field */}
+      <input
+        type="text"
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+        className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        placeholder="Search for products..."
+        autoFocus
+      />
+
+      {/* Show products results */}
+      <div className="mt-4 max-h-60 overflow-y-auto">
+        {products.length > 0 ? (
+          products
+          .filter((product) => product.name.toLowerCase().includes(searchQuery.toLowerCase()))
+          .map((product) => (
+            <a 
+              key={product.id} 
+              href={`http://localhost:5173/products/${product.id}`} 
+              className="block p-3 border-b border-gray-200 hover:bg-gray-100"
+            >
+              <div className="flex items-center">
+                {/* Product Image */}
+                <img className="w-16 h-16 object-cover rounded-md" src={product.image} alt={product.name} />
+
+                {/* Product Details */}
+                <div className="ml-3">
+                  <p className="text-lg font-medium text-gray-800">{product.name}</p>
+                  <p className="text-sm text-gray-600">£{product.price}</p>
+                </div>
+              </div>
+            </a>
+          ))
+        ) : (
+          <p className="text-gray-500 text-center mt-2">No products found.</p>
+        )}
+      </div>
+    </div>
+  </div>
+)}
+
+
+
+
 
                 {/* Cart */}
                 <div className="ml-4 flow-root lg:ml-6 z-60">

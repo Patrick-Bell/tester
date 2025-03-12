@@ -53,12 +53,7 @@ class CheckoutController < ApplicationController
       when 'payment_intent.succeeded'
         payment_intent = event.data.object
         order_id = payment_intent.metadata['order_id']
-        
-        Rails.logger.info("💳 PaymentIntent succeeded for Order: #{order_id}")
-        Rails.logger.info("Amount: #{payment_intent.amount} #{payment_intent.currency.upcase}")
-        Rails.logger.info("Customer: #{payment_intent.customer}")
-        Rails.logger.info("Payment Method: #{payment_intent.payment_method}")
-        Rails.logger.info("Status: #{payment_intent.status}")
+
     
         # Update order status in your database
         order = Order.find_by(id: order_id)

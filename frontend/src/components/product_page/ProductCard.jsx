@@ -57,7 +57,14 @@ const ProductCard = ({ product }) => {
                   {product.name}
                 </a>
               </h3>
-            <p className="text-sm font-medium text-gray-900">£{product.price}</p>
+              {product.sale_price > 0 ? (
+                <div>
+                  <p className="text-sm font-medium line-through text-red-500">£{product.sale_price}</p>
+                  <p className="text-sm font-medium text-gray-900">£{product.price}</p>
+                </div>
+              ):(
+                <p className="text-sm font-medium text-gray-900">£{product.price}</p>
+              )}
             </div>
               {inStock(product)}
           </div>

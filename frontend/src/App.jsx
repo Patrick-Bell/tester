@@ -10,6 +10,8 @@ import Success from "./components/stripe/Success"
 import Sidebar from "./components/admin/Sidebar"
 import AdminTest from './components/admin/AdminTest'
 import { Toaster } from "sonner"
+import Refund from "./components/refund/RefundPage"
+import AboutPage from './components/about/AboutPage'
 const App = () => {
 
   return (
@@ -21,6 +23,8 @@ const App = () => {
     <Route path="/products/:id" element={<DynamicProductPage />}></Route>
     <Route path="/cancel" element={<Cancel />}></Route>
     <Route path="/success" element={<Success />}></Route>
+    <Route path="/refund" element={<Refund />}></Route>
+    <Route path="/about" element={<AboutPage />}></Route>
 
     <Route path="/admin" element={<Sidebar />}></Route>
     <Route path="/admin-test" element={<AdminTest />}></Route>

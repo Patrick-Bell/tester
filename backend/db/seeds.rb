@@ -23,13 +23,25 @@ Order.create({
             image: "https://minifigurebricks.com/cdn/shop/files/id0_c60753_u1.jpg",
             price: 5.99,
             quantity: 2,
-          }
+          },
+          {
+            name: "Guard (square)",
+            image: "https://minifigurebricks.com/cdn/shop/files/K2053.jpg?crop=center&height=720&v=1737498329&width=720",
+            price: 2.99,
+            quantity: 1,
+          },
+          {
+            name: "Shadow the Hedgehog",
+            image: "https://minifigurebricks.com/cdn/shop/files/K2236.jpg?crop=center&height=720&v=1737480889&width=720",
+            price: 7.49,
+            quantity: 1,
+          },
         ],
-        total_price: "21.97",
+        total_price: 0.00,
         status: "pending",
         date: "2025-03-03T13:28:44.660Z",
         address: "123 Main Street, New York, NY 10001",
         payment_method: "credit_card",
-        shipping_fee: "1.50",
-        paid: false
+        shipping_fee: 1.50,
+        paid: true
 })

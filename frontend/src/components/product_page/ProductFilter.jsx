@@ -18,6 +18,7 @@ import Navbar from '../front_page/Navbar'
 import ShoppingCartSide from './ShoppingCartSide'
 import Footer from '../front_page/Footer'
 import axios from 'axios'
+import ProductCardSkeleton from './ProductCardSkeleton'
 
 
 
@@ -30,6 +31,7 @@ const ProductFilter = () => {
     category: [],
     tag: [],
   })
+  const [isLoading, setIsLoading] = useState(true)
 
   const allCategories = products.map(product => product.category)
   const uniqueCategories = [...new Set(allCategories)]
@@ -45,6 +47,10 @@ const ProductFilter = () => {
       console.log(response, 'data', response.data)
     }catch(e){
       console.log(e)
+    } finally {
+      setTimeout(() => {
+        setIsLoading(false)
+      } , 1000)
     }
   }
 
@@ -382,7 +388,12 @@ const ProductFilter = () => {
           
                 
                 {/* Your content */}
-                <div className="bg-white">
+                {isLoading ? (
+                <div className="mx-auto max-w-2xl py-6 px-4 sm:px-6 lg:max-w-7xl">
+                  <ProductCardSkeleton times={filteredProducts?.length} />
+                  </div>
+                ): (
+              <div className="bg-white">
                   <div className="mx-auto max-w-2xl py-6 px-4 sm:px-6 lg:max-w-7xl">
                     <div className="mt-6 grid grid-cols-2 gap-x-5 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8 h-auto pointer-events-auto">
                       {filteredProducts
@@ -397,6 +408,9 @@ const ProductFilter = () => {
                     </div>
                     <button onClick={() => handleShowMore()} className='bg-indigo-500 mt-2 flex justify-center align-middle m-auto p-2 text-sm rounded-sm text-white cursor-pointer hover:bg-indigo-600'>{showMoreBtn}</button>
                 </div>
+                )}
+                
+
               </div>
             </div>
           </section>

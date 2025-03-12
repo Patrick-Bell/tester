@@ -96,71 +96,139 @@ const AdminOrders = () => {
             {selectedOrder ? (
                 <>
                 <div className="flex justify-between items-middle">
-                <span className="text-indigo-600 font-bold text-2xl">£{(calculateTotal(selectedOrder.products) + Number(selectedOrder.shipping_fee))}</span>
+                <span className="text-indigo-600 font-bold text-2xl">£{(calculateTotal(selectedOrder.products) + Number(selectedOrder.shipping_fee)).toFixed(2)}</span>
                 <div className="flex gap-2">
                 <button className="px-4 py-2 rounded-md border mb-4 border-[#e9ebee] hover:bg-gray-50 cursor-pointer"><GrPrint /></button>
                 <button className="px-4 py-2 rounded-md border mb-4 border-[#e9ebee] hover:bg-gray-50 cursor-pointer"><FaRegFilePdf /></button>
                 <button onClick={() => setSelectedOrder(null)} className="px-4 py-2 rounded-md border mb-4 border-[#e9ebee] hover:bg-gray-50 cursor-pointer">Back</button>
                 </div>
                 </div>
-                <div className="p-4 rounded-md border border-gray-200">
-                <h3 className="text-lg font-medium mb-2">Order Summary</h3>
-                <p><strong>Order ID:</strong> {selectedOrder.id}</p>
-                <p><strong>Status:</strong> {showStaus(selectedOrder.status)}</p>
-                <p><strong>Order Date:</strong> {new Date(selectedOrder.date).toLocaleDateString()}</p>
-                <p><strong>Expected Delivery Date:</strong> {new Date(selectedOrder.delivery_date).toLocaleDateString()}</p>
-            </div>
 
-            {/* Customer Information */}
-            <div className="p-4 border border-gray-200 rounded-md mt-6">
-                <h3 className="text-lg font-medium mb-2">Customer Information</h3>
-                <p><strong>Name:</strong> Patrick Bell</p>
-                <p><strong>Email:</strong> patrickbell1302@gmail.com</p>
-                <p><strong>Phone:</strong> 07710279288</p>
-                <p><strong>User:</strong> No</p>
-            </div>
+                <div className="px-4 sm:px-0">
+                <div className="mt-6 border-t border-gray-100"></div>
+        <h3 className="mt-6 text-base/7 font-semibold text-gray-900">Customer Information</h3>
+        <p className="mt-1 max-w-2xl text-sm/6 text-gray-500">Review data on the customer </p>
+      </div>
+      <div className="mt-6 border-t border-gray-100">
+          <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+            <dt className="text-sm/6 font-medium text-gray-900">Name</dt>
+            <dd className="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0"></dd>
+          </div>
+          <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+            <dt className="text-sm/6 font-medium text-gray-900">Email</dt>
+            <dd className="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0"></dd>
+          </div>
+          <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+            <dt className="text-sm/6 font-medium text-gray-900">Number</dt>
+            <dd className="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0"></dd>
+          </div>
+          <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+            <dt className="text-sm/6 font-medium text-gray-900">Address</dt>
+            <dd className="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">{selectedOrder?.address}</dd>
+          </div>
+      </div>
 
-            {/* Payment Address */}
-            <div className="border border-gray-200 p-4 rounded-md mt-6">
-                <h3 className="text-lg font-medium mb-2">Payment</h3>
-                <p><strong>Payment Method:</strong> {selectedOrder.payment_method}</p>
-                <p><strong>Paid:</strong> {selectedOrder.paid ? "Yes" : "No"}</p>
-                <p><strong>Shipping Fee:</strong> £{selectedOrder.shipping_fee}</p>
-            </div>
 
-            {/* Shipping Address */}
-            <div className="border border-gray-200 p-4 rounded-md mt-6">
-                <h3 className="text-lg font-medium mb-2">Shipping Address</h3>
-                <p>{selectedOrder?.address}</p>
-            </div>
+      <div className="px-4 sm:px-0">
+                <div className="mt-6 border-t border-gray-100"></div>
+        <h3 className="mt-6 text-base/7 font-semibold text-gray-900">Shipping Information</h3>
+        <p className="mt-1 max-w-2xl text-sm/6 text-gray-500">Review data on shipment status </p>
+      </div>
+      <div className="mt-6 border-t border-gray-100">
+          <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+            <dt className="text-sm/6 font-medium text-gray-900">Shipping Address</dt>
+            <dd className="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">{selectedOrder?.address}</dd>
+          </div>
+          <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+            <dt className="text-sm/6 font-medium text-gray-900">Order Date</dt>
+            <dd className="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">{new Date(selectedOrder?.created_at).toLocaleString()}</dd>
+          </div>
+          <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+            <dt className="text-sm/6 font-medium text-gray-900">Expected Delivery Date</dt>
+            <dd className="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">{new Date(selectedOrder?.delivery_date).toLocaleDateString()}</dd>
+          </div>
+          <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+            <dt className="text-sm/6 font-medium text-gray-900">Shipping Fee</dt>
+            <dd className="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">£1.50</dd>
+          </div>
+          <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+            <dt className="text-sm/6 font-medium text-gray-900">Shipping Status</dt>
+            <dd className="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">{showStaus(selectedOrder?.status)}</dd>
+          </div>
+      </div>
 
-            {/* Product List */}
-            <div className="border border-gray-200 p-4 rounded-md mt-6">
-                <h3 className="text-l font-medium mb-2">Products</h3>
-                {selectedOrder?.products.map((product, index) => (
-                    <div key={index} className="flex items-center justify-between border-b border-gray-200 py-2">
-                        <div className="flex items-center gap-4">
-                            <img 
-                                src={product.image} 
-                                alt={product.name} 
-                                className="w-16 h-16 object-cover rounded-md"
-                            />
-                            <div>
-                                <p className="font-semibold">{product.name}</p>
-                                <p>Price: £{product.price.toFixed(2)}</p>
-                                <p>Quantity: {product.quantity}</p>
-                                <p>
-                                    Reviewed: 
-                                    <span className={product.reviewed ? "text-green-600" : "text-red-600"}>
-                                        {product.reviewed ? " Yes" : " No"}
-                                    </span>
-                                </p>
-                            </div>
-                        </div>
-                        <p className="font-medium">£{(product.price * product.quantity).toFixed(2)}</p>
+      <div className="mt-6 border-t border-gray-100"></div>
+      
+
+      
+      <div className="mt-6 px-4 sm:px-0">
+        <h3 className="text-base/7 font-semibold text-gray-900">Payment Information</h3>
+        <p className="mt-1 max-w-2xl text-sm/6 text-gray-500">Review data on payment </p>
+      </div>
+      <div className="mt-6 border-t border-gray-100">
+          <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+            <dt className="text-sm/6 font-medium text-gray-900">Order Date</dt>
+            <dd className="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">{new Date(selectedOrder?.created_at).toLocaleString()}</dd>
+          </div>
+          <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+            <dt className="text-sm/6 font-medium text-gray-900">Paid</dt>
+            <dd className="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">{showPay(selectedOrder)}</dd>
+          </div>
+          <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+            <dt className="text-sm/6 font-medium text-gray-900">Payment Method</dt>
+            <dd className="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">Mastercard</dd>
+          </div>
+          <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+            <dt className="text-sm/6 font-medium text-gray-900">Card ending in</dt>
+            <dd className="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">4242</dd>
+          </div>
+      </div>
+
+      <div className="mt-6 border-t border-gray-100"></div>
+
+
+      <div className="mt-6 px-4 sm:px-0">
+        <h3 className="text-base/7 font-semibold text-gray-900">Order Information</h3>
+        <p className="mt-1 max-w-2xl text-sm/6 text-gray-500">Review data on the products ordered </p>
+      </div>
+      <div className="mt-6 border-t border-gray-100">
+      <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+            <dt className="text-sm/6 font-medium text-gray-900">Platform</dt>
+            <dd className="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">eBay</dd>
+          </div>
+          <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+            <dt className="text-sm/6 font-medium text-gray-900">Total Quantity</dt>
+            <dd className="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">{selectedOrder?.products.reduce((sum, item) => sum + item.quantity, 0)}</dd>
+          </div>
+          <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+            <dt className="text-sm/6 font-medium text-gray-900">Products</dt>
+            <dd className="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">
+            <div className="flex gap-4 overflow-x-auto whitespace-nowrap min-w-0 p-2">
+                {selectedOrder.products.map((product, i) => (
+                    <div key={i} className="flex items-center gap-4 border border-gray-100 p-2 rounded-md shrink-0">
+                    <img src={product.image} alt={product.name} className="w-16 h-16 object-cover rounded-md" />
+                    <div>
+                        <h3 className="text-sm font-semibold text-gray-900">{product.name}</h3>
+                        <p className="text-sm text-gray-500">£{product.price} x {product.quantity}</p>
+                    </div>
                     </div>
                 ))}
                 </div>
+            </dd>
+          </div>
+          <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+            <dt className="text-sm/6 font-medium text-gray-900">Sub Total</dt>
+            <dd className="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">£{selectedOrder.products.reduce((sum, item) => sum + (item.quantity * item.price), 0).toFixed(2)}</dd>
+          </div>
+          <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+            <dt className="text-sm/6 font-medium text-gray-900">Shipping Fee</dt>
+            <dd className="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">£1.50</dd>
+          </div>
+          <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+            <dt className="text-sm/6 font-medium text-gray-900">Total</dt>
+            <dd className="mt-1 text-sm/6 font-bold text-indigo-700 sm:col-span-2 sm:mt-0">£{(selectedOrder.products.reduce((sum, item) => sum + (item.quantity * item.price), 0) + 1.50).toFixed(2)}</dd>
+          </div>
+      </div>
                   
                 </>
             ): updatedOrder ? (

@@ -2,6 +2,8 @@ class Order < ApplicationRecord
   before_validation :generate_tracking_id, on: :create
   before_validation :generate_unique_order_id, on: :create
 
+  before_create :expected_delivery_date
+
   belongs_to :user, optional: true
 
   validates :tracking_id, uniqueness: true
@@ -13,9 +15,16 @@ class Order < ApplicationRecord
     self.tracking_id ||= generate_unique_hex(:tracking_id)
   end
 
+ 
+
   def generate_unique_order_id
     self.order_id ||= generate_unique_hex(:order_id)
   end
+
+  def expected_delivery_date
+    self.delivery_date ||= Time.zone.now + 3.days
+  end
+
 
   def generate_unique_hex(attribute)
     loop do
