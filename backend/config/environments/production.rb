@@ -33,6 +33,9 @@ Rails.application.configure do
   config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present? || Rails.env.development?
 
 
+# config/environments/production.rb
+config.public_file_server.enabled = true
+config.assets.compile = false
 
 
   # Skip http-to-https redirect for the default health check endpoint.
