@@ -18,7 +18,7 @@ export default defineConfig({
     historyApiFallback: true,
   },
   build: {
-    outDir: '../public/assets', // ✅ Ensure correct path
+    outDir: './public/assets', // ✅ Ensure correct path
   },
   base: './',  // ✅ Ensure correct path
   resolve: {
