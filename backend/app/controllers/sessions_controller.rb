@@ -1,5 +1,5 @@
 class SessionsController < ApplicationController
-
+#
     
     include ActionController::Cookies
     JWT_SECRET_KEY = ENV['JWT_SECRET_KEY']

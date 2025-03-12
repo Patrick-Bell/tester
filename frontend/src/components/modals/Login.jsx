@@ -2,6 +2,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { toast } from "sonner";
+import axios from "axios";
 
 const Login = ({ isOpen, setIsOpen, setRegisterModalOpen }) => {
 
@@ -15,18 +16,21 @@ const Login = ({ isOpen, setIsOpen, setRegisterModalOpen }) => {
     setRegisterModalOpen(true)
   }
 
-  const handleLogin = async () => {
+  const handleLogin = async (e) => {
     e.preventDefault()
     
     try{
-      const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/login`,
+      const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/login`,
         { user: formData },
         { withCredentials: true }
       )
       console.log(response.data)
       toast.success('Successfully Logged in')
+      window.location.href = '/admin'
+      toast.success('Welcome back to the dashboard')
     }catch(e){
       console.log(e)
+      console.log('error')
     }
   }
 
@@ -87,7 +91,7 @@ const Login = ({ isOpen, setIsOpen, setRegisterModalOpen }) => {
                   />
                 </div>
 
-                <button className="w-full bg-indigo-600 text-white py-2 rounded-lg mt-2 hover:bg-indigo-700 cursor-pointer">
+                <button onClick={(e) => handleLogin(e)} className="w-full bg-indigo-600 text-white py-2 rounded-lg mt-2 hover:bg-indigo-700 cursor-pointer">
                   Log In
                 </button>
                 <button class="w-full mt-2 px-4 py-2 border rounded-lg flex justify-center gap-2 cursor-pointer hover:bg-gray-100">
