@@ -19,6 +19,7 @@ export default defineConfig({
   },
   build: {
     outDir: 'public/assets', // ✅ Ensure correct path
+    manifest: true,
   },
   base: './',  // ✅ Ensure correct path
   resolve: {
