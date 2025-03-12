@@ -17,6 +17,9 @@ export default defineConfig({
   server: {
     historyApiFallback: true,
   },
+  build: {
+    outDir: '../public/assets', // ✅ Ensure correct path
+  },
   base: './',  // ✅ Ensure correct path
   resolve: {
     alias: {
