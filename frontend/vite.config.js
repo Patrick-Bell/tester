@@ -18,7 +18,9 @@ export default defineConfig({
     historyApiFallback: true,
   },
   build: {
-    outDir: 'public', // ✅ Ensure correct path
+    outDir: 'public/vite', // ✅ Ensure correct path
+    assetsDir: 'assets', // Assets will go into the public/vite/assets folder
+    manifest: true,
   },
   base: './',  // ✅ Ensure correct path
   resolve: {

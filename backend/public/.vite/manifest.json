@@ -1,0 +1,38 @@
+{
+  "index.html": {
+    "file": "assets/index-CmAsOt86.js",
+    "name": "index",
+    "src": "index.html",
+    "isEntry": true,
+    "css": [
+      "assets/index-CNT7tdxK.css"
+    ],
+    "assets": [
+      "assets/apple-pay-dqLefoYh.png",
+      "assets/visa-Du9kNWIG.png",
+      "assets/card-Dekgy4mj.png",
+      "assets/american-express-Biy_yu5Y.png",
+      "assets/lego-man-CVo2Vcyg.png"
+    ]
+  },
+  "src/components/assets/american-express.png": {
+    "file": "assets/american-express-Biy_yu5Y.png",
+    "src": "src/components/assets/american-express.png"
+  },
+  "src/components/assets/apple-pay.png": {
+    "file": "assets/apple-pay-dqLefoYh.png",
+    "src": "src/components/assets/apple-pay.png"
+  },
+  "src/components/assets/card.png": {
+    "file": "assets/card-Dekgy4mj.png",
+    "src": "src/components/assets/card.png"
+  },
+  "src/components/assets/lego-man.png": {
+    "file": "assets/lego-man-CVo2Vcyg.png",
+    "src": "src/components/assets/lego-man.png"
+  },
+  "src/components/assets/visa.png": {
+    "file": "assets/visa-Du9kNWIG.png",
+    "src": "src/components/assets/visa.png"
+  }
+}
