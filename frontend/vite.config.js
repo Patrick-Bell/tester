@@ -18,8 +18,7 @@ export default defineConfig({
     historyApiFallback: true,
   },
   build: {
-    outDir: 'public/vite', // ✅ Ensure correct path
-    manifest: true,
+    outDir: 'public', // ✅ Ensure correct path
   },
   base: './',  // ✅ Ensure correct path
   resolve: {
