@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  
+
+  # Root Route
+  root to: 'home#index'
   get "home/index"
 
   scope :api do
