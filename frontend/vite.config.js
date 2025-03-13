@@ -11,8 +11,8 @@ export default defineConfig({
     svgr(),
   ],
   build: {
-    outDir: "dist",  // Ensures all output goes into "dist/"
-    emptyOutDir: true,  // Clears old files before building
+    outDir: '../backend/public', // Ensure that Vite's build output is directed to backend's public folder
+    assetsDir: 'assets',         // Place assets like JS and CSS under the 'assets' directory inside public
   },
   base: '/',  // Ensure correct path for assets
   resolve: {
