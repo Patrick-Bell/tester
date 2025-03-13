@@ -85,7 +85,7 @@ const AdminCalendar = () => {
   };
 
   return (
-    <div className="p-6 bg-white rounded-lg border border-[#e9ebee] shadow-lg">
+    <div className="p-6 bg-white rounded-lg border border-[#e9ebee]">
       <h2 className="text-md font-semibold mb-4">Calendar</h2>
       <FullCalendar
         plugins={[dayGridPlugin, interactionPlugin]}

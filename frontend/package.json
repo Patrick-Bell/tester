@@ -7,7 +7,10 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "start:rails": "cd ../backend && rails s -b '0.0.0.0'",
+    "start:frontend": "npm run dev",
+    "start:all": "concurrently \"npm run start:rails\" \"npm run start:frontend\""
   },
   "dependencies": {
     "@fullcalendar/daygrid": "^6.1.15",
@@ -46,6 +49,7 @@
     "@types/react-dom": "^19.0.3",
     "@vitejs/plugin-react-swc": "^3.5.0",
     "autoprefixer": "^10.4.20",
+    "concurrently": "^9.1.2",
     "eslint": "^9.19.0",
     "eslint-plugin-react": "^7.37.4",
     "eslint-plugin-react-hooks": "^5.0.0",

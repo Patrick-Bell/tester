@@ -9,6 +9,8 @@ import { MdPendingActions, MdLocalShipping } from "react-icons/md";
 import { FaRegFilePdf } from "react-icons/fa6";
 import { GrPrint } from "react-icons/gr";
 import { toast } from 'sonner'
+import masterCardImg from '../assets/card.png'
+import applePay from '../assets/apple-pay.png'
 
 
 const AdminOrders = () => {
@@ -176,11 +178,14 @@ const AdminOrders = () => {
           </div>
           <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
             <dt className="text-sm/6 font-medium text-gray-900">Payment Method</dt>
-            <dd className="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">Mastercard</dd>
+            <dd className="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">Apple Pay</dd>
           </div>
           <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
             <dt className="text-sm/6 font-medium text-gray-900">Card ending in</dt>
+            <div className="flex items-center">
             <dd className="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">4242</dd>
+            <img className="w-7 ml-2" src={applePay}/>
+            </div>
           </div>
       </div>
 

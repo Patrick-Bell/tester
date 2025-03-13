@@ -43,5 +43,6 @@ Order.create({
         address: "123 Main Street, New York, NY 10001",
         payment_method: "credit_card",
         shipping_fee: 1.50,
-        paid: true
+        paid: true,
+        user_id: 24
 })
