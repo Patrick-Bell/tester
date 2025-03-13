@@ -10,11 +10,9 @@ export default defineConfig({
     tailwindcss(),
     svgr(),
   ],
-  server: {
-    proxy: {
-      '/api': 'http://localhost:3000', // Proxy API requests to Rails backend in development
-    },
-    https: true, // Enable HTTPS for Vite server if required in dev
+  build: {
+    outDir: "dist",  // Ensures all output goes into "dist/"
+    emptyOutDir: true,  // Clears old files before building
   },
   base: '/',  // Ensure correct path for assets
   resolve: {
