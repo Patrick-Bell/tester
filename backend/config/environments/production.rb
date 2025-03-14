@@ -33,9 +33,6 @@ Rails.application.configure do
   # Disable asset pipeline (we're using Vite)
   config.assets.enabled = false  # No need to handle Rails assets
 
-  # Vite is managing assets
-  config.assets.compile = false
-  config.assets.digest = false
 
   # Enable caching
   config.cache_classes = true
