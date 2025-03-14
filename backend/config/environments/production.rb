@@ -32,6 +32,20 @@ Rails.application.configure do
 
   config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present? || Rails.env.development?
 
+  # config/environments/production.rb
+
+# Enable asset compilation if needed
+config.assets.compile = true
+config.assets.digest = true
+
+# Set the asset host if necessary (e.g., CDN or subfolder)
+# config.action_controller.asset_host = 'https://your-cdn-url.com'
+
+# Enable caching and ensure assets are served correctly
+config.cache_classes = true
+config.eager_load = true
+
+
 
 # config/environments/production.rb
 
