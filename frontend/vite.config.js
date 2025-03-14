@@ -12,8 +12,9 @@ export default defineConfig({
     svgr(),
   ],
   build: {
-    outDir: '../backend/public', // Ensure that Vite's build output is directed to backend's public folder
-    assetsDir: 'assets',         // Place assets like JS and CSS under the 'assets' directory inside public
+    outDir: '../backend/public/assets', // Make sure this points to the Rails public folder
+    assetsDir: '',                      // Ensure Vite's assets are placed in the correct folder
+    manifest: true,                     // Generate manifest.json for asset management
   },
   base: '/',  // Ensure correct path for assets
   resolve: {
