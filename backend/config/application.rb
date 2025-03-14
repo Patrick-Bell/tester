@@ -36,7 +36,6 @@ module Backend
     config.action_dispatch.cookies_same_site_protection = :lax
 
     # config/application.rb
-config.assets.paths << Rails.root.join('public', 'assets')
 
 
     config.session_store :cookie_store, key: '_your_app_session'
