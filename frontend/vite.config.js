@@ -4,23 +4,22 @@ import tailwindcss from '@tailwindcss/vite';
 import path from 'path';
 import svgr from 'vite-plugin-svgr';
 
-
 export default defineConfig({
   plugins: [
     react(),
     tailwindcss(),
     svgr(),
   ],
-  root: '../frontend',
+  root: '../frontend',  // Root directory of your frontend code
   build: {
-    outDir: '../backend/public',  // This puts the compiled assets in the Rails 'public' folder
-    assetsDir: 'assets',                // Ensure assets go directly into the 'public' folder
-    manifest: true,               // Enables asset management in Rails
+    outDir: '../backend/public/vite',  // Output the compiled assets to the backend public folder under `vite`
+    assetsDir: '',  // No separate assets directory; put them directly into the `vite` folder
+    manifest: true,  // Ensures that Vite generates a manifest file for Rails to reference
   },  
-  base: '/',  // Ensure correct path for assets
+  base: '/',  // Make sure asset URLs are rooted correctly
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, 'frontend/src'),  // Path resolution for the frontend
+      '@': path.resolve(__dirname, '../frontend/src'),  // Path resolution for the frontend
     },
   },
 });

@@ -18,6 +18,18 @@ Rails.application.configure do
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
 
+  config.public_file_server.enabled = true
+
+  # Set the correct path where assets are served from
+  config.assets.prefix = '/vite'
+
+  # Disable the traditional asset pipeline, since Vite handles assets
+  config.assets.compile = false
+
+  # Enable caching (Vite-generated assets should be cached properly)
+  config.cache_classes = true
+  config.eager_load = true
+
   # Assume all access to the app is happening through a SSL-terminating reverse proxy.
   config.assume_ssl = true
 
