@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Menu, X, Home, Settings, User, Calendar, ToyBrick, PiggyBank, Star } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import AdminDashboard from "./AdminDashboard";
 import AdminInventory from "./AdminInventory";
 import AdminCalendar from "./AdminCalendar";
@@ -51,13 +50,13 @@ const Sidebar = () => {
       >
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-xl font-bold">Sidebar</h2>
-          <Button
+          <button
             variant="ghost"
             className="md:hidden"
             onClick={() => setIsOpen(false)}
           >
             <X className="w-6 h-6" />
-          </Button>
+          </button>
         </div>
         <nav className="flex flex-col gap-4">
             {navMenu.map((nav, i) => (
@@ -86,19 +85,19 @@ const Sidebar = () => {
         {/* Header */}
         <header className="fixed top-0 left-0 right-0 bg-white p-4 flex items-center justify-between border-b border-[#e9ebee] z-50 md:ml-64">
           <div className="flex items-center gap-3">
-            <Button variant="ghost" className="md:hidden" onClick={() => setIsOpen(true)}>
+            <button variant="ghost" className="md:hidden" onClick={() => setIsOpen(true)}>
               <Menu className="w-6 h-6" />
-            </Button>
+            </button>
             <img src="/logo.png" alt="Logo" className="w-10 h-10" />
             <h1 className="text-xl font-bold">Dashboard</h1>
           </div>
           <div className="flex items-center gap-4">
-            <Button variant="ghost">
+            <button variant="ghost">
               <User className="w-6 h-6" />
-            </Button>
-            <Button variant="ghost">
+            </button>
+            <button variant="ghost">
               <Settings className="w-6 h-6" />
-            </Button>
+            </button>
           </div>
         </header>
 

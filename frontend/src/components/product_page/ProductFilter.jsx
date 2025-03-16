@@ -19,6 +19,7 @@ import ShoppingCartSide from './ShoppingCartSide'
 import Footer from '../front_page/Footer'
 import axios from 'axios'
 import ProductCardSkeleton from './ProductCardSkeleton'
+import { useParams } from 'react-router-dom'
 
 
 
@@ -31,6 +32,8 @@ const ProductFilter = () => {
     category: [],
     tag: [],
   })
+  const { category } = useParams()
+  console.log(category)
   const [isLoading, setIsLoading] = useState(true)
 
   const allCategories = products.map(product => product.category)

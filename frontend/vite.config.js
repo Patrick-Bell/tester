@@ -13,14 +13,14 @@ export default defineConfig({
   ],
   root: '../frontend',
   build: {
-    outDir: '../backend/public', // Make sure this points to the Rails public folder
-    assetsDir: '',                      // Ensure Vite's assets are placed in the correct folder
-    manifest: true,                     // Generate manifest.json for asset management
-  },
+    outDir: '../backend/public',  // This puts the compiled assets in the Rails 'public' folder
+    assetsDir: '',                // Ensure assets go directly into the 'public' folder
+    manifest: true,               // Enables asset management in Rails
+  },  
   base: '/',  // Ensure correct path for assets
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src'),
+      '@': path.resolve(__dirname, 'frontend/src'),  // Path resolution for the frontend
     },
   },
 });

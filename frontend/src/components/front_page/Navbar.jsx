@@ -50,7 +50,7 @@ const navigation = {
           id: 'sports',
           name: 'Sports',
           items: [
-            { name: 'Football (most popular)', href: 'http://localhost:5173/products?football' },
+            { name: 'Football (most popular)', href: 'http://localhost:5173/products?category=football' },
             { name: 'Basketball', href: '#' },
             { name: 'Other', href: '#' },
           ],
