@@ -11,7 +11,7 @@ export default defineConfig({
     tailwindcss(),
     svgr(),
   ],
-  root: 'frontend',
+  root: '../frontend',
   build: {
     outDir: '../backend/public', // Make sure this points to the Rails public folder
     assetsDir: '',                      // Ensure Vite's assets are placed in the correct folder
