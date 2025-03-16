@@ -14,7 +14,7 @@ export default defineConfig({
   root: '../frontend',
   build: {
     outDir: '../backend/public',  // This puts the compiled assets in the Rails 'public' folder
-    assetsDir: '',                // Ensure assets go directly into the 'public' folder
+    assetsDir: 'assets',                // Ensure assets go directly into the 'public' folder
     manifest: true,               // Enables asset management in Rails
   },  
   base: '/',  // Ensure correct path for assets
