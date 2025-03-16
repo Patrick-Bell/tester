@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_09_133106) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_16_200524) do
   create_schema "auth"
   create_schema "extensions"
   create_schema "graphql"
@@ -55,6 +55,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_09_133106) do
     t.string "tracking_id"
     t.bigint "user_id"
     t.decimal "shipping_fee", precision: 10, scale: 2, default: "0.0", null: false
+    t.string "name"
+    t.string "email"
+    t.string "phone"
+    t.string "platform"
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
