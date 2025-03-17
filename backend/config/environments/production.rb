@@ -20,8 +20,6 @@ Rails.application.configure do
 
   config.public_file_server.enabled = true
 
-  config.assets.compile = false # Rails should not compile assets, let Vite handle that
-  config.assets.digest = true
 
   # Enable caching (Vite-generated assets should be cached properly)
   config.cache_classes = true
