@@ -38,6 +38,9 @@ module Backend
     # config/application.rb
     config.vite_rails.manifest_path = "public/.vite/manifest.json"
 
+    config.middleware.use ViteRails::Middleware
+
+
 
 
     config.session_store :cookie_store, key: '_your_app_session'
