@@ -1,3 +1,5 @@
+import React from "react"
+
 import BestSells from "./BestSells"
 import ComingSoon from "./ComingSoon"
 import FeaturedCategories from "./FeaturedCategories"

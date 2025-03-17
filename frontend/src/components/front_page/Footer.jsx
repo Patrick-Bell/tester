@@ -1,3 +1,4 @@
+import React from 'react';
 import {payment} from '../api/Payment'
 
 const Footer = () => {

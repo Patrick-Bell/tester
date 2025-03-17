@@ -58,7 +58,7 @@ const NewReleases = () => {
 
         <div className='grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6'>
   {products.map((product, i) => (
-    <div className='border border-gray-200 rounded-lg overflow-hidden'>
+    <div key={i} className='border border-gray-200 rounded-lg overflow-hidden'>
       <img className='w-40 sm:w-32 md:w-60 lg:w-48 xl:w-full object-cover mx-auto' src={product.image} alt={product.name} />
       <div className='p-4'>
         <p className='text-sm font-semibold text-gray-800'>{product.name}</p>

@@ -362,7 +362,7 @@ const AdminOrders = () => {
                         {orders.map((order, i) => (
                             <tr key={i} className="hover:bg-gray-50 transition">
                                 <td className="px-6 py-4 border-b border-[#e9ebee]">{order?.id}</td>
-                                <td className="px-6 py-4 border-b border-[#e9ebee]">{new Date(order?.date).toLocaleString('en-GB')}</td>
+                                <td className="px-6 py-4 border-b border-[#e9ebee]">{new Date(order?.date).toLocaleString('en-GB').slice(0, 17)}</td>
                                 <td className="px-6 py-4 border-b border-[#e9ebee]">
                                     {order?.products.reduce((sum, pro) => sum + pro.quantity, 0)}
                                 </td>

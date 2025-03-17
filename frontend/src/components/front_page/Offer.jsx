@@ -1,3 +1,4 @@
+import React from 'react';
 const Offer = () => {
     return (
         <div className="bg-indigo-600 text-white w-full h-40 flex flex-col items-center justify-center text-center px-4">
