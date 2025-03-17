@@ -12,7 +12,7 @@ export default defineConfig({
   ],
   root: path.resolve(__dirname, '../frontend'),  // Absolute path to the frontend directory
   build: {
-    outDir: path.resolve(__dirname, '../backend/public'),  // Output directory for assets in backend/public
+    outDir: path.resolve(__dirname, '../public'),  // Output directory for assets in backend/public
     assetsDir: 'assets',  // Assets will be placed under backend/public/vite/assets
     manifest: true,  // Generates the manifest for Rails to use
     emptyOutDir: true,  // Empty out the output directory before building
