@@ -1,0 +1,7 @@
+{
+  "success": false,
+  "errors": "failed to load config from /Users/patrick/Documents/Projects/e-commerce/vite.config.js\nerror during build:\nError: Cannot find module 'vite'\nRequire stack:\n- /Users/patrick/Documents/Projects/e-commerce/vite.config.js\n- /Users/patrick/.npm/_npx/9ed06546b0653f96/node_modules/vite/dist/node/chunks/dep-B0fRCRkQ.js\n    at Function._resolveFilename (node:internal/modules/cjs/loader:1225:15)\n    at Function._load (node:internal/modules/cjs/loader:1055:27)\n    at TracingChannel.traceSync (node:diagnostics_channel:322:14)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:220:24)\n    at Module.require (node:internal/modules/cjs/loader:1311:12)\n    at require (node:internal/modules/helpers:136:16)\n    at Object.<anonymous> (/Users/patrick/Documents/Projects/e-commerce/vite.config.js:35:19)\n    at Module._compile (node:internal/modules/cjs/loader:1554:14)\n    at _require.extensions.<computed> [as .js] (file:///Users/patrick/.npm/_npx/9ed06546b0653f96/node_modules/vite/dist/node/chunks/dep-B0fRCRkQ.js:54652:16)\n    at Module.load (node:internal/modules/cjs/loader:1289:32)\n",
+  "timestamp": "2025-03-17 13:45:53",
+  "vite_ruby": "3.9.1",
+  "digest": "ed67f3b38c48a5af665a5593e05a4e3794d761b3"
+}

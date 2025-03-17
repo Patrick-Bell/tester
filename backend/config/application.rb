@@ -39,6 +39,7 @@ module Backend
     # config/application.rb
 
 
+    config.assets.manifest = Rails.root.join('public', 'vite', 'manifest.json')
 
     config.session_store :cookie_store, key: '_your_app_session'
 

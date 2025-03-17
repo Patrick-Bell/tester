@@ -1,0 +1,9 @@
+{
+    "root": "frontend", 
+    "public": "../backend/public/assets",  
+    "build": {
+      "outDir": "../backend/public/assets",  
+      "assetsDir": "assets" 
+    }
+  }
+  

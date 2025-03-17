@@ -10,18 +10,17 @@ export default defineConfig({
     tailwindcss(),
     svgr(),
   ],
-  root: '../frontend',  // Root directory of your frontend code
+  root: path.resolve(__dirname, '../frontend'),  // Absolute path to the frontend directory
   build: {
-    outDir: '../backend/public',  // Output the compiled assets to the backend public folder under `vite`
-    assetsDir: 'assets',  // No separate assets directory; put them directly into the `vite` folder
-    manifest: true,  // Ensures that Vite generates a manifest file for Rails to reference
-    emptyOutDir: true,
-  },  
-  base: '/',  // Make sure asset URLs are rooted correctly
+    outDir: path.resolve(__dirname, '../backend/public/vite'),  // Output directory for assets in backend/public
+    assetsDir: 'assets',  // Assets will be placed under backend/public/vite/assets
+    manifest: true,  // Generates the manifest for Rails to use
+    emptyOutDir: true,  // Empty out the output directory before building
+  },
+  base: '/',  // Root for asset URLs (make sure it works with your Rails routes)
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, '../frontend/src'),  // Path resolution for the frontend
+      '@': path.resolve(__dirname, '../frontend/src'),  // Resolves '@' to frontend/src
     },
   },
-  
 });
