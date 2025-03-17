@@ -2,7 +2,6 @@ require_relative "boot"
 
 require "rails/all"
 require 'dotenv/load'
-require "vite_rails"
 
 
 
@@ -39,9 +38,6 @@ module Backend
 
     # config/application.rb
     config.vite_rails.manifest_path = "public/.vite/manifest.json"
-
-    config.middleware.use ViteRails::Middleware
-
 
 
 
