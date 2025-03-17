@@ -1,7 +1,7 @@
 {
   "success": true,
   "errors": "\n(!) outDir /Users/patrick/Documents/Projects/e-commerce/backend/public is not inside project root and will not be emptied.\nUse --emptyOutDir to override.\n\n\n(!) Some chunks are larger than 500 kB after minification. Consider:\n- Using dynamic import() to code-split the application\n- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks\n- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.\n",
-  "timestamp": "2025-03-16 22:19:13",
+  "timestamp": "2025-03-17 00:10:39",
   "vite_ruby": "3.9.1",
-  "digest": "7b5288cfce8a7eb859f8d5e5c1598ffc2406df12"
+  "digest": "a2e23e632f4c9790c7f64480dc4809a66ea37af7"
 }
