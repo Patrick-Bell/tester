@@ -111,19 +111,7 @@ const Footer = () => {
 
             <div className="flex flex-col md:flex-row items-center gap-4">
               <span className="text-gray-900">Get deliveries with FreshCart</span>
-              <ul className="flex gap-2">
-                {["appstore-btn", "googleplay-btn"].map((app, index) => (
-                  <li key={index}>
-                    <a href="#!">
-                      <img
-                        src={`/assets/images/appbutton/${app}.svg`}
-                        alt={app}
-                        className="w-36"
-                      />
-                    </a>
-                  </li>
-                ))}
-              </ul>
+             
             </div>
           </div>
         </div>
