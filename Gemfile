@@ -15,6 +15,9 @@ gem "cssbundling-rails"
 
 gem "dotenv-rails", "~> 3.1"
 
+ruby '3.4.1'
+
+
   gem 'stripe'
 
   gem "devise", "~> 4.9"
