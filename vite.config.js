@@ -13,7 +13,7 @@ export default defineConfig({
   root: '../frontend',  // Root directory of your frontend code
   build: {
     outDir: '../backend/public',  // Output the compiled assets to the backend public folder under `vite`
-    assetsDir: '',  // No separate assets directory; put them directly into the `vite` folder
+    assetsDir: 'assets',  // No separate assets directory; put them directly into the `vite` folder
     manifest: true,  // Ensures that Vite generates a manifest file for Rails to reference
     emptyOutDir: true,
   },  
