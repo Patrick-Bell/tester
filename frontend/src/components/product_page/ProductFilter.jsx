@@ -24,15 +24,12 @@ import { useLocation } from 'react-router-dom'
 
 
 const ProductFilter = () => {
-  const location = useLocation()
-  const queryParams = new URLSearchParams(location.search);
-  const category = queryParams.get('category')
-  console.log(category)
+  
 
   const [products, setProducts] = useState([])
   const [show, setShow] = useState(20)
   const [allFilters, setAllFilters] = useState({
-    category: [category],
+    category: [],
     tag: [],
   })
 
