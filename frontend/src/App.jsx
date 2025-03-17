@@ -1,7 +1,5 @@
 import React from "react"
-
 import { Route, Routes } from "react-router-dom"
-import Navbar from "./components/front_page/Navbar"
 import MainPage from "./components/front_page/MainPage"
 import ProductFilter from "./components/product_page/ProductFilter"
 import DynamicProductPage from "./components/dynamic_product/DynamicProductPage"
