@@ -23,4 +23,7 @@ export default defineConfig({
       '@': path.resolve(__dirname, '../frontend/src'),  // Resolves '@' to frontend/src
     },
   },
+  server: {
+    historyApiFallback: true,  // Ensure Vite serves index.html for all routes
+  },
 });
