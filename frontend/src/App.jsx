@@ -24,7 +24,7 @@ const App = () => {
     <Route path="/refund" element={<Refund />}></Route>
     <Route path="/about" element={<AboutPage />}></Route>
 
-    <Route path="/admin" element={<Sidebar />}></Route>
+    <Route path="/admin" element={<h1>Admin Page Works!</h1>}></Route>
     <Route path="/admin-test" element={<AdminTest />}></Route>
     
   </Routes>
