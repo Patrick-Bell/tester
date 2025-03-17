@@ -20,11 +20,8 @@ Rails.application.configure do
 
   config.public_file_server.enabled = true
 
-config.assets.compile = false # Rails should not compile assets, let Vite handle that
-config.assets.digest = true
-
-  # Disable the traditional asset pipeline, since Vite handles assets
-  config.assets.compile = false
+  config.assets.compile = false # Rails should not compile assets, let Vite handle that
+  config.assets.digest = true
 
   # Enable caching (Vite-generated assets should be cached properly)
   config.cache_classes = true
@@ -34,12 +31,6 @@ config.assets.digest = true
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
   config.force_ssl = true
-
-  config.public_file_server.enabled = true
-
-  # Disable asset pipeline since we're using Vite
-  # Remove any references to `config.assets` here entirely
-  # The assets pipeline is no longer necessary when using Vite
 
   # Log to STDOUT with the current request id as a default log tag.
   config.log_tags = [ :request_id ]

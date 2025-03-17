@@ -36,6 +36,8 @@ module Backend
     config.action_dispatch.cookies_same_site_protection = :lax
 
     # config/application.rb
+    config.vite_rails.manifest_path = "public/.vite/manifest.json"
+
 
 
     config.session_store :cookie_store, key: '_your_app_session'
