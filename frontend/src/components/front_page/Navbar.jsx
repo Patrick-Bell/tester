@@ -50,7 +50,7 @@ const navigation = {
           id: 'sports',
           name: 'Sports',
           items: [
-            { name: 'Football (most popular)', href: 'http://localhost:5173/products?category=football' },
+            { name: 'Football (most popular)', href: `${import.meta.env.VITE_API_BASE_URL}/products?category=football` },
             { name: 'Basketball', href: '#' },
             { name: 'Other', href: '#' },
           ],
