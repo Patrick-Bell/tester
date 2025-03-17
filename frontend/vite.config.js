@@ -23,4 +23,5 @@ export default defineConfig({
       '@': path.resolve(__dirname, '../frontend/src'),  // Path resolution for the frontend
     },
   },
+  
 });

@@ -2,7 +2,6 @@ Rails.application.routes.draw do
 
   # Root Route
   root 'home#index'
-  get 'home/index'
 
   # API Routes
   scope :api do
