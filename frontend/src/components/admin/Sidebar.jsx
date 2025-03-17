@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Menu, X, Home, Settings, User, Calendar, ToyBrick, PiggyBank, Star } from "lucide-react";
 import AdminDashboard from "./AdminDashboard";
 import AdminInventory from "./AdminInventory";

@@ -1,3 +1,5 @@
+import React from "react";
+
 const SidebarItem = ({ setSection, currentSection, section, icon }) => {
     return (
       <div
