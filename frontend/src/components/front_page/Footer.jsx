@@ -117,31 +117,6 @@ const Footer = () => {
         </div>
 
         <div className="border-t py-4 border-gray-300 flex flex-col md:flex-row items-center justify-between gap-3 text-sm text-gray-500">
-          <div>
-            © {new Date().getFullYear()} LegoFigures. Powered by{" "}
-            <a href="https://codescandy.com/" target="_blank" rel="noopener noreferrer" className="text-indigo-600">
-              Heroku
-            </a>
-            .
-          </div>
-          <div className="flex items-center gap-3">
-            <span>Follow us on</span>
-            <ul className="flex items-center gap-3">
-              {[
-                { name: "Facebook", icon: "brand-facebook" },
-                { name: "X", icon: "brand-x" },
-                { name: "Instagram", icon: "brand-instagram" },
-              ].map((social, index) => (
-                <li key={index}>
-                  <a href="#!" className="p-2 border border-gray-300 rounded hover:border-green-600 hover:text-green-600 transition">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
-                      <use href={`/assets/icons/tabler-icons.svg#${social.icon}`} />
-                    </svg>
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
         </div>
       </div>
     </footer>
