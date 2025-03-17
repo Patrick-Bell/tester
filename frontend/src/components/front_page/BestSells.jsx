@@ -14,7 +14,7 @@ const BestSells = () => {
 
     const fetchProducts = async () => {
         try{
-            const response = await axios.get(`/api/products`)
+            const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/products`, { withCredentials: true })
             setProducts(response.data.slice(0, 6))
         }catch(e){
             console.log(e)
