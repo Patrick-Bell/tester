@@ -1,0 +1,10 @@
+{
+    "root": "./frontend",
+    "build": {
+      "outDir": "public"
+    },
+    "server": {
+      "port": 3000
+    }
+  }
+  
