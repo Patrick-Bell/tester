@@ -10,6 +10,7 @@ import AdminTest from './components/admin/AdminTest'
 import { Toaster } from "sonner"
 import Refund from "./components/refund/RefundPage"
 import AboutPage from './components/about/AboutPage'
+import NotFound from "./components/not_found/NotFound"
 const App = () => {
 
   return (
@@ -23,8 +24,9 @@ const App = () => {
     <Route path="/success" element={<Success />}></Route>
     <Route path="/refund" element={<Refund />}></Route>
     <Route path="/about" element={<AboutPage />}></Route>
+    <Route path="*" element={<NotFound />}></Route>
 
-    <Route path="/admin" element={<h1>Admin Page Works!</h1>}></Route>
+    <Route path="/admin" element={<Sidebar />}></Route>
     <Route path="/admin-test" element={<AdminTest />}></Route>
     
   </Routes>

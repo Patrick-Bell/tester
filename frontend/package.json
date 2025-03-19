@@ -60,5 +60,5 @@
     "vite": "^6.1.0",
     "vite-plugin-svgr": "^4.3.0"
   },
-  "proxy": "http://localhost:3000"
+  "proxy": "https://minifigmania-5c03e61c784a.herokuapp.com"
 }
