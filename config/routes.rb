@@ -4,8 +4,7 @@ Rails.application.routes.draw do
   root 'home#index'
 
   
-  get '*path', to: 'home#index'  # All other paths should load index.html for React Router
-
+  get 'home/index'
 
   # API Routes
   scope :api do
