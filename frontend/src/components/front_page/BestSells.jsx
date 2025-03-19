@@ -1,4 +1,4 @@
-import React, { act, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { useCart } from '../context/CartContext'
 import { toast } from 'sonner'

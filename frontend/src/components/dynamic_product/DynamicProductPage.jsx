@@ -1,5 +1,5 @@
+import React, { useEffect, useState } from 'react';
 import Navbar from "../front_page/Navbar";
-import { useEffect, useState } from 'react';
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useCart } from "../context/CartContext";

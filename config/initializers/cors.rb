@@ -1,6 +1,6 @@
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    origins 'https://minifigmania-47fa062622db.herokuapp.com'
+    origins 'https://minifigmania-47fa062622db.herokuapp.com', 'http://localhost:5173'
 
     resource "*",
       headers: :any,
