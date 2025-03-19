@@ -21,6 +21,9 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'), // Resolve @ to src in current directory
     },
   },
+  rollUpOptions: {
+    input: '../public/index.html',
+  },
   server: {
     historyApiFallback: true,
   },

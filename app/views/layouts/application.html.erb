@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My App</title>
+
+  <!-- Include Vite-generated CSS file -->
+  <%= stylesheet_link_tag asset_path('index.css') %> <!-- Dynamically link to the hashed CSS file -->
+</head>
+<body>
+  <!-- This is where React will mount -->
+  <div id="root"></div>
+
+  <!-- Include Vite-generated JavaScript file -->
+  <%= javascript_include_tag asset_path('index.js'), type: 'module' %> <!-- Dynamically link to the hashed JS file -->
+</body>
+</html>

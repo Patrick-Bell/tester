@@ -1,0 +1,16 @@
+{
+    "name": "your-app-name",
+    "version": "1.0.0",
+    "dependencies": {
+      "vite": "^3.0.0",
+      "vite_rails": "^3.0.19"
+    },
+    "devDependencies": {
+      "vite": "^3.0.0"
+    },
+    "scripts": {
+      "build": "vite build",
+      "dev": "vite"
+    }
+  }
+  
