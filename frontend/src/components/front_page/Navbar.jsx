@@ -424,7 +424,7 @@ const Navbar = () => {
           .map((product) => (
             <a 
               key={product.id} 
-              href={`http://localhost:5173/products/${product.id}`} 
+              href={`/products/${product.id}`} 
               className="block p-3 border-b border-gray-200 hover:bg-gray-100"
             >
               <div className="flex items-center">

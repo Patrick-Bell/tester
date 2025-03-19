@@ -36,10 +36,9 @@ Rails.application.routes.draw do
 
   # Catch-all for React Frontend Routing
 
-  get '*path', to: 'home#index'
+  get '*path', to: 'home#index', constraints: ->(request) do
+  !request.path.starts_with?('/api') && request.format.html?
+end
 
-  #get '*path', to: 'home#index', constraints: ->(req) { 
-  #  !req.xhr? && req.format.html? 
-  #}
   
 end

@@ -1,5 +1,5 @@
 import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react-swc'; // or '@vitejs/plugin-react'
+import react from '@vitejs/plugin-react-swc';
 import tailwindcss from '@tailwindcss/vite';
 import path from 'path';
 import svgr from 'vite-plugin-svgr';
@@ -10,20 +10,18 @@ export default defineConfig({
     tailwindcss(),
     svgr(),
   ],
-  root: path.resolve(__dirname, '../frontend'),  // Absolute path to the frontend directory
+  root: path.resolve(__dirname, './'), // Current directory since you're already in frontend
   build: {
-    outDir: '../public', // Ensure build output goes to Rails `public/`
-    assetsDir: 'assets', // Keep assets inside `public/vite/`
-    manifest: true, // Generates manifest.json for Rails to use
-    emptyOutDir: true, // Clears the directory before building
+    outDir: '../public', // Build to Rails public directory
+    emptyOutDir: true,
   },
-  base: '/',  // Root for asset URLs (make sure it works with your Rails routes)
+  base: '/', // This should be fine if serving from domain root
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, '../frontend/src'),  // Resolves '@' to frontend/src
+      '@': path.resolve(__dirname, './src'), // Resolve @ to src in current directory
     },
   },
   server: {
-    historyApiFallback: true,  // Ensure Vite serves index.html for all routes
+    historyApiFallback: true,
   },
 });
