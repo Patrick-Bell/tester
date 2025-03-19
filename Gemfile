@@ -12,8 +12,6 @@ gem "puma", ">= 5.0"
 gem "jsbundling-rails"
 gem "cssbundling-rails"
 
-gem 'vite_rails', '~> 3.0'
-
 
 gem "dotenv-rails", "~> 3.1"
 
