@@ -26,9 +26,7 @@ const App = () => {
     <Route path="/about" element={<AboutPage />}></Route>
     <Route path="*" element={<NotFound />}></Route>
 
-    <Route path="/admin" element={<Sidebar />}></Route>
-    <Route path="/admin-test" element={<AdminTest />}></Route>
-    
+    <Route path="/admin" element={<Sidebar />}></Route>    
   </Routes>
   </>
 
