@@ -4,7 +4,8 @@ Rails.application.routes.draw do
   root 'home#index'
 
   
-  get 'home/index'
+  get '*path', to: 'home#index'  # All other paths should load index.html for React Router
+
 
   # API Routes
   scope :api do
@@ -36,9 +37,8 @@ Rails.application.routes.draw do
 
   # Catch-all for React Frontend Routing
 
-  get '*path', to: 'home#index', constraints: ->(request) do
-  !request.path.starts_with?('/api') && request.format.html?
-end
+  get '*path', to: 'home#index', constraints: ->(req) { !req.xhr? && req.format.html? }
+
 
   
 end
