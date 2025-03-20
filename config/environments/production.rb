@@ -20,6 +20,8 @@ Rails.application.configure do
 
   # Public file server for Vite-generated assets (ensure Vite is serving your assets)
   config.public_file_server.enabled = true
+  config.public_file_server.index_name = 'index.html' # Just to be safe
+
 
   # Enable caching (Vite-generated assets should be cached properly)
   config.cache_classes = true
