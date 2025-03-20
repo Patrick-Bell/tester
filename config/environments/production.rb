@@ -18,17 +18,12 @@ Rails.application.configure do
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
 
+  # Public file server for Vite-generated assets (ensure Vite is serving your assets)
   config.public_file_server.enabled = true
-  config.public_file_server.enabled = true
-  config.assets.compile = false  # Let Vite handle compilation
-  config.assets.check_precompiled_asset = false  # Let Vite handle compilation
-  
 
-
-  #new one
-  #config.assets.compile = true
-
-
+  # Let Vite handle assets compilation
+  config.assets.compile = false
+  config.assets.check_precompiled_asset = false
 
   # Enable caching (Vite-generated assets should be cached properly)
   config.cache_classes = true
@@ -59,12 +54,9 @@ Rails.application.configure do
   config.active_job.queue_adapter = :solid_queue
   config.solid_queue.connects_to = { database: { writing: :queue } }
 
-  # Ignore bad email addresses and do not raise email delivery errors.
-  # Set this to true and configure the email server for immediate delivery to raise delivery errors.
-  # config.action_mailer.raise_delivery_errors = false
-
-  # Set host to be used by links generated in mailer templates.
-  config.action_mailer.default_url_options = { host: "example.com" }
+  # Email configuration - Make sure to set up your email settings in production.
+  # config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.default_url_options = { host: "minifigmania-5c03e61c784a.herokuapp.com" }
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).
@@ -77,12 +69,10 @@ Rails.application.configure do
   config.active_record.attributes_for_inspect = [ :id ]
 
   # Enable DNS rebinding protection and other `Host` header attacks.
-  # config.hosts = [
-  #   "example.com",     # Allow requests from example.com
-  #   /.*\.example\.com/ # Allow requests from subdomains like `www.example.com`
-  # ]
+  # If needed, specify allowed hosts like so:
+  # config.hosts = ["minifigmania-5c03e61c784a.herokuapp.com"]
   #
   # Skip DNS rebinding protection for the default health check endpoint.
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
-
+  
 end
