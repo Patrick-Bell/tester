@@ -11,7 +11,7 @@ export default defineConfig({
     svgr(),
   ], 
   build: {
-    outDir: 'public',
+    outDir: '../public',
   },
   server: {
     historyApiFallback: true,
