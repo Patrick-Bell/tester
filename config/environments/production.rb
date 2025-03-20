@@ -20,6 +20,10 @@ Rails.application.configure do
 
   config.public_file_server.enabled = true
 
+  #new one
+  config.assets.compile = true
+
+
 
   # Enable caching (Vite-generated assets should be cached properly)
   config.cache_classes = true
