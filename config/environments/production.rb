@@ -21,10 +21,6 @@ Rails.application.configure do
   # Public file server for Vite-generated assets (ensure Vite is serving your assets)
   config.public_file_server.enabled = true
 
-  # Let Vite handle assets compilation
-  config.assets.compile = false
-  config.assets.check_precompiled_asset = false
-
   # Enable caching (Vite-generated assets should be cached properly)
   config.cache_classes = true
 
