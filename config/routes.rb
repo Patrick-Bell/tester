@@ -36,7 +36,7 @@ Rails.application.routes.draw do
 
   # Catch-all for React Frontend Routing
 
-  get '*path', to: 'home#index', constraints: ->(req) { !req.xhr? && req.format.html? }
+  get '*path', to: 'home#index', constraints: ->(req) { !req.xhr? && req.format.html? }, via: :all
 
 
   

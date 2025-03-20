@@ -36,6 +36,10 @@ module Backend
     config.api_only = true
     config.action_dispatch.cookies_same_site_protection = :lax
 
+    config.serve_static_assets = true
+    config.public_file_server.enabled = true
+
+
     # config/application.rb
 
     config.session_store :cookie_store, key: '_your_app_session'
