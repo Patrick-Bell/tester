@@ -3,10 +3,9 @@ Rails.application.routes.draw do
   # Root Route
   root 'home#index'
   get '/', to: 'home#index'
-  get '/admin', to: 'home#index'
 
   # API Routes
-  scope :api do
+  scope '/api' do
     # Devise authentication routes (No need to define manually)
     devise_for :users, path: '', path_names: {
       sign_in: 'login',
@@ -35,7 +34,7 @@ Rails.application.routes.draw do
 
   # Catch-all for React Frontend Routing
 
-  get '*path', to: 'home#index'  # This sends all other routes to index.html
+  get '*path', to: 'home#index', constraints: ->(req) { !req.xhr? && req.format.html? }
 
 
   
