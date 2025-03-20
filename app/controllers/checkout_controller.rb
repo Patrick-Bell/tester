@@ -50,11 +50,11 @@ class CheckoutController < ApplicationController
       Rails.logger.info("🔔 Received Stripe event: #{event.type}")
     
       case event.type
-      when 'payment_intent.succeeded'
-        payment_intent = event.data.object
-        order_id = payment_intent.metadata['order_id']
-
-    
+      when 'invoice.payment_succeeded'
+        invoice = event.data.object
+        order_id = invoice.metadata.order_id
+        Rails.logger.info("🔔 Invoice ##{invoice.id} successfully paid.")
+        
         # Update order status in your database
         order = Order.find_by(id: order_id)
         if order
