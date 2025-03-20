@@ -26,11 +26,12 @@ const AboutPage = () => {
          
           
           {/* Text Section */}
-          <div className="lg:w-2/3 text-gray-700 text-base sm:text-lg leading-relaxed">
+          <div className="lg:w-2/3 text-gray-700 text-base">
             <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-4">Title</h2>
             <p className="mb-4">
               At Minifigure Mania, we are dedicated to bringing LEGO enthusiasts the best selection of high-quality, affordable minifigures. Our passion for LEGO fuels our commitment to offering a wide variety of figures at unbeatable prices.
             </p>
+            
             <p className="mb-4">
               We noticed how hard it was to find rare and unique LEGO minifigures at reasonable prices. That’s why we created Minifigure Mania—to provide collectors, kids, and LEGO fans with access to the best minifigures without breaking the bank.
             </p>
@@ -73,6 +74,7 @@ const AboutPage = () => {
 
         {/* Testimonials Section */}
         <div className="mt-16 text-center">
+        <p className="text-base sm:text-lg font-bold text-indigo-600">Reviews</p>
           <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-6">What Our Customers Say</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {reviews.map((review, index) => (
