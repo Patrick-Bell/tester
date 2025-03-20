@@ -9,7 +9,10 @@ export default defineConfig({
     react(),
     tailwindcss(),
     svgr(),
-  ],  
+  ], 
+  build: {
+    outDir: '../public',
+  },
   server: {
     historyApiFallback: true,
   },

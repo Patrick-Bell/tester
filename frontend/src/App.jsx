@@ -18,7 +18,7 @@ const App = () => {
 <Toaster />
     <Routes>
     <Route path="/" element={<MainPage />}></Route>
-    <Route path="/all-products" element={<ProductFilter />}></Route>
+    <Route path="/products" element={<ProductFilter />}></Route>
     <Route path="/products/:id" element={<DynamicProductPage />}></Route>
     <Route path="/cancel" element={<Cancel />}></Route>
     <Route path="/success" element={<Success />}></Route>

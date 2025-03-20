@@ -19,6 +19,11 @@ Rails.application.configure do
   config.active_storage.service = :local
 
   config.public_file_server.enabled = true
+  config.public_file_server.enabled = true
+  config.assets.compile = false  # Let Vite handle compilation
+  config.assets.check_precompiled_asset = false  # Let Vite handle compilation
+  
+
 
   #new one
   #config.assets.compile = true
