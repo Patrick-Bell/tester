@@ -2,6 +2,8 @@ Rails.application.routes.draw do
 
   # Root Route
   root 'home#index'
+  get '/', to: 'home#index'
+  get '/admin', to: 'home#index'
 
   # API Routes
   scope :api do
@@ -33,7 +35,7 @@ Rails.application.routes.draw do
 
   # Catch-all for React Frontend Routing
 
-  get '*path', to: 'home#index', constraints: ->(req) { !req.xhr? && req.format.html? }, via: :all
+  get '*path', to: 'home#index'  # This sends all other routes to index.html
 
 
   
