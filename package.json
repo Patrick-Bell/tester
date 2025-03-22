@@ -1,0 +1,21 @@
+{
+    "name": "rails-backend",
+    "version": "1.0.0",
+    "private": true,
+    "dependencies": {
+      "@vite/rails": "^2.0.0",
+      "vite": "^4.0.0",          
+      "react-rails": "^2.6.0",   
+      "esbuild": "^0.15.0"       
+    },
+    "devDependencies": {
+      "vite-plugin-react": "^1.0.0",  
+      "sass": "^1.32.0"               
+    },
+    "scripts": {
+      "build": "vite build",          
+      "dev": "vite",                  
+      "serve": "rails server"         
+    }
+  }
+  
