@@ -3,14 +3,12 @@ import react from '@vitejs/plugin-react-swc';
 import tailwindcss from '@tailwindcss/vite';
 import path from 'path';
 import svgr from 'vite-plugin-svgr';
-import ViteRuby from 'vite-plugin-ruby'
 
 export default defineConfig({
   plugins: [
     react(),
     tailwindcss(),
     svgr(),
-    ViteRuby()
   ], 
   build: {
     outDir: '../public', // Make sure this path is correct and points to your main HTML file
