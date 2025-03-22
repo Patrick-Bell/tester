@@ -1,18 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My App</title>
+<html>
+  <head>
+    <title>My Rails App</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
 
-  <!-- Include Vite-generated CSS file -->
-  <%= stylesheet_link_tag asset_path('index.css') %> <!-- Dynamically link to the hashed CSS file -->
-</head>
-<body>
-  <!-- This is where React will mount -->
-  <div id="root"></div>
+    <!-- Include Vite's generated CSS -->
+    <%= stylesheet_link_tag 'assets/index.css', 'data-turbo-track': 'reload' %>
+  </head>
+  <body>
+    <%= yield %>  <!-- This renders the specific page content -->
 
-  <!-- Include Vite-generated JavaScript file -->
-  <%= javascript_include_tag asset_path('index.js'), type: 'module' %> <!-- Dynamically link to the hashed JS file -->
-</body>
+    <!-- Include Vite's JS bundle -->
+    <%= javascript_include_tag 'assets/index.js', 'data-turbo-track': 'reload' %>
+  </body>
 </html>

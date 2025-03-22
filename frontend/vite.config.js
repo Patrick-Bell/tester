@@ -10,12 +10,6 @@ export default defineConfig({
     tailwindcss(),
     svgr(),
   ], 
-  build: {
-    outDir: '../public', // Make sure this path is correct and points to your main HTML file
-    assetsDir: '',
-    manifest: true,
-    emptyOutDir: true,
-  },
   server: {
     historyApiFallback: true,
     proxy: {

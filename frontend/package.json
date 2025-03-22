@@ -5,13 +5,13 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "heroku-postbuild": "bundle install && cd ../frontend && npm install && npm run build",
-    "start": "vite",
-    "dev": "vite",
-    "build": "vite build",
-    "backend": "cd ../ && bundle exec rails s -b '0.0.0.0' -p 3000",
-    "postinstall": "npm install && npm run build"
-  },
+  "heroku-postbuild": "bundle install && cd frontend && npm install && npm run build",
+  "start": "vite dev",
+  "frontend": "vite dev",
+  "backend": "bundle exec rails s -b '0.0.0.0' -p 3000",
+  "postinstall": "cd frontend && npm run build && cp -r dist ../public/",
+  "build": "vite build && cp -r dist ../public/"
+},
   "dependencies": {
     "@fullcalendar/daygrid": "^6.1.15",
     "@fullcalendar/interaction": "^6.1.15",
