@@ -19,6 +19,9 @@ Rails.application.routes.draw do
 
     # Check auth status (Custom route)
     get 'auth_status', to: 'sessions#auth_status'
+    get 'current-user', to: 'application#current_user', as: 'current_user'
+
+    get 'my-orders', to: 'orders#user_orders', as: 'user_orders'
 
     # API Resources
     resources :orders

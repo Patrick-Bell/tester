@@ -11,6 +11,8 @@ import { Toaster } from "sonner"
 import Refund from "./components/refund/RefundPage"
 import AboutPage from './components/about/AboutPage'
 import NotFound from "./components/not_found/NotFound"
+import UserSidebar from './components/user_dashboard/Sidebar'
+
 const App = () => {
 
   return (
@@ -26,7 +28,9 @@ const App = () => {
     <Route path="/about" element={<AboutPage />}></Route>
     <Route path="*" element={<NotFound />}></Route>
 
-    <Route path="/admin" element={<Sidebar />}></Route>    
+    <Route path="/admin" element={<Sidebar />}></Route>   
+
+    <Route path="/my-dash" element={<UserSidebar />}></Route> 
   </Routes>
   </>
 

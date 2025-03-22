@@ -38,6 +38,12 @@ class OrdersController < ApplicationController
     @order.destroy!
   end
 
+  def user_orders
+    @orders = @current_user.orders 
+    render json: @orders
+  end
+  
+
 
   private
     # Use callbacks to share common setup or constraints between actions.

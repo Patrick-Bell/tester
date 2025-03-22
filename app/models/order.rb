@@ -9,6 +9,8 @@ class Order < ApplicationRecord
   validates :tracking_id, uniqueness: true
   validates :order_id, uniqueness: true
 
+  belongs_to :user
+
   private
 
   def generate_tracking_id

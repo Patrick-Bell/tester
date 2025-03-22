@@ -21,7 +21,7 @@ class SessionsController < ApplicationController
             expires: 1.hour.from_now,
           }
     
-          render json: { message: 'Login successful', user: user, exp: 1.hour.from_now }
+          render json: { message: 'Login successful', user: user, exp: 1.hour.from_now, token: token }
         else
           render json: { error: 'Invalid email or password' }, status: :unauthorized
         end

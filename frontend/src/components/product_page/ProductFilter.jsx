@@ -389,6 +389,7 @@ const ProductFilter = () => {
               <div className="lg:col-span-3">
           
                 
+                
                 {/* Your content */}
                 {isLoading ? (
                 <div className="mx-auto max-w-2xl py-6 px-4 sm:px-6 lg:max-w-7xl">

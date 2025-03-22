@@ -11,18 +11,34 @@ Order.create!([
     "price":4.49,
     "quantity":1
     },
+    {"name":"Saka",
+    "image":"https://minifigurebricks.com/cdn/shop/files/93d1a581-535b-4125-a678-dfe0ec2b1170.jpg?crop=center&height=533&v=1731190057&width=533",
+    "price":4.49,
+    "quantity":1
+    },
+    {"name":"Kane",
+    "image":"https://minifigurebricks.com/cdn/shop/files/d8faa921-28c2-4ec6-ab14-940b2331efe2.jpg?crop=center&height=533&v=1731190162&width=533",
+    "price":4.49,
+    "quantity":2
+    },
+    {"name":"Courtois",
+    "image":"https://minifigurebricks.com/cdn/shop/files/858eeadd-3d78-4d4f-b7c9-79a422f74959_7ed68797-82f9-474c-ac2e-49289edc90ab.jpg?crop=center&height=533&v=1719491814&width=533",
+    "price":4.49,
+    "quantity":1
+    },
 ],
-    "total_price":"10.84",
-    "status":"pending",
+    "total_price":"21.21",
+    "status":"shipped",
     "date":"2025-03-20T17:20:00.824Z",
     "address":"3 The Populars Mill Lane, Chesterfield, Derbyshire, S42 5BF",
     "payment_method":"credit_card",
     "delivery_date":"2025-03-23T15:43:01.829Z",
     "paid":true,
     "shipping_fee":"3.10",
-    "name":"Sharron Fearn",
+    "name":"Patrick Bell",
     "email":"",
     "phone":"07788241054",
-    "platform":"eBay"
+    "platform":"eBay",
+    "user_id": 25
 }
 ])

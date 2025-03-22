@@ -14,11 +14,12 @@ import {
   TabPanel,
   TabPanels,
 } from '@headlessui/react'
-import { Bars3Icon, MagnifyingGlassIcon, ShoppingBagIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import { Bars3Icon, MagnifyingGlassIcon, ShoppingBagIcon, XMarkIcon, UserIcon } from '@heroicons/react/24/outline'
 import Hero from './Hero'
 import ShoppingCartSide from '../product_page/ShoppingCartSide'
-import Login from '../modals/Login'
+import LoginPage from '../modals/LoginPage'
 import { useCart } from '../context/CartContext'
+import { useAuth } from '../context/AuthContext';
 import Register from '../modals/Register'
 import axios from 'axios'
 
@@ -92,6 +93,7 @@ const Navbar = () => {
   const [products, setProducts] = useState([])
 
   const { cart, cartNumber } = useCart()
+  const { user } = useAuth() || {}
 
   console.log(cart, 'cart', cartNumber)
 
@@ -125,11 +127,15 @@ const Navbar = () => {
     fetchProducts()
   }, [])
 
+  const goToDash = () => {
+    window.location = '/my-dash'
+  }
+
 
   return (
     <>
     <ShoppingCartSide open={openCart} setOpen={setOpenCart} />
-    <Login isOpen={openLoginModal} setIsOpen={setOpenLoginModal} setRegisterModalOpen={setOpenRegisterModal}/>
+    <LoginPage isOpen={openLoginModal} setIsOpen={setOpenLoginModal} setRegisterModalOpen={setOpenRegisterModal}/>
     <Register isOpen={openRegisterModal} setIsOpen={setOpenRegisterModal} setOpenLogin={setOpenLoginModal} />
    <div className="bg-white w-full">
       {/* Mobile menu */}
@@ -216,6 +222,7 @@ const Navbar = () => {
               </TabPanels>
             </TabGroup>
 
+
             <div className="space-y-6 border-t border-gray-200 px-4 py-6">
               {navigation.pages.map((page) => (
                 <div key={page.name} className="flow-root">
@@ -285,6 +292,7 @@ const Navbar = () => {
                 </a>
               </div>
 
+
               {/* Flyout menus */}
               <PopoverGroup className="hidden lg:ml-8 lg:block lg:self-stretch">
                 <div className="flex h-full space-x-8">
@@ -353,6 +361,7 @@ const Navbar = () => {
                     </Popover>
                   ))}
 
+
                   {navigation.pages.map((page) => (
                     <a
                       key={page.name}
@@ -365,15 +374,28 @@ const Navbar = () => {
                 </div>
               </PopoverGroup>
 
+
+
               <div className="ml-auto flex items-center">
+
+
+
                 <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                  <a onClick={() => handleOpenLogin()} href="#" className="text-sm font-medium text-gray-700 hover:text-gray-800 z-60">
+                  {!user ? (
+                    <>
+                    <a onClick={() => handleOpenLogin()} href="#" className="text-sm font-medium text-gray-700 hover:text-gray-800 z-60">
                     Sign in
                   </a>
                   <span aria-hidden="true" className="h-6 w-px bg-gray-200" />
                   <a onClick={() => handleOpenRegister()} href="#" className="text-sm font-medium text-gray-700 hover:text-gray-800 z-60">
                     Create account
                   </a>
+                  </>
+                  ):(
+                    <>
+                    <p onClick={() => goToDash()} className='text-sm cursor-pointer'>Hi, <strong>{user?.user?.name}</strong> <span aria-hidden="true">&rarr;</span></p>
+                    </>
+                  )}
                 </div>
 
                 <div className="hidden lg:ml-8 lg:flex">
@@ -446,11 +468,7 @@ const Navbar = () => {
     </div>
   </div>
 )}
-
-
-
-
-
+        
                 {/* Cart */}
                 <div className="ml-4 flow-root lg:ml-6 z-60">
                   <a href="#" className="group -m-2 flex items-center p-2" onClick={() => handleOpenCart()}>
