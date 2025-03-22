@@ -9,8 +9,7 @@ gem "puma", ">= 5.0"
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 # gem "jbuilder"
 
-gem "jsbundling-rails"
-gem "cssbundling-rails"
+
 
 
 gem "dotenv-rails", "~> 3.1"
