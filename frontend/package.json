@@ -6,11 +6,11 @@
   "type": "module",
   "scripts": {
     "heroku-postbuild": "bundle install && cd ../frontend && npm install && npm run build",
-    "start": "vite",  
-    "dev": "vite", 
-    "build": "vite build --outDir ../public",
-    "backend": "cd ../ && bundle exec rails s -b '0.0.0.0' -p 3000",  
-    "postinstall": "npm install && npm run build" 
+    "start": "vite",
+    "dev": "vite",
+    "build": "vite build",
+    "backend": "cd ../ && bundle exec rails s -b '0.0.0.0' -p 3000",
+    "postinstall": "npm install && npm run build"
   },
   "dependencies": {
     "@fullcalendar/daygrid": "^6.1.15",
