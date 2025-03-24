@@ -14,7 +14,7 @@ const NewReleases = () => {
     const fetchProducts = async () => {
         try{
             const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/products`)
-            setProducts(response.data.filter(product => product.category === 'squid game'))
+            setProducts(response.data.filter(product => product.category === 'squid game').slice(0, 6))
         }catch(e){
             console.log(e)
         }

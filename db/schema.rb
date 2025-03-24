@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_20_195728) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_24_023834) do
   create_schema "auth"
   create_schema "extensions"
   create_schema "graphql"
@@ -41,25 +41,24 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_20_195728) do
   end
 
   create_table "orders", force: :cascade do |t|
-    t.jsonb "products", default: []
-    t.decimal "total_price", precision: 10, scale: 2, null: false
-    t.string "status", default: "pending"
-    t.datetime "date", default: -> { "CURRENT_TIMESTAMP" }, null: false
-    t.text "address", null: false
-    t.string "payment_method", null: false
+    t.text "products"
+    t.float "total_price"
+    t.string "status"
+    t.datetime "date"
+    t.text "address"
+    t.string "payment_method"
     t.datetime "delivery_date"
-    t.boolean "paid", default: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.boolean "paid"
     t.string "order_id"
     t.string "tracking_id"
-    t.bigint "user_id"
-    t.decimal "shipping_fee", precision: 10, scale: 2, default: "0.0", null: false
+    t.integer "user_id"
+    t.float "shipping_fee"
     t.string "name"
     t.string "email"
     t.string "phone"
     t.string "platform"
-    t.index ["user_id"], name: "index_orders_on_user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "products", force: :cascade do |t|
@@ -67,8 +66,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_20_195728) do
     t.string "image"
     t.float "price"
     t.integer "stock"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
     t.string "team"
     t.string "category"
     t.float "sale_price"
@@ -79,19 +76,20 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_20_195728) do
     t.float "bought"
     t.boolean "active", default: false
     t.string "notes"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "reviews", force: :cascade do |t|
     t.string "name"
     t.string "header"
     t.string "text"
-    t.integer "rating", default: 5
+    t.integer "rating"
     t.string "platform"
-    t.boolean "reviewed", default: false
+    t.boolean "reviewed"
+    t.bigint "product_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "product_id", null: false
-    t.index ["product_id"], name: "index_reviews_on_product_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -102,12 +100,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_20_195728) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "name"
-    t.string "role"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
-
-  add_foreign_key "orders", "users"
-  add_foreign_key "reviews", "products"
 end
