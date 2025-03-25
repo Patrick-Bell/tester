@@ -16,8 +16,6 @@ gem "dotenv-rails", "~> 3.1"
 
 ruby '3.4.1'
 
-gem "vite_rails", "~> 3.0"
-
 
 
   gem 'stripe'
