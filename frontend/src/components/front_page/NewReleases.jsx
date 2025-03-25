@@ -15,7 +15,7 @@ const NewReleases = () => {
     const fetchProducts = async () => {
         try{
             const response = await getProducts()
-            setProducts(response.data.filter(product => product.category === 'squid game').slice(0, 6))
+            setProducts(response.filter(product => product.category === 'squid game').slice(0, 6))
         }catch(e){
             console.log(e)
         }
