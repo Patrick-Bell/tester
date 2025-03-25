@@ -5,18 +5,10 @@ Rails.application.routes.draw do
 
   # API Routes
   scope '/api' do
-    # Devise authentication routes (No need to define manually)
-    devise_for :users, path: '', path_names: {
-      sign_in: 'login',
-      sign_out: 'logout',
-      registration: 'signup'
-    },
-    controllers: {
-      sessions: 'sessions',
-      registrations: 'registrations'
-    }
-
+    
     # Check auth status (Custom route)
+    post 'login', to: 'sessions#create'
+    post 'signup', to: 'registrations#creare'
     get 'auth_status', to: 'sessions#auth_status'
     get 'current-user', to: 'application#current_user', as: 'current_user'
 
