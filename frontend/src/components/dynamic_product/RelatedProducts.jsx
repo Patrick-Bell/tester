@@ -9,7 +9,7 @@ const RelatedProducts = ({ product, products, handleAddToCart }) => {
   // Fetch related products from the API
   const fetchRelatedProducts = async () => {
     try {
-      const response = getProducts();
+      const response = await getProducts();
       const products = response;
       
       // Filter products to find those in the same category and excluding the current product

@@ -32,6 +32,19 @@ export const AuthProvider = ({ children }) => {
         }
       }
 
+      const signup = async (formData) => {
+        try{
+          const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/signup`, { user: formData }, { withCredentials: true })
+          toast.success("Account successfully created!", 
+            { description: 'You can now log in' },
+            { autoClose: 3000 }
+        );
+
+        }catch(e){
+          console.log(e)
+        }
+      }
+
       const checkAuth = async () => {
         try{
           const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/current-user`, { withCredentials: true })
@@ -57,7 +70,7 @@ export const AuthProvider = ({ children }) => {
 
     return (
 
-        <AuthContext.Provider value={{user, isAdmin, isUser, authenticated, login}}>
+        <AuthContext.Provider value={{user, isAdmin, isUser, authenticated, login, signup}}>
             {children}
         </AuthContext.Provider>
     )

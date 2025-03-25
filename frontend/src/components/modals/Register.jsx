@@ -4,6 +4,7 @@ import { Fragment, useState } from "react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import axios from "axios";
 import { toast } from 'sonner'
+import { useAuth } from '../context/AuthContext';
 
 const Register = ({ isOpen, setIsOpen, setOpenLogin }) => {
   const [formData, setFormData] = useState({
@@ -14,6 +15,8 @@ const Register = ({ isOpen, setIsOpen, setOpenLogin }) => {
   });
 
   const [errors, setErrors] = useState({});
+
+  const { signup } = useAuth()
 
   const handleOpenLogin = () => {
     setIsOpen(false);
@@ -53,18 +56,7 @@ const Register = ({ isOpen, setIsOpen, setOpenLogin }) => {
   
     try {
         
-      const response = await axios.post(
-        "http://localhost:3000/api/signup",
-        { user: formData }, // 👈 Wrap user data inside "user"
-        {
-         
-          withCredentials: true, // 👈 Important: Allow cookies/auth
-        }
-      );
-      toast.success("Account successfully created!", 
-        { description: 'You can now log in' },
-        { autoClose: 3000 }
-    );
+      const response = await signup(formData)
       setIsOpen(false)
       setOpenLogin(true)
   
