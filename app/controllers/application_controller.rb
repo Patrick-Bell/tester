@@ -1,6 +1,5 @@
 class ApplicationController < ActionController::API
     
-  # Disable CSRF for specific actions
     include ActionController::Cookies
     before_action :set_current_user
   
