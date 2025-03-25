@@ -1,9 +1,6 @@
 require_relative "boot"
 
 require "rails/all"
-require 'dotenv/load'
-
-
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -13,9 +10,6 @@ module Backend
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0
-
-    config.active_record.queues = :primary
-
 
     # Please, add to the `ignore` list any other `lib` subdirectories that do
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
@@ -34,19 +28,13 @@ module Backend
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+
     config.action_dispatch.cookies_same_site_protection = :lax
-
-    config.serve_static_assets = true
-    config.public_file_server.enabled = true
-
-
-    # config/application.rb
-
-    config.session_store :cookie_store, key: '_your_app_session'
-
 
 
     config.middleware.use ActionDispatch::Cookies
     config.middleware.use ActionDispatch::Session::CookieStore
+
+    
   end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_24_023834) do
+ActiveRecord::Schema[7.2].define(version: 2025_03_25_205106) do
   create_schema "auth"
   create_schema "extensions"
   create_schema "graphql"
@@ -23,14 +23,14 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_24_023834) do
   create_schema "vault"
 
   # These are extensions that must be enabled in order to support this database
-  enable_extension "extensions.pg_stat_statements"
-  enable_extension "extensions.pgcrypto"
-  enable_extension "extensions.pgjwt"
-  enable_extension "extensions.uuid-ossp"
-  enable_extension "graphql.pg_graphql"
-  enable_extension "pg_catalog.plpgsql"
-  enable_extension "pgsodium.pgsodium"
-  enable_extension "vault.supabase_vault"
+  enable_extension "pg_graphql"
+  enable_extension "pg_stat_statements"
+  enable_extension "pgcrypto"
+  enable_extension "pgjwt"
+  enable_extension "pgsodium"
+  enable_extension "plpgsql"
+  enable_extension "supabase_vault"
+  enable_extension "uuid-ossp"
 
   create_table "events", force: :cascade do |t|
     t.string "title"
