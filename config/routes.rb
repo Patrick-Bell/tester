@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  root 'home#index'  # or any other controller you want to load first
 
 
   # API Routes
@@ -12,7 +13,7 @@ Rails.application.routes.draw do
     },
     controllers: {
       sessions: 'sessions',
-      registrations: 'registrations'  # ✅ Add this line
+      registrations: 'registrations'
     }
 
     # Check auth status (Custom route)
@@ -20,6 +21,8 @@ Rails.application.routes.draw do
     get 'current-user', to: 'application#current_user', as: 'current_user'
 
     get 'my-orders', to: 'orders#user_orders', as: 'user_orders'
+
+    get 'auth/google_oauth2', to: 'sessions#google_oauth2'
 
     # API Resources
     resources :orders

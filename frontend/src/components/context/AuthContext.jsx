@@ -63,6 +63,21 @@ export const AuthProvider = ({ children }) => {
         }
       }
 
+      const googleLogin = async () => {
+        try{
+        const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/auth/google_oauth2`)
+        cnonsole.log(res.data)
+        window.location.href = '/my-dash'
+        
+    
+
+        }catch(e){
+          console.log(e)
+        }
+      }
+
+      
+
       useEffect(() => {
         checkAuth()
       }, [location.pathname])
@@ -70,7 +85,7 @@ export const AuthProvider = ({ children }) => {
 
     return (
 
-        <AuthContext.Provider value={{user, isAdmin, isUser, authenticated, login, signup}}>
+        <AuthContext.Provider value={{user, isAdmin, isUser, authenticated, login, signup, googleLogin}}>
             {children}
         </AuthContext.Provider>
     )

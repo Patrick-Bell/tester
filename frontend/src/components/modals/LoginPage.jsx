@@ -2,9 +2,9 @@ import React from 'react';
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import { toast } from "sonner";
-import axios from "axios";
 import { useAuth } from '../context/AuthContext';
+import { GoogleLogin } from '@react-oauth/google';
+
 
 const LoginPage = ({ isOpen, setIsOpen, setRegisterModalOpen }) => {
 
@@ -12,7 +12,7 @@ const LoginPage = ({ isOpen, setIsOpen, setRegisterModalOpen }) => {
     email: '',
     password: ''
   })
-  const { login } = useAuth()
+  const { login, googleLogin } = useAuth()
 
   const handleOpenRegister = () => {
     setIsOpen(false)
@@ -29,6 +29,10 @@ const LoginPage = ({ isOpen, setIsOpen, setRegisterModalOpen }) => {
       console.log(e)
       console.log('error')
     }
+  }
+
+  const handleGoogleLogin = async () => {
+    const response = await googleLogin()
   }
 
 
@@ -92,13 +96,13 @@ const LoginPage = ({ isOpen, setIsOpen, setRegisterModalOpen }) => {
                   />
                 </div>
 
-                <button onClick={(e) => handleLogin(e, formData)} className="w-full bg-indigo-600 text-white py-2 rounded-lg mt-2 hover:bg-indigo-700 cursor-pointer">
+                <button onClick={(e) => handleLogin(e, formData)} className="w-full bg-indigo-600 text-white py-2 rounded-lg mt-2 mb-2 hover:bg-indigo-700 cursor-pointer">
                   Log In
                 </button>
-                <button class="w-full mt-2 px-4 py-2 border rounded-lg flex justify-center gap-2 cursor-pointer hover:bg-gray-100">
+                <GoogleLogin onSuccess={handleGoogleLogin} class="w-full mt2 px-4 py-2 border rounded-lg flex justify-center gap-2 cursor-pointer hover:bg-gray-100">
                     <img class="w-6 h-6" src="https://www.svgrepo.com/show/475656/google-color.svg" loading="lazy" alt="google logo"/>
                     <span>Login with Google</span>
-                </button>
+                </GoogleLogin>
               </form>
 
               {/* Divider */}
