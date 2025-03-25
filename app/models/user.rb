@@ -8,7 +8,7 @@ class User < ApplicationRecord
 
   # Devise modules
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable,
+         :recoverable, :rememberable, :validatable
 
   # Method to find or create a user from the OAuth provider
 
