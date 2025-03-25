@@ -122,7 +122,7 @@ const Navbar = () => {
 
   useEffect(() => {
     const fetchProducts = async () => {
-      const res = getProducts()
+      const res = await getProducts()
       setProducts(res.filter(product => product.active === true))
     }
     fetchProducts()

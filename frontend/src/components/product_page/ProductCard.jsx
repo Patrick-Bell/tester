@@ -1,4 +1,4 @@
-import { useState } from "react"
+import React, { useState } from "react"
 import ShoppingCartSide from "./ShoppingCartSide"
 import { useCart } from "../context/CartContext"
 
