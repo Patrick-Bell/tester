@@ -12,6 +12,9 @@ export default defineConfig({
     tailwindcss(),
     svgr(),
   ], 
+  build: {
+    outDir: '../public'
+  },
   server: {
     historyApiFallback: true,
     proxy: {
