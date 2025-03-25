@@ -65,7 +65,7 @@ export const AuthProvider = ({ children }) => {
 
       const googleLogin = async () => {
         try{
-        const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/auth/google_oauth2`)
+        const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/auth/google_oauth2`, { withCredentials: true })
         cnonsole.log(res.data)
         window.location.href = '/my-dash'
         

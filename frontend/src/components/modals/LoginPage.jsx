@@ -3,7 +3,6 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { useAuth } from '../context/AuthContext';
-import { GoogleLogin } from '@react-oauth/google';
 
 
 const LoginPage = ({ isOpen, setIsOpen, setRegisterModalOpen }) => {
@@ -99,10 +98,10 @@ const LoginPage = ({ isOpen, setIsOpen, setRegisterModalOpen }) => {
                 <button onClick={(e) => handleLogin(e, formData)} className="w-full bg-indigo-600 text-white py-2 rounded-lg mt-2 mb-2 hover:bg-indigo-700 cursor-pointer">
                   Log In
                 </button>
-                <GoogleLogin onSuccess={handleGoogleLogin} class="w-full mt2 px-4 py-2 border rounded-lg flex justify-center gap-2 cursor-pointer hover:bg-gray-100">
+                <button onSuccess={handleGoogleLogin} class="w-full mt2 px-4 py-2 border rounded-lg flex justify-center gap-2 cursor-pointer hover:bg-gray-100">
                     <img class="w-6 h-6" src="https://www.svgrepo.com/show/475656/google-color.svg" loading="lazy" alt="google logo"/>
                     <span>Login with Google</span>
-                </GoogleLogin>
+                </button>
               </form>
 
               {/* Divider */}

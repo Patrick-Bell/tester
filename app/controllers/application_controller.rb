@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::API
+    
+  # Disable CSRF for specific actions
     include ActionController::Cookies
-  
-    skip_before_action :verify_authenticity_token
     before_action :set_current_user
   
     def set_current_user
@@ -31,12 +31,6 @@ class ApplicationController < ActionController::API
         nil
       end
     end
-
-    def set_cors_headers
-      response.set_header('Cross-Origin-Opener-Policy', 'same-origin')
-      response.set_header('Cross-Origin-Resource-Policy', 'same-origin')
-    end
-
     
   end
   

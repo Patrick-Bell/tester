@@ -22,8 +22,6 @@ Rails.application.routes.draw do
 
     get 'my-orders', to: 'orders#user_orders', as: 'user_orders'
 
-    get 'auth/google_oauth2', to: 'sessions#google_oauth2'
-
     # API Resources
     resources :orders
     resources :products

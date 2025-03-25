@@ -9,7 +9,7 @@ import { categories } from "../api/Categories";
 const FeaturedCategories = () => {
 
   return (
-    <div className="w-auto m-8">
+    <div className="w-auto m-8 mb-16">
     <div> {/* Ensure the section takes full width */}
       <div className=""> {/* Remove horizontal padding to ensure full width */}
         {/* Title and custom navigation arrows */}
