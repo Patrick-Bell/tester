@@ -22,6 +22,7 @@ import { useCart } from '../context/CartContext'
 import { useAuth } from '../context/AuthContext';
 import Register from '../modals/Register'
 import axios from 'axios'
+import { getProducts } from '../routes/ProductRoutes';
 
 
 const navigation = {
@@ -121,8 +122,8 @@ const Navbar = () => {
 
   useEffect(() => {
     const fetchProducts = async () => {
-      const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/products`)
-      setProducts(res.data.filter(product => product.active === true))
+      const res = getProducts()
+      setProducts(res.filter(product => product.active === true))
     }
     fetchProducts()
   }, [])

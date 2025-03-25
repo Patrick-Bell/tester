@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { getProducts } from "../routes/ProductRoutes";
 
 const RelatedProducts = ({ product, products, handleAddToCart }) => {
   const [relatedProducts, setRelatedProducts] = useState([]);
@@ -8,8 +9,8 @@ const RelatedProducts = ({ product, products, handleAddToCart }) => {
   // Fetch related products from the API
   const fetchRelatedProducts = async () => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/products`);
-      const products = response.data;
+      const response = getProducts();
+      const products = response;
       
       // Filter products to find those in the same category and excluding the current product
       const relatedProducts = products?.filter(

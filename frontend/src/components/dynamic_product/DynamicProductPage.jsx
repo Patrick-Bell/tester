@@ -8,6 +8,7 @@ import FAQSection from "./FAQ";
 import Reviews from "./Reviews";
 import ProductData from "./ProductData";
 import RelatedProducts from "./RelatedProducts";
+import { getOneProduct } from '../routes/ProductRoutes';
 
 const DynamicProductPage = () => {
     const { id } = useParams();
@@ -18,8 +19,8 @@ const DynamicProductPage = () => {
 
     const fetchProduct = async () => {
         try {
-            const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/products/${id}`);
-            setProduct(response.data);
+            const response = await getOneProduct(id);
+            setProduct(response);
         } catch (error) {
             console.error("Error fetching product:", error);
         } finally {

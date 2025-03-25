@@ -4,6 +4,7 @@ import ProductCard from '../product_page/ProductCard'
 import ShoppingCartSide from '../product_page/ShoppingCartSide'
 import { useCart } from '../context/CartContext'
 import {toast} from 'sonner'
+import { getProducts } from '../routes/ProductRoutes'
 
 const NewReleases = () => {
 
@@ -13,7 +14,7 @@ const NewReleases = () => {
 
     const fetchProducts = async () => {
         try{
-            const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/products`)
+            const response = await getProducts()
             setProducts(response.data.filter(product => product.category === 'squid game').slice(0, 6))
         }catch(e){
             console.log(e)

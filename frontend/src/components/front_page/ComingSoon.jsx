@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import ProductCard from '../product_page/ProductCard'
+import { getProducts } from '../routes/ProductRoutes'
 
 const ComingSoon = () => {
 
@@ -8,8 +9,8 @@ const ComingSoon = () => {
 
     const fetchProducts = async () => {
         try{
-            const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/products`)
-            setProducts(response.data.filter(product => product.active === false || product.stock === 0).slice(0, 6))
+            const response = await getProducts()
+            setProducts(response.filter(product => product.active === false || product.stock === 0).slice(0, 6))
         }catch(e){
             console.log(e)
         }
