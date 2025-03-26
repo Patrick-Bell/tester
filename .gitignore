@@ -21,6 +21,7 @@
 !/tmp/pids/
 !/tmp/pids/.keep
 
+
 # Ignore storage (uploaded files in development and any SQLite databases).
 /storage/*
 !/storage/.keep
@@ -39,3 +40,7 @@ node_modules
 *.local
 
 /log/development.log
+
+.env
+
+
