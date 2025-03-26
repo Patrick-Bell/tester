@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_03_25_205106) do
+ActiveRecord::Schema[7.2].define(version: 2025_03_26_192837) do
   create_schema "auth"
   create_schema "extensions"
   create_schema "graphql"
@@ -40,8 +40,18 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_25_205106) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "line_items", force: :cascade do |t|
+    t.bigint "order_id", null: false
+    t.string "name"
+    t.float "price"
+    t.integer "quantity"
+    t.string "image"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["order_id"], name: "index_line_items_on_order_id"
+  end
+
   create_table "orders", force: :cascade do |t|
-    t.text "products"
     t.float "total_price"
     t.string "status"
     t.datetime "date"
@@ -103,4 +113,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_25_205106) do
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
+
+  add_foreign_key "line_items", "orders"
 end

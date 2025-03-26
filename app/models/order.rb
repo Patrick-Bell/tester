@@ -1,4 +1,8 @@
 class Order < ApplicationRecord
+
+  has_many :line_items, dependent: :destroy
+
+
   before_validation :generate_tracking_id, on: :create
   before_validation :generate_unique_order_id, on: :create
 
@@ -9,7 +13,6 @@ class Order < ApplicationRecord
   validates :tracking_id, uniqueness: true
   validates :order_id, uniqueness: true
 
-  belongs_to :user
 
   private
 

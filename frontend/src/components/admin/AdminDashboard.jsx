@@ -7,6 +7,8 @@ import { TbLego } from "react-icons/tb";
 import { PaperClipIcon } from '@heroicons/react/20/solid'
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import AdminLowStockReport from "./reports/AdminLowStockReport";
+import { getOrders } from "../routes/OrderRoutes";
+import { getProducts } from "../routes/ProductRoutes";
 
 
 const AdminDashboard = () => {
@@ -18,16 +20,18 @@ const AdminDashboard = () => {
 
     const fetchData = async () => {
         try {
-            const [orderRes, productRes] = await Promise.all([
-                axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/orders`),
-                axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/products`),
-            ]);
+           
+            const orderRes = await getOrders()
+            const productRes = await getProducts()
 
-            const lowStockProducts = productRes.data.filter(product => product.stock <= 2)
+            console.log(orderRes, 'orders')
+            console.log('line items', orderRes.line_items)
+
+            const lowStockProducts = productRes.filter(product => product.stock <= 2)
             setLowStock(lowStockProducts)
 
-            setOrders(orderRes.data)
-            setProducts(productRes.data)
+            setOrders(orderRes)
+            setProducts(productRes)
     
         } catch (e) {
             console.error('Error fetching data:', e);
@@ -40,7 +44,7 @@ const AdminDashboard = () => {
 
     const numberOfProducts = products.length
     const ordersValue = orders?.reduce(
-        (sum, order) => sum + order.products?.reduce(
+        (sum, order) => sum + order.line_items?.reduce(
             (orderSum, item) => orderSum + (item.quantity * item.price), 0
         ) || 0, 
         0
@@ -61,7 +65,7 @@ const AdminDashboard = () => {
         const productCounts = {};
       
         orders.forEach(order => {
-          order.products.forEach(product => {
+          order?.line_items.forEach(product => {
             if (productCounts[product.name]) {
               productCounts[product.name].quantity += product.quantity;
             } else {

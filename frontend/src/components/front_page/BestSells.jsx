@@ -4,6 +4,7 @@ import { useCart } from '../context/CartContext'
 import { toast } from 'sonner'
 import ShoppingCartSide from '../product_page/ShoppingCartSide'
 import { getProducts } from '../routes/ProductRoutes'
+import { getOrders } from '../routes/OrderRoutes'
 
 
 
@@ -12,12 +13,14 @@ const BestSells = () => {
     const [products, setProducts] = useState([])
     const { addItemToCart } = useCart()
     const [open, setOpen] = useState(false)
+    const [orders, setOrders] = useState(0)
 
     const fetchProducts = async () => {
         try{
           console.log("API URL:", import.meta.env.VITE_RAILS_ENV === 'development' ? 'http://localhost:3000' : import.meta.env.VITE_API_BASE_URL)  // Debugging
             const response = await getProducts()
             setProducts(response.slice(0, 6))
+                            
         }catch(e){
             console.log(e)
         }

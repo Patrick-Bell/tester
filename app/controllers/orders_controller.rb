@@ -3,14 +3,15 @@ class OrdersController < ApplicationController
 
   # GET /orders
   def index
-    @orders = Order.all
+    @orders = Order.includes(:line_items).all
 
-    render json: @orders
+    render json: @orders.to_json(include: :line_items)
   end
 
   # GET /orders/1
   def show
-    render json: @order
+    order = Order.includes(:line_items).find(params[:id])
+    render json: order.to_json(include: :line_items)
   end
 
   # POST /orders
@@ -53,6 +54,6 @@ class OrdersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def order_params
-      params.expect(order: [ :user_id, :products, :total_price, :status, :date, :address, :payment_method, :delivery_date, :paid, :shipping_fee, :tracking_id, :order_id ])
+      params.expect(order: [ :user_id, :total_price, :status, :date, :address, :payment_method, :delivery_date, :paid, :shipping_fee, :tracking_id, :order_id ])
     end
 end

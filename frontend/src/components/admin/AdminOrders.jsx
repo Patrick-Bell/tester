@@ -11,6 +11,7 @@ import { GrPrint } from "react-icons/gr";
 import { toast } from 'sonner'
 import masterCardImg from '../assets/card.png'
 import applePay from '../assets/apple-pay.png'
+import { getOrders } from "../routes/OrderRoutes";
 
 
 const AdminOrders = () => {
@@ -20,9 +21,8 @@ const AdminOrders = () => {
 
     const fetchOrders = async () => {
         try {
-            const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/orders`);
-
-            setOrders(response.data);
+            const response = await getOrders();
+            setOrders(response)
         } catch (e) {
             console.log(e);
         }
@@ -74,7 +74,7 @@ const AdminOrders = () => {
     }
 
     const ordersValue = orders?.reduce(
-        (sum, order) => sum + order.products?.reduce(
+        (sum, order) => sum + order?.line_items?.reduce(
             (orderSum, item) => orderSum + (item.quantity * item.price), 0
         ) || 0, 
         0
@@ -98,7 +98,7 @@ const AdminOrders = () => {
             {selectedOrder ? (
                 <>
                 <div className="flex justify-between items-middle">
-                <span className="text-indigo-600 font-bold text-2xl">£{(calculateTotal(selectedOrder.products) + Number(selectedOrder.shipping_fee)).toFixed(2)}</span>
+                <span className="text-indigo-600 font-bold text-2xl">£{(calculateTotal(selectedOrder.line_items) + Number(selectedOrder.shipping_fee)).toFixed(2)}</span>
                 <div className="flex gap-2">
                 <button className="px-4 py-2 rounded-md border mb-4 border-[#e9ebee] hover:bg-gray-50 cursor-pointer"><GrPrint /></button>
                 <button className="px-4 py-2 rounded-md border mb-4 border-[#e9ebee] hover:bg-gray-50 cursor-pointer"><FaRegFilePdf /></button>
@@ -207,13 +207,13 @@ const AdminOrders = () => {
           </div>
           <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
             <dt className="text-sm/6 font-medium text-gray-900">Total Quantity</dt>
-            <dd className="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">{selectedOrder?.products.reduce((sum, item) => sum + item.quantity, 0)}</dd>
+            <dd className="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">{selectedOrder?.line_items.reduce((sum, item) => sum + item.quantity, 0)}</dd>
           </div>
           <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
             <dt className="text-sm/6 font-medium text-gray-900">Products</dt>
             <dd className="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">
             <div className="flex gap-4 overflow-x-auto whitespace-nowrap min-w-0 p-2">
-                {selectedOrder.products.map((product, i) => (
+                {selectedOrder.line_items.map((product, i) => (
                     <div key={i} className="flex items-center gap-4 border border-gray-100 p-2 rounded-md shrink-0">
                     <img src={product.image} alt={product.name} className="w-16 h-16 object-cover rounded-md" />
                     <div>
@@ -227,7 +227,7 @@ const AdminOrders = () => {
           </div>
           <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
             <dt className="text-sm/6 font-medium text-gray-900">Sub Total</dt>
-            <dd className="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">£{selectedOrder.products.reduce((sum, item) => sum + (item.quantity * item.price), 0).toFixed(2)}</dd>
+            <dd className="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">£{selectedOrder.line_items.reduce((sum, item) => sum + (item.quantity * item.price), 0).toFixed(2)}</dd>
           </div>
           <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
             <dt className="text-sm/6 font-medium text-gray-900">Shipping Fee</dt>
@@ -235,7 +235,7 @@ const AdminOrders = () => {
           </div>
           <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
             <dt className="text-sm/6 font-medium text-gray-900">Total</dt>
-            <dd className="mt-1 text-sm/6 font-bold text-indigo-700 sm:col-span-2 sm:mt-0">£{(selectedOrder.products.reduce((sum, item) => sum + (item.quantity * item.price), 0) + 1.55).toFixed(2)}</dd>
+            <dd className="mt-1 text-sm/6 font-bold text-indigo-700 sm:col-span-2 sm:mt-0">£{(selectedOrder.line_items.reduce((sum, item) => sum + (item.quantity * item.price), 0) + 1.55).toFixed(2)}</dd>
           </div>
           <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
             <dt className="text-sm/6 font-medium text-gray-900">Estimated Profit</dt>
@@ -305,7 +305,7 @@ const AdminOrders = () => {
                     </div>
                     <div>
                         <h3 className="text-sm font-semibold text-gray-600">Total Orders</h3>
-                        <p className="text-2xl font-bold text-gray-900">{orders.length}</p>
+                        <p className="text-2xl font-bold text-gray-900">{orders?.length}</p>
                     </div>
                 </div>
 
@@ -359,12 +359,12 @@ const AdminOrders = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {orders.map((order, i) => (
+                        {orders?.map((order, i) => (
                             <tr key={i} className="hover:bg-gray-50 transition">
                                 <td className="px-6 py-4 border-b border-[#e9ebee]">{order?.id}</td>
                                 <td className="px-6 py-4 border-b border-[#e9ebee]">{new Date(order?.date).toLocaleString('en-GB').slice(0, 17)}</td>
                                 <td className="px-6 py-4 border-b border-[#e9ebee]">
-                                    {order?.products.reduce((sum, pro) => sum + pro.quantity, 0)}
+                                    {order?.line_items.reduce((sum, pro) => sum + pro.quantity, 0)}
                                 </td>
                                 <td className="px-6 py-4 border-b border-[#e9ebee]">£{order?.total_price}</td>
                                 <td className="px-6 py-4 border-b border-[#e9ebee]">{showPay(order)}</td>
