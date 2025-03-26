@@ -7,4 +7,13 @@
        methods: [:get, :post, :put, :patch, :delete, :options, :head],
        credentials: true
    end
+
+   allow do
+    origins "https://minifigs-mania-47c93479337f.herokuapp.com"
+
+    resource "*",
+      headers: :any,
+      methods: [:get, :post, :put, :patch, :delete, :options, :head],
+      credentials: true
+  end
 end
