@@ -22,6 +22,9 @@ Rails.application.configure do
 
   # Disable serving static files from `public/`, relying on NGINX/Apache to do so instead.
   config.public_file_server.enabled = true
+  config.assets.compile = true
+  config.assets.digest = true
+
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
   # config.asset_host = "http://assets.example.com"
