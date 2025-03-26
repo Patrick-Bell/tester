@@ -11,7 +11,6 @@ gem "puma", ">= 5.0"
 
 
 
-
 gem "dotenv-rails", "~> 3.1"
 
 ruby '3.4.1'
@@ -20,6 +19,9 @@ ruby '3.4.1'
   gem 'stripe'
 
   gem 'jwt'
+
+  gem 'propshaft'
+
 
   
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
