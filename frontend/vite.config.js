@@ -18,7 +18,7 @@ export default defineConfig({
   server: {
     historyApiFallback: true,
     proxy: {
-      '/api': 'https://minifigs-mania-47c93479337f.herokuapp.com',
+      '/api': 'http://localhost:3000',
     }
   },
   base: '/'
