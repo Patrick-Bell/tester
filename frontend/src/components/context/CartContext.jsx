@@ -52,6 +52,12 @@ export const CartProvider = ({ children }) => {
     setCart([]);
   };
 
+  const updateQuantity = (id, newQuantity) => {
+    setCart(cart.map(item => 
+      item.id === id ? { ...item, quantity: Math.max(1, newQuantity) } : item
+    ));
+  };
+
   // Context value
   const value = {
     cart,
@@ -59,7 +65,8 @@ export const CartProvider = ({ children }) => {
     removeItemFromCart,
     clearCart,
     handleCartNumber,
-    cartNumber
+    cartNumber,
+    updateQuantity
   };
 
   return (

@@ -12,6 +12,7 @@ import Refund from "./components/refund/RefundPage"
 import AboutPage from './components/about/AboutPage'
 import NotFound from "./components/not_found/NotFound"
 import UserSidebar from './components/user_dashboard/Sidebar'
+import CartPage from "./components/cart/CartPage"
 
 const App = () => {
 
@@ -27,6 +28,7 @@ const App = () => {
     <Route path="/refund" element={<Refund />}></Route>
     <Route path="/about" element={<AboutPage />}></Route>
     <Route path="*" element={<NotFound />}></Route>
+    <Route path="/cart" element={<CartPage />}></Route>
 
     <Route path="/admin" element={<Sidebar />}></Route>   
 

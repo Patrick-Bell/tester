@@ -17,7 +17,6 @@ const BestSells = () => {
 
     const fetchProducts = async () => {
         try{
-          console.log("API URL:", import.meta.env.VITE_RAILS_ENV === 'development' ? 'http://localhost:3000' : import.meta.env.VITE_API_BASE_URL)  // Debugging
             const response = await getProducts()
             setProducts(response.slice(0, 6))
                             

@@ -27,6 +27,7 @@ class ProductsController < ApplicationController
   # PATCH/PUT /products/1
   def update
     if @product.update(product_params)
+      Rails.logger.debug("params: #{params.inspect}")
       render json: @product
     else
       render json: @product.errors, status: :unprocessable_entity
@@ -48,6 +49,6 @@ class ProductsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def product_params
-      params.expect(product: [ :name, :image, :price, :stock, :category, :height, :weight, :tag, :sale_price, :accessories, :active ])
+      params.require(:product).permit(:active, :name, :image, :price, :stock, :category, :height, :weight, :tag, :sale_price, :accessories)
     end
 end

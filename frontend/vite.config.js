@@ -21,5 +21,5 @@ export default defineConfig({
       '/api': process.env.VITE_RAILS_ENV === 'development' ? 'http://localhost:5173' : 'https://minifigs-mania-47c93479337f.herokuapp.com/',
     }
   },
-  base: '/assets/'
+  base: '/'
 });
