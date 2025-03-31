@@ -13,7 +13,8 @@ export default defineConfig({
     svgr(),
   ], 
   build: {
-    outDir: '../public'
+    outDir: '../public',
+    assetsDir: 'assets'
   },
   server: {
     historyApiFallback: true,
@@ -21,5 +22,5 @@ export default defineConfig({
       '/api': process.env.VITE_RAILS_ENV === 'development' ? 'http://localhost:3000' : 'https://minifigs-mania-47c93479337f.herokuapp.com',
     }
   },
-  base: '/'
+  base: '/assets/'
 });
