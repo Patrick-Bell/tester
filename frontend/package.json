@@ -8,7 +8,7 @@
     "frontend": "vite dev",
     "backend": "bundle exec rails s -b '0.0.0.0' -p 3000",
     "build": "vite build",
-    "heroku-postbuild": "bundle install && cd ../frontend && npm install && npm run build",
+    "heroku-postbuild": "npm install && npm run build",
     "postinstall": "npm run build && cp -r build ../public"
 
   },
