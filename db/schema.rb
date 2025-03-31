@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_03_26_192837) do
+ActiveRecord::Schema[7.2].define(version: 2025_03_31_112343) do
   create_schema "auth"
   create_schema "extensions"
   create_schema "graphql"
@@ -40,6 +40,14 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_26_192837) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "images", force: :cascade do |t|
+    t.bigint "product_id", null: false
+    t.string "url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["product_id"], name: "index_images_on_product_id"
+  end
+
   create_table "line_items", force: :cascade do |t|
     t.bigint "order_id", null: false
     t.string "name"
@@ -48,7 +56,9 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_26_192837) do
     t.string "image"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "product_id", null: false
     t.index ["order_id"], name: "index_line_items_on_order_id"
+    t.index ["product_id"], name: "index_line_items_on_product_id"
   end
 
   create_table "orders", force: :cascade do |t|
@@ -73,7 +83,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_26_192837) do
 
   create_table "products", force: :cascade do |t|
     t.string "name"
-    t.string "image"
     t.float "price"
     t.integer "stock"
     t.string "team"
@@ -114,5 +123,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_26_192837) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "images", "products"
   add_foreign_key "line_items", "orders"
+  add_foreign_key "line_items", "products"
 end

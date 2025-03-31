@@ -3,14 +3,16 @@ class ProductsController < ApplicationController
 
   # GET /products
   def index
-    @products = Product.all
-
-    render json: @products
+    @products = Product.includes(:images).all
+  
+    # You can format the response to include images within the product object if needed
+    render json: @products, include: :images
   end
+  
 
   # GET /products/1
   def show
-    render json: @product, include: :reviews
+    render json: @product, include: [:reviews, :images]
   end
 
   # POST /products
@@ -49,6 +51,6 @@ class ProductsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def product_params
-      params.require(:product).permit(:active, :name, :image, :price, :stock, :category, :height, :weight, :tag, :sale_price, :accessories)
+      params.require(:product).permit(:active, :name, :price, :stock, :category, :height, :weight, :tag, :sale_price, :accessories)
     end
 end

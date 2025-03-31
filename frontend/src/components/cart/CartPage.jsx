@@ -5,6 +5,7 @@ import NewReleases from '../front_page/NewReleases';
 import Footer from '../front_page/Footer';
 import { useCart } from '../context/CartContext';
 import { CreditCard, Lock, } from "lucide-react"
+import axios from 'axios'
 
 
 import ApplePay from '../assets/apple-pay.png'
@@ -30,6 +31,10 @@ const CartPage = () => {
   const calculateSubtotal = () => {
     return cart.reduce((total, item) => total + (item.price * item.quantity), 0).toFixed(2);
   };
+
+  const calculateNumberOfItems = () => {
+    return cart.reduce((sum, item) => sum + item.quantity, 0)
+  }
 
   const calculateWeight = () => {
     return (cart.reduce((sum, item) => sum + item.quantity * 0.17, 0) * 100).toFixed(0)
@@ -67,7 +72,23 @@ const CartPage = () => {
     setSelectedProduct(null)
     setOpen(false)
   }
+
+  const jobsPage = () => {
+    window.location.href = '/products'
+  }
   
+  const handleCheckout = async () => {
+    try{
+      console.log('Checking out...')
+      console.log(cart, 'cart to checkout')
+      const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/create-checkout-session`, { cart: cart } )
+      console.log(response.data)
+
+      window.location.href = response.data.url
+    }catch(e){
+      console.log(e)
+    }
+  }
 
 
   return (
@@ -81,7 +102,7 @@ const CartPage = () => {
         <div className="lg:col-span-2 space-y-6">
           <div className="flex justify-between items-center border-b border-gray-200 pb-4">
             <h1 className="text-3xl font-extrabold text-gray-900">Your Cart</h1>
-            <p className="text-gray-600">{cart.length} Items</p>
+            <p className="text-gray-600">{calculateNumberOfItems()} Items</p>
           </div>
           {cart.length > 0 ? (
             <>
@@ -92,7 +113,7 @@ const CartPage = () => {
             >
               <div className="flex flex-col md:flex-row items-center p-4 space-y-4 md:space-y-0 md:space-x-6">
                 <img 
-                  src={item.image} 
+                  src={item.images[0].url} 
                   alt={item.name} 
                   className="w-28 h-28 object-cover rounded-md border border-gray-200"
                 />
@@ -152,7 +173,7 @@ const CartPage = () => {
             </>
 
           ):(
-            <p className='text-gray-400 text-sm'>Your cart is empty. Click <span className='text-indigo-500 cursor-pointer'>here</span> to view all products.</p>
+            <p className='text-gray-400 text-sm'>Your cart is empty. Click <span onClick={() => jobsPage()} className='text-indigo-500 cursor-pointer'>here</span> to view all products.</p>
           )}
           
         </div>
@@ -163,7 +184,7 @@ const CartPage = () => {
           <div className='flex pb-4 gap-3 max-w-100 overflow-auto'>
             {cart.map((item, i) => (
                 <>
-                <img className='h-20 border border-gray-200 rounded-md relative' src={item.image} />
+                <img className='h-20 border border-gray-200 rounded-md relative' src={item.images[0].url} />
                 </>
             ))}
           </div>
@@ -198,7 +219,7 @@ const CartPage = () => {
                 </button>
               </div>
               
-              <button className="w-full bg-indigo-600 text-white py-3 rounded-md hover:bg-indigo-700 transition-all duration-300 ease-in-out cursor-pointer">
+              <button onClick={() => handleCheckout()} className="w-full bg-indigo-600 text-white py-3 rounded-md hover:bg-indigo-700 transition-all duration-300 ease-in-out cursor-pointer">
                 Checkout with Stripe
               </button>
             </div>
@@ -240,7 +261,7 @@ const CartPage = () => {
                     <h3 className="text-lg font-semibold">Fast Delivery</h3>
                     </div>
                 </div>
-                    <p className='mt-1 text-sm text-gray-400'>Shipped within 24 hours and with you within 5 working days!</p>
+                    <p className='mt-1 text-sm text-gray-400'>Shipped within 24 hours and delivered within 5 working days!</p>
              </div>
 
 

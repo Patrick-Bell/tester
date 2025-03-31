@@ -11,9 +11,10 @@ const RelatedProducts = ({ product, products, handleAddToCart }) => {
     try {
       const response = await getProducts();
       const products = response;
+      const validProducts = products.filter(item => item.active)
       
       // Filter products to find those in the same category and excluding the current product
-      const relatedProducts = products?.filter(
+      const relatedProducts = validProducts?.filter(
         (p) => p.category.toLowerCase() === product.category.toLowerCase() && p.id !== product.id
       );
       
@@ -43,7 +44,7 @@ const RelatedProducts = ({ product, products, handleAddToCart }) => {
             <div key={relatedProduct.id} className="border border-gray-200 rounded-lg overflow-hidden transition-shadow duration-300">
               <img
                 className="w-40 sm:w-32 md:w-60 lg:w-48 xl:w-full object-cover mx-auto"
-                src={relatedProduct.image}
+                src={relatedProduct.images[0].url}
                 alt={relatedProduct.name}
               />
               <div className="p-4">

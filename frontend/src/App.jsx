@@ -13,6 +13,10 @@ import AboutPage from './components/about/AboutPage'
 import NotFound from "./components/not_found/NotFound"
 import UserSidebar from './components/user_dashboard/Sidebar'
 import CartPage from "./components/cart/CartPage"
+import Contact from "./components/contact/Contact"
+import FAQPage from "./components/contact/FAQPage"
+import ShippingPage from "./components/contact/ShippingPage"
+import PrivacyPolicy from "./components/contact/PrivacyPolicy"
 
 const App = () => {
 
@@ -29,6 +33,10 @@ const App = () => {
     <Route path="/about" element={<AboutPage />}></Route>
     <Route path="*" element={<NotFound />}></Route>
     <Route path="/cart" element={<CartPage />}></Route>
+    <Route path="/contact" element={<Contact />}></Route>
+    <Route path="/frequently-asked-questions" element={<FAQPage />}></Route>
+    <Route path="/shipping" element={<ShippingPage />}></Route>
+    <Route path="/privacy-policy" element={<PrivacyPolicy />}></Route>
 
     <Route path="/admin" element={<Sidebar />}></Route>   
 

@@ -11,6 +11,7 @@ import { PaperClipIcon } from '@heroicons/react/20/solid'
 import { FaCircle } from "react-icons/fa";
 import AdminUpdateOrderSelect from "./AdminUpdateOrderSelect";
 import { Toaster, toast } from 'sonner';
+import AdminImageSection from "./AdminImageSection";
 
 
 const AdminInventory = () => {
@@ -26,13 +27,13 @@ const AdminInventory = () => {
     stock: "",
     category: "",
     tag: "",
-    image: "",
     height: 4,
     weight: 2.5,
     accessories: ""
   });
 
   const [addProductSection, setAddProductSection] = useState(false);
+  const [ImageSection, setImageSection] = useState(false)
 
   const fetchProducts = async () => {
     const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/products`);
@@ -84,7 +85,6 @@ const AdminInventory = () => {
         stock: "",
         category: "",
         tag: "",
-        image: "",
         height: 4,
         weight: 2.5,
         accessories: ""
@@ -121,12 +121,24 @@ const AdminInventory = () => {
     }
 };
 
+const handleImageSection = (product) => {
+  setSelectedProduct(product)
+  setImageSection(true)
+  console.log(product, 'rendering image section for this product')
+}
+
+const handleImageBack = () => {
+  setSelectedProduct(null)
+  setImageSection(false)
+}
+
 
 
   return (
     <div className="p-6 bg-white rounded-lg border border-[#e9ebee]">
       <AdminDeleteProductModal open={showModal} setOpen={setShowModal} deleteProduct={deleteProduct} product={seletedProduct} />
       <Toaster />
+      
       {/* Stats Cards */}
       {editProduct ? (
         <>
@@ -215,16 +227,7 @@ const AdminInventory = () => {
                     setSelected={(value) => setEditProduct({ ...editProduct, tag: value })}
                 />
           </div>
-          <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-            <dt className="text-sm/6 font-medium text-gray-900">Image</dt>
-            <input 
-              type="text"
-              className="mt-1 text-sm text-gray-700 sm:col-span-2 sm:mt-0 border border-gray-300 rounded-md p-2"
-              value={editProduct.image || ''}  // ✅ Ensures it doesn't crash on undefined values
-              onChange={(e) => setEditProduct({ ...editProduct, image: e.target.value })}  // ✅ Updates state on change
-            />
-            <img className="w-20 border border-[#e9ebee] rounded-md" src={editProduct.image} />
-          </div>
+         
         </dl>
       </div>
       <button onClick={() => editOneProduct(editProduct?.id)} className="w-full bg-indigo-600 p-2 rounded-md text-white hover:bg-indigo-700 cursor-pointer transition-all">Confirm</button>
@@ -348,22 +351,17 @@ const AdminInventory = () => {
               onChange={(e) => setNewProduct({ ...newProduct, accessories: e.target.value })}  // ✅ Updates state on change
             />
           </div>
-          <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-            <dt className="text-sm/6 font-medium text-gray-900">Image</dt>
-            <input 
-              type="text"
-              className="mt-1 text-sm text-gray-700 sm:col-span-2 sm:mt-0 border border-gray-300 rounded-md p-2"
-              value={newProduct.image || ''}  // ✅ Ensures it doesn't crash on undefined values
-              onChange={(e) => setNewProduct({ ...newProduct, image: e.target.value })}  // ✅ Updates state on change
-            />
-            <img className="w-20 border border-[#e9ebee] rounded-md" src={newProduct.image} />
-          </div>
+          
         </dl>
       </div>
       <button onClick={() => addProduct()} className="w-full bg-indigo-600 p-2 rounded-md text-white hover:bg-indigo-700 cursor-pointer transition-all">Confirm</button>
     </div>
     </>
           </>
+      ):ImageSection ? (
+        <>
+        <AdminImageSection product={seletedProduct} handleImageBack={handleImageBack} />
+        </>
       ):(
         <>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
@@ -433,7 +431,7 @@ const AdminInventory = () => {
               products.map((product, i) => (
                     <tr key={i} className={`hover:bg-gray-50 transition ${product.stock === 0 ? 'bg-red-50' : ''}`}>
                     <td className="px-6 py-4 border-b border-[#e9ebee] flex items-center gap-3">
-                    <img className="w-10 h-10 object-cover rounded" src={product.image} alt={product.name} />
+                    <img className="w-10 h-10 object-cover rounded" src={product?.images[0]?.url ? product?.images[0]?.url : ''} alt={product.name} />
                     <span className="text-gray-700 font-medium">{product.name}</span>
                   </td>
                   <td className="px-6 py-4 border-b border-[#e9ebee]">{product.category || "N/A"}</td>
@@ -441,6 +439,7 @@ const AdminInventory = () => {
                   <td className="px-6 py-4 border-b border-[#e9ebee]">{product.stock}</td>
                   <td className="px-6 py-4 border-b border-[#e9ebee]">
                     <span onClick={(() => setEditProduct(product))} className="text-indigo-600 cursor-pointer hover:text-indigo-700">Edit</span>
+                    <span onClick={() => handleImageSection(product)} className="ml-3 text-green-600 cursor-pointer hover:text-green-700">Images</span>
                     <span onClick={() => openDeleteModal(product)} className="ml-3 text-red-600 cursor-pointer hover:text-red-700">Delete</span>
                   </td>
                   <td className="px-6 py-4 border-b border-[#e9ebee]">

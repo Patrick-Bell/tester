@@ -16,19 +16,19 @@ order = Order.create!(
 
 # Create associated line items
 products = [
-  { name: "Reus", image: "https://minifigurebricks.com/cdn/shop/files/e4dc5256-89df-49db-87b8-16c5202f127a.jpg", price: 3.25, quantity: 1 },
-  { name: "Zlatan - Inter Milan", image: "https://i.ebayimg.com/images/g/FsIAAOSwvNln2XmJ/s-l1600.webp", price: 4.49, quantity: 1 },
-  { name: "Saka", image: "https://minifigurebricks.com/cdn/shop/files/93d1a581-535b-4125-a678-dfe0ec2b1170.jpg", price: 4.49, quantity: 1 },
-  { name: "Kane", image: "https://minifigurebricks.com/cdn/shop/files/d8faa921-28c2-4ec6-ab14-940b2331efe2.jpg", price: 4.49, quantity: 2 },
-  { name: "Courtois", image: "https://minifigurebricks.com/cdn/shop/files/858eeadd-3d78-4d4f-b7c9-79a422f74959_7ed68797-82f9-474c-ac2e-49289edc90ab.jpg", price: 4.49, quantity: 1 }
+  { name: "Reus", image: "https://minifigurebricks.com/cdn/shop/files/e4dc5256-89df-49db-87b8-16c5202f127a.jpg", price: 3.25, quantity: 1, product_id: 180 },
+  { name: "Zlatan - Inter Milan", image: "https://i.ebayimg.com/images/g/FsIAAOSwvNln2XmJ/s-l1600.webp", price: 4.49, quantity: 1, product_id: 181 },
+  { name: "Saka", image: "https://minifigurebricks.com/cdn/shop/files/93d1a581-535b-4125-a678-dfe0ec2b1170.jpg", price: 4.49, quantity: 1, product_id: 182  },
+  { name: "Kane", image: "https://minifigurebricks.com/cdn/shop/files/d8faa921-28c2-4ec6-ab14-940b2331efe2.jpg", price: 4.49, quantity: 2, product_id: 183  },
+  { name: "Courtois", image: "https://minifigurebricks.com/cdn/shop/files/858eeadd-3d78-4d4f-b7c9-79a422f74959_7ed68797-82f9-474c-ac2e-49289edc90ab.jpg", price: 4.49, quantity: 1, product_id: 184  }
 ]
 
 products.each do |product|
   order.line_items.create!(product)
 end
-
 =end
 
+=begin
 # Create products based on order line items
 Product.create!([
   {
@@ -130,4 +130,18 @@ Product.create!([
     image: "https://minifigurebricks.com/cdn/shop/files/K2235.jpg?crop=center&height=720&v=1737049230&width=720",
     active: true
   },
+])
+
+=end
+
+Review.create!([
+  {
+    name: 'John',
+    header: 'Perfect',
+    text: 'Arrived promptly and seller was helpful.',
+    rating: 5,
+    platform: 'eBay',
+    reviewed: false,
+    product_id: 217,
+  }
 ])

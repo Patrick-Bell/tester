@@ -46,7 +46,7 @@ const ProductCard = ({ product }) => {
   <div className="absolute top-1 right-1">{displayTag(product)}</div>
           <img
             alt={product.name}
-            src={product.image}
+            src={product?.images[0]?.url || ''}
             className="aspect-square w-full rounded-md bg-gray-600 object-cover group-hover:opacity-75"
           />
           <div className="flex flex-col flex-grow justify-between p-2">

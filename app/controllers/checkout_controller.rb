@@ -7,17 +7,19 @@ class CheckoutController < ApplicationController
       cart = params[:cart] || []
       Rails.logger.info("Received cart: #{cart.inspect}")
   
-      line_items = cart.map do |item|
+      line_items = params[:cart].map do |item|
+        images = item["images"].reject { |img| img["url"].blank? }
+    
         {
           price_data: {
             currency: 'gbp',
             product_data: {
-              name: item['name'],
-              images: [item['image']] # Stripe expects an array
+              name: item["name"],
+              images: images.map { |img| img["url"] }
             },
-            unit_amount: (item['price'].to_f * 100).to_i # Convert price to cents
+            unit_amount: (item['price'] * 100).to_i,  # Convert to cents
           },
-          quantity: item['quantity'].to_i
+          quantity: item["quantity"]
         }
       end
   
@@ -25,8 +27,43 @@ class CheckoutController < ApplicationController
         payment_method_types: ['card'],
         line_items: line_items, # ✅ Added line_items here
         mode: 'payment',
+        shipping_address_collection: {
+          allowed_countries: ['GB'] # Add countries where you ship
+        },
+        shipping_options: [
+            {
+              shipping_rate_data: {
+                type: "fixed_amount",
+                fixed_amount: {
+                  amount: 500, # $5.00
+                  currency: "gbp"
+                },
+                display_name: "2-3 days",
+                delivery_estimate: {
+                  minimum: { unit: "business_day", value: 5 },
+                  maximum: { unit: "business_day", value: 7 }
+                }
+              }
+            },
+            {
+              shipping_rate_data: {
+                type: "fixed_amount",
+                fixed_amount: {
+                  amount: 1500, # $15.00
+                  currency: "gbp"
+                },
+                display_name: "Express Shipping (1-2 days)",
+                delivery_estimate: {
+                  minimum: { unit: "business_day", value: 1 },
+                  maximum: { unit: "business_day", value: 2 }
+                }
+              }
+            }
+          ],
         success_url: 'http://localhost:5173/success',
         cancel_url: 'http://localhost:5173/cancel',
+        # metadata: { user_id: current_user ? current_user.id : 'guest' }
+    
       )
   
       render json: { url: session.url } # ✅ Send URL to frontend
@@ -70,6 +107,34 @@ class CheckoutController < ApplicationController
     
       head :ok
     end
+
+
+    private
+
+    def update_stock(order)
+      updated = false
+      
+      order.line_items.each do |item|
+        product = Product.find_by(id: item.product_id)
+        
+        if product
+          product.update(stock: product.stock - item.quantity)
+          updated = true 
+        else
+          Rails.logger.warn("⚠️ Product with ID #{item.product_id} not found!")
+        end
+      end
+    
+      if updated
+        render json: { message: 'Stock updated successfully' }, status: :ok
+      else
+        render json: { message: 'No products found or failed to update stock' }, status: :unprocessable_entity
+      end
+    end
+    
+
+
+
     
 
   end

@@ -12,21 +12,6 @@ const ShoppingCartSide = ({ open, setOpen }) => {
     const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
     return total.toFixed(2)
   };
-
-  const handleCheckout = async () => {
-    try{
-      console.log('Checking out...')
-      console.log(cart, 'cart to checkout')
-      const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/create-checkout-session`, { cart: cart } )
-      console.log(response.data)
-
-      window.location.href = response.data.url
-    }catch(e){
-      console.log(e)
-    }
-  }
-  
-
    
     return (
         <>
@@ -67,7 +52,7 @@ const ShoppingCartSide = ({ open, setOpen }) => {
                         {cart.map((product) => (
                           <li key={product.id} className="flex py-6">
                             <div className="size-24 shrink-0 overflow-hidden rounded-md border border-gray-200">
-                              <img alt={product.name} src={product.image} className="size-full object-cover" />
+                              <img alt={product.name} src={product.images[0].url} className="size-full object-cover" />
                             </div>
 
                             <div className="ml-4 flex flex-1 flex-col">
@@ -105,10 +90,10 @@ const ShoppingCartSide = ({ open, setOpen }) => {
                   <p className="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
                   <div className="mt-6">
                     <a
-                      onClick={() => handleCheckout()}
+                      href='/cart'
                       className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-xs hover:bg-indigo-700 cursor-pointer"
                     >
-                      Checkout
+                      View Cart
                     </a>
                   </div>
                   <div className="mt-6 flex justify-center text-center text-sm text-gray-500">

@@ -11,7 +11,8 @@ const RelatedProductsModal = ({ open, setOpen, product }) => {
     const findRelatedProducts = async () => {
         try{
             const response = await getProducts()
-            const products = response.filter(item => item.category === product?.category && item.id !== product.id)
+            const validProducts = response.filter(item => item.active)
+            const products = validProducts.filter(item => item.category === product?.category && item.id !== product.id)
             setRelatedProducts(products)
 
         }catch(e){

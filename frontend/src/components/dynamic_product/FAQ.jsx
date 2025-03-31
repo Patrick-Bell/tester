@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { faqData } from '../api/FAQ';
 
 const FAQSection = () => {
   const [activeTab, setActiveTab] = useState("FAQ");
@@ -11,56 +12,11 @@ const FAQSection = () => {
       [key]: !prev[key]
     }));
   };
-  
-  const faqData = {
-    GENERAL: [
-      {
-        question: "Are these minifigures official LEGO minifigures?",
-        answer: "No, these minifigures are NOT official minifigures."
-      },
-      {
-        question: "Are these minifigures compatible with LEGO?",
-        answer: "Yes, these minifigures are compatible with LEGO but are NOT official lego minifigures."
-      },
-      {
-        question: "Are all the minifigures in new condition?",
-        answer: "Most of our products we sell are new, however there are some that have been opened from its original packaging. Please check the product description for more information."
-      },
-    ],
-    SHIPPING: [
-      {
-        question: "Do you ship internationally?",
-        answer: "No. We currently only ship within the UK. However, we are planning to expand our shipping locations in the future."
-      },
-      {
-        question: "How quick is the delivery?",
-        answer: "We ship products within 24 hours of purchase. Your package will typically be with you within 7 working days. If there are holidays, please be aware that this may increase delivery times."
-      },
-      {
-        question: "How can I track my order?",
-        answer: "Once your order ships, you'll receive a confirmation email with a tracking number and instructions on how to monitor your delivery."
-      },
-      {
-        question: "How much does shipping cost?",
-        answer: "Shipping costs are calculated at checkout based on the weight of your order and your location. Typically, a few minifigures will cost around £1.10 to ship, where larger orders will cost arounf £2.20."
-      }
-    ],
-    RETURNS: [
-      {
-        question: "What is your return policy?",
-        answer: "We accept returns within 30 days of delivery. Items must be in original condition and packaging."
-      },
-      {
-        question: "How do I request a return?",
-        answer: "To initiate a return, please contact our customer service team through the Contact page or email returns@minifigstore.example.com with your order number."
-      }
-    ]
-  };
-  
+
   return (
-    <div className="mx-auto px-4 py-8">
+    <div className="mx-auto px-4 py-8 max-w-7xl">
       {activeTab === "FAQ" && (
-        <div className="bg-white rounded-lg p-6">
+        <div className="rounded-lg p-6">
           
           {Object.entries(faqData).map(([category, questions]) => (
             <div key={category} className="mb-8">

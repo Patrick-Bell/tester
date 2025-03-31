@@ -452,7 +452,7 @@ const Navbar = () => {
             >
               <div className="flex items-center">
                 {/* Product Image */}
-                <img className="w-16 h-16 object-cover rounded-md" src={product.image} alt={product.name} />
+                <img className="w-16 h-16 object-cover rounded-md" src={product.images[0].url} alt={product.name} />
 
                 {/* Product Details */}
                 <div className="ml-3">
