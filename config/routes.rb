@@ -26,6 +26,12 @@ Rails.application.routes.draw do
     # Stripe Checkout
     post 'create-checkout-session', to: 'checkout#create_checkout_session', as: 'create_checkout_session'
     post 'webhooks', to: 'checkout#stripe_webhook', as: 'stripe_webhook'
+
+
+    get "ebay/inventory", to: "ebay#fetch_inventory"
+    post "ebay/sync", to: "ebay#sync_inventory"
+
+
   end
 
   # Catch-all for React Frontend Routing

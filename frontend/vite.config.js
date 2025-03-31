@@ -20,7 +20,8 @@ export default defineConfig({
     historyApiFallback: true,
     proxy: {
       '/api': process.env.VITE_RAILS_ENV === 'development' ? 'http://localhost:3000' : 'https://minifigs-mania-47c93479337f.herokuapp.com',
-    }
+    },
+    historyApiFallback: true,
   },
   base: '/'
 });

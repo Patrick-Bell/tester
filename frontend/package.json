@@ -4,13 +4,12 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "start": "vite dev",
-    "frontend": "vite dev",
-    "backend": "bundle exec rails s -b '0.0.0.0' -p 3000",
-    "build": "vite build",
-    "heroku-postbuild": "npm install && npm run build",
-    "postinstall": "npm run build && cp -r build ../public"
-
+  "start": "vite dev",
+  "frontend": "vite dev",
+  "backend": "bundle exec rails s -b '0.0.0.0' -p 3000",
+  "build": "vite build",
+  "heroku-postbuild": "npm install && npm run build",
+  "postinstall": "npm run build"
   },
   "dependencies": {
     "@fullcalendar/daygrid": "^6.1.15",
