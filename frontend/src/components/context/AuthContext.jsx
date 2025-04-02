@@ -22,6 +22,7 @@ export const AuthProvider = ({ children }) => {
             toast.success('Successfully Logged in');
             setUser(response?.data?.user);
             console.log('user', response.data);
+            window.location.reload()
 
             setAuthenticated(true); // ✅ Set authentication state
 
@@ -79,9 +80,25 @@ export const AuthProvider = ({ children }) => {
             console.log('checking status', response.data);
         } catch (e) {
             console.error('Auth check error:', e);
-            setAuthenticated(false);
+            
         }
     };
+
+    const logout = async () => {
+        try{
+            const response = await axios.delete(
+                `${import.meta.env.VITE_API_BASE_URL}/api/logout`,
+                { withCredentials: true }
+            );
+            console.log(response.data)
+            setAuthenticated(false);
+            setIsAdmin(false)
+            setIsUser(false)
+            setUser(null)
+        }catch(e){
+            console.log(e)
+        }
+    }
 
     useEffect(() => {
         checkAuth();

@@ -23,6 +23,7 @@ const MainPage = () => {
         <ComingSoon />
         <Offer />
         <BestSells />
+        <NewReleases />
         </div>
         <Footer />
         </>

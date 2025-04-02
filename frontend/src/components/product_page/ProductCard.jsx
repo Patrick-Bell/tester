@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import ShoppingCartSide from "./ShoppingCartSide"
 import { useCart } from "../context/CartContext"
+import { toast } from 'sonner'
 
 const ProductCard = ({ product }) => {
 
@@ -9,7 +10,16 @@ const ProductCard = ({ product }) => {
 
     const handleClick = (product) => {
         addItemToCart(product)
-        setOpen(true)
+        toast.success(`Added to Cart`, {
+          description: `You have successfully added ${product.name} to your cart.`,
+          action: {
+            label: 'View Cart', // The label of the action button
+            onClick: () => {
+              // Assuming you have a function to navigate or open the cart
+              setOpen(true);
+            },
+          },
+        });
     }
 
     const viewProduct = (id) => {

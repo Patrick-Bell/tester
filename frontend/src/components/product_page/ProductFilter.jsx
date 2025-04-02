@@ -24,22 +24,6 @@ import { useLocation } from 'react-router-dom'
 
 
 const ProductFilter = () => {
-  
-
-  const [products, setProducts] = useState([])
-  const [show, setShow] = useState(20)
-  const [allFilters, setAllFilters] = useState({
-    category: [],
-    tag: [],
-  })
-
-  const [isLoading, setIsLoading] = useState(true)
-
-  const allCategories = products.map(product => product.category)
-  const uniqueCategories = [...new Set(allCategories)]
-
-  const allTags = products.map(product => product.tag)
-  const uniqueTags = [...new Set(allTags)]
 
   const fetchProducts = async () => {
     try{
@@ -59,6 +43,31 @@ const ProductFilter = () => {
   useEffect(() => {
     fetchProducts()
   }, [])
+  
+  const useQuery = () => {
+    return new URLSearchParams(useLocation().search)
+  }
+  const query = useQuery()
+  const category = query.get("category") // Get the 'category' query param
+  console.log("Category:", category)
+
+
+  const [products, setProducts] = useState([])
+  const [show, setShow] = useState(20)
+  const [allFilters, setAllFilters] = useState({
+    category: category ? [category] : [], // Corrected
+    tag: [],
+  })
+
+
+  const [isLoading, setIsLoading] = useState(true)
+
+  const allCategories = products.map(product => product.category)
+  const uniqueCategories = [...new Set(allCategories)]
+
+  const allTags = products.map(product => product.tag)
+  const uniqueTags = [...new Set(allTags)]
+
 
 
 

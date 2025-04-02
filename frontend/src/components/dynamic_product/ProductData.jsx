@@ -2,11 +2,26 @@ import { MinusIcon, PlusIcon, TruckIcon, CheckIcon } from '@heroicons/react/20/s
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react';
 import { useState, useEffect } from 'react';
 import { useCart } from '../context/CartContext'
+import { toast } from 'sonner'
 
 const ProductData = ({ product, rating, validReviews, isLoading }) => {
     const [selectedImage, setSelectedImage] = useState('');
 
     const { addItemToCart } = useCart()
+
+    const handleClick = (product) => {
+        addItemToCart(product)
+        toast.success(`Added to Cart`, {
+            description: `You have successfully added ${product.name} to your cart.`,
+            action: {
+              label: 'View Cart', // The label of the action button
+              onClick: () => {
+                // Assuming you have a function to navigate or open the cart
+                setOpen(true);
+              },
+            },
+          });
+    }
 
 useEffect(() => {
     if (product?.images?.length) {
@@ -137,7 +152,7 @@ useEffect(() => {
                 {isLoading ? (
                     <div className="h-12 w-32 bg-gray-300 animate-pulse rounded"></div>
                 ) : (
-                    <button onClick={() => addItemToCart(product)} className="bg-indigo-600 text-white px-4 py-2 rounded-lg shadow-md hover:bg-indigo-700 transition">
+                    <button onClick={() => handleClick(product)} className="bg-indigo-600 text-white px-4 py-2 rounded-lg shadow-md hover:bg-indigo-700 transition cursor-pointer">
                         Add to Cart
                     </button>
                 )}

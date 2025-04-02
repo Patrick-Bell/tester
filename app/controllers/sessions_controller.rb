@@ -9,7 +9,7 @@ class SessionsController < ApplicationController
     def create
         user = User.find_by(email: params[:user][:email])
     
-        if user&.authenticate?(params[:user][:password])
+        if user&.authenticate(params[:user][:password]) # NOT authenticate?
           token = JWT.encode({ user_id: user.id, email: user.email, exp: 1.hour.from_now.to_i }, JWT_SECRET_KEY, 'HS256')
     
           Rails.logger.debug "Generated Token: #{token}"

@@ -9,7 +9,7 @@ Rails.application.routes.draw do
     
     # Check auth status (Custom route)
     post 'login', to: 'sessions#create'
-    post 'signup', to: 'registrations#creare'
+    post 'signup', to: 'registrations#create'
     get 'auth_status', to: 'sessions#auth_status'
     get 'current-user', to: 'application#current_user', as: 'current_user'
 

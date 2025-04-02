@@ -51,7 +51,7 @@ const navigation = {
           id: 'sports',
           name: 'Sports',
           items: [
-            { name: 'Football (most popular)', href: `${import.meta.env.VITE_API_BASE_URL}/products?category=football` },
+            { name: 'Football (most popular)', href: `http://localhost:5173/products?category=football` },
             { name: 'Basketball', href: '#' },
             { name: 'Other', href: '#' },
           ],
@@ -63,7 +63,7 @@ const navigation = {
             { name: 'Star Wars', href: '#' },
             { name: 'Marvel', href: '#' },
             { name: 'Teenage Mutant Ninja Turtles', href: '#' },
-            { name: 'Sonic', href: '#' },
+            { name: 'Sonic', href: 'http://localhost:5173/products?category=sonic' },
             { name: 'Simpsons', href: '#' },
           ],
         },
