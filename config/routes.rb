@@ -4,10 +4,9 @@ Rails.application.routes.draw do
   get 'home/index'
 
 
-  # API Routes
   scope '/api' do
     
-    # Check auth status (Custom route)
+    # Auth Routes
     post 'login', to: 'sessions#create'
     post 'signup', to: 'registrations#create'
     get 'auth_status', to: 'sessions#auth_status'
@@ -15,7 +14,7 @@ Rails.application.routes.draw do
 
     get 'my-orders', to: 'orders#user_orders', as: 'user_orders'
 
-    # API Resources
+
     resources :orders
     resources :products
     resources :reviews
@@ -28,14 +27,9 @@ Rails.application.routes.draw do
     post 'webhooks', to: 'checkout#stripe_webhook', as: 'stripe_webhook'
 
 
-    get "ebay/inventory", to: "ebay#fetch_inventory"
-    post "ebay/sync", to: "ebay#sync_inventory"
-
-
   end
 
   # Catch-all for React Frontend Routing
-
   get '*path', to: 'home#index', constraints: ->(req) { !req.xhr? && req.format.html? }
 
 
