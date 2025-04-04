@@ -1,3 +1,5 @@
+=begin
+
 require 'http'
 require 'json'
 
@@ -43,3 +45,6 @@ class EbayController < ApplicationController
     JSON.parse(response.body.to_s)
   end
 end
+
+
+=end
