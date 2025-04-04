@@ -18,6 +18,8 @@ ruby '3.4.1'
 
   gem 'stripe'
 
+  gem 'http'
+
   gem 'jwt'
 
   gem 'propshaft'
