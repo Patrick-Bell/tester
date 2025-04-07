@@ -28,6 +28,13 @@ class ProductsController < ApplicationController
 
   # PATCH/PUT /products/1
   def update
+    # Track if the product's active status is changing from false to true
+      if @product.active != product_params[:active] && product_params[:active] == true
+        # Trigger the email to be sent when the product is activated
+        ProductMailer.new_product_listed(@product).deliver_later
+    end
+  
+    # Attempt to update the product
     if @product.update(product_params)
       Rails.logger.debug("params: #{params.inspect}")
       render json: @product
@@ -35,7 +42,7 @@ class ProductsController < ApplicationController
       render json: @product.errors, status: :unprocessable_entity
     end
   end
-
+  
   # DELETE /products/1
   def destroy
     @product.destroy!
