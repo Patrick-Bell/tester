@@ -327,7 +327,6 @@
         <div class="product-header">
         <div class="flex">
           <h2><%= @product.name %></h2>
-          <span class="status-tag">NEW</span>
           </div>
         </div>
         
@@ -372,9 +371,9 @@
               <span class="price-label">Price: </span>
               <span class="price-value">
                 <% if @product.sale_price.present? %>
-                  $<%= @product.sale_price %> <span class="regular-price">$<%= @product.price %></span>
+                  £<%= @product.sale_price %> <span class="regular-price">£<%= @product.price %></span>
                 <% else %>
-                  $<%= @product.price %>
+                  £<%= @product.price %>
                 <% end %>
               </span>
             </div>
@@ -411,11 +410,7 @@
         <tr>
           <td class="info-label">Product Visibility:</td>
           <td>
-            <% if @product.respond_to?(:active?) && @product.active? %>
               <span class="badge badge-success">Published</span>
-            <% else %>
-              <span class="badge badge-warning">Draft</span>
-            <% end %>
           </td>
         </tr>
       </table>

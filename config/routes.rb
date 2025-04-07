@@ -21,6 +21,8 @@ Rails.application.routes.draw do
     resources :users
     resources :events
     resources :images
+    resources :promotions
+
 
     # Stripe Checkout
     post 'create-checkout-session', to: 'checkout#create_checkout_session', as: 'create_checkout_session'

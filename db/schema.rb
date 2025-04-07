@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_04_01_121142) do
+ActiveRecord::Schema[7.2].define(version: 2025_04_07_110945) do
   create_schema "auth"
   create_schema "extensions"
   create_schema "graphql"
@@ -95,6 +95,19 @@ ActiveRecord::Schema[7.2].define(version: 2025_04_01_121142) do
     t.float "bought"
     t.boolean "active", default: false
     t.string "notes"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "promotions", force: :cascade do |t|
+    t.string "code"
+    t.integer "percent_off"
+    t.string "duration"
+    t.string "coupon_id"
+    t.datetime "expires_at"
+    t.boolean "active", default: false
+    t.integer "usage_limit"
+    t.integer "redeemed_count", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

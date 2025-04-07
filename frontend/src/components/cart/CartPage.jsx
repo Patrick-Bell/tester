@@ -6,6 +6,7 @@ import Footer from '../front_page/Footer';
 import { useCart } from '../context/CartContext';
 import { CreditCard, Lock, } from "lucide-react"
 import axios from 'axios'
+import { toast } from 'sonner'
 
 
 import ApplePay from '../assets/apple-pay.png'
@@ -26,6 +27,9 @@ const CartPage = () => {
     const { cart, addItemToCart, updateQuantity, removeItemFromCart } = useCart()
     const [selectedProduct, setSelectedProduct] = useState(null)
     const [open, setOpen] = useState(false)
+    const [code, setCode] = useState('')
+    const [activeCode, setActiveCode] = useState(false)
+    const [promoValue, setPromoValue] = useState(0)
 
 
   const calculateSubtotal = () => {
@@ -55,13 +59,18 @@ const CartPage = () => {
   }
 
   const calculateTotal = () => {
-    const subTotal = calculateSubtotal()
-    const shippingTotal = calculateShipping()
+    const subTotal = calculateSubtotal();
+    const shippingTotal = calculateShipping();
 
-    console.log('subtotal', subTotal, 'shipping total', shippingTotal)
+    if (activeCode) {
+      const promoValue = subTotal * (code.percent_off / 100)
+      return (Number(subTotal) + Number(shippingTotal) - promoValue).toFixed(2);
+    }
 
-    return (Number(subTotal) + Number(shippingTotal)).toFixed(2)
-  }
+  
+    return (Number(subTotal) + Number(shippingTotal)).toFixed(2);
+  };
+  
 
   const showRelatedProducts = (product) => {
     setSelectedProduct(product)
@@ -78,16 +87,61 @@ const CartPage = () => {
   }
   
   const handleCheckout = async () => {
-    try{
-      console.log('Checking out...')
-      console.log(cart, 'cart to checkout')
-      const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/create-checkout-session`, { cart: cart } )
-      console.log(response.data)
+    try {
+      console.log('Checking out...');
+      console.log(cart, 'cart to checkout');
+      console.log(code, 'code to checkout');  
+  
+      // Pass cart and promotion as properties inside the data object
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_BASE_URL}/api/create-checkout-session`, 
+        { cart: cart, code: code.code },
+      );
 
-      window.location.href = response.data.url
+      console.log(cart, code)
+  
+      console.log(response.data);
+  
+      // Redirect to Stripe Checkout session
+      window.location.href = response.data.url;
+    } catch (e) {
+      console.error('Error during checkout:', e);
+    }
+  }
+  
+
+  const checkPromoCode = async (code) => {
+    console.log(code)
+    try{
+      const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/promotions`)
+      const promotions = response.data.filter(promo => promo.active === true)
+
+      const promo = promotions.find(promo => promo.code === code)
+      if (promo) {
+        toast.success('Promo code: ' + promo.code + ' applied successfully!')
+        setActiveCode(true)
+        setCode(promo)
+      } else {
+        toast.error('Promotion Code not Valid.')
+      }
+
+
     }catch(e){
       console.log(e)
+      setActiveCode(false)
     }
+  }
+
+  const removePromoCode = () => {
+    setCode('')
+    setActiveCode(false)
+  }
+
+  const calculatePromotion = () => {
+    const total = calculateSubtotal()
+    const promoValue = total * (code.percent_off / 100)
+
+    return promoValue.toFixed(2)
   }
 
 
@@ -201,6 +255,12 @@ const CartPage = () => {
               <span>Shipping</span>
               <span className="font-semibold">£{calculateShipping()}</span>
             </div>
+            {activeCode && (
+              <div className="flex justify-between text-gray-700">
+              <span>Promotion</span>
+              <span className="font-semibold">-£{calculatePromotion()}</span>
+              </div>
+            )}
             <div className="flex justify-between text-xl font-bold text-gray-900 border-t border-gray-200 pt-4">
               <span>Total</span>
               <span>£{calculateTotal()}</span>
@@ -208,16 +268,37 @@ const CartPage = () => {
             
             {/* Promotion Code Section */}
             <div className="pt-4 space-y-4">
-              <div className="flex space-x-2">
-                <input 
-                  type="text" 
-                  placeholder="Enter promotion code" 
-                  className="flex-grow border-2 border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" 
-                />
-                <button className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition-colors">
-                  Apply
-                </button>
-              </div>
+              
+            
+            {!activeCode ? (
+               <div className="flex space-x-2">
+               <input 
+               value={code}
+               onChange={(e) => setCode(e.target.value)}
+                 type="text" 
+                 placeholder="Enter promotion code" 
+                 className="flex-grow border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" 
+               />
+               <button onClick={() => checkPromoCode(code)} className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition-colors">
+                 Apply
+               </button>
+             </div>
+            ) : (
+              <>  
+              <div className='flex justify-between items-center border border-gray-200 rounded-md w-40 p-2'>
+                <div className=''>{code?.code}</div>
+                <button 
+                    className="text-red-500 hover:text-red-700 transition-colors"
+                    onClick={() => removePromoCode()}
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                    </svg>
+                  </button>
+                </div>
+              </>
+            )}
+              
               
               <button onClick={() => handleCheckout()} className="w-full bg-indigo-600 text-white py-3 rounded-md hover:bg-indigo-700 transition-all duration-300 ease-in-out cursor-pointer">
                 Checkout with Stripe

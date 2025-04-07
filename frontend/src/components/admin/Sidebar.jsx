@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Menu, X, Home, Settings, User, Calendar, ToyBrick, PiggyBank, Star } from "lucide-react";
+import { Menu, X, Home, Settings, User, Calendar, ToyBrick, PiggyBank, Star, Percent } from "lucide-react";
 import AdminDashboard from "./AdminDashboard";
 import AdminInventory from "./AdminInventory";
 import AdminCalendar from "./AdminCalendar";
@@ -7,6 +7,8 @@ import SidebarItem from "./SidebarItem";
 import AdminOrders from "./AdminOrders";
 import AdminReviews from "./AdminReviews";
 import AdminUsers from "./AdminUsers";
+import AdminPromo from "./AdminPromo";
+import { CiDiscount1 } from "react-icons/ci";
 
 
 const Sidebar = () => {
@@ -27,6 +29,8 @@ const Sidebar = () => {
         return <AdminReviews />
         case 'Users':
         return <AdminUsers />
+        case 'Promotions':
+        return <AdminPromo />
     }
   }
 
@@ -36,7 +40,8 @@ const Sidebar = () => {
     { id: 3, section: 'Calendar', icon: <Calendar /> },
     { id: 4, section: 'Orders', icon: <PiggyBank /> },
     { id: 5, section: 'Users', icon: <User /> },
-    { id: 6, section: 'Reviews', icon: <Star /> }
+    { id: 6, section: 'Reviews', icon: <Star /> },
+    { id: 7, section: 'Promotions', icon: <Percent />}
   ]
 
 

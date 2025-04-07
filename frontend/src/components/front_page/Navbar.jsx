@@ -71,7 +71,6 @@ const navigation = {
           id: 'other',
           name: 'Other',
           items: [
-            { name: 'Squid Games', href: '#' },
             { name: 'Military', href: '#' },
           ],
         },
@@ -265,7 +264,7 @@ const Navbar = () => {
 
       <header className="relative bg-white">
         <p className="flex h-10 items-center justify-center bg-indigo-600 px-4 text-sm font-medium text-white sm:px-6 lg:px-8">
-          Over 50 products to choose from!
+          Use Promo Code SUMMER25 for 15% of your order!
         </p>
 
         <nav aria-label="Top" className="mx-auto w-full px-4 sm:px-6 lg:px-8">
