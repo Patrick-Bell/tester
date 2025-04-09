@@ -12,6 +12,7 @@ export default defineConfig({
     tailwindcss(),
     svgr(),
   ], 
+  base: '/assets/',
   build: {
     outDir: '../public',
     assetsDir: 'assets',
