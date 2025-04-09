@@ -1,0 +1,8 @@
+{
+    "name": "rails-react-app",
+    "private": true,
+    "scripts": {
+      "heroku-postbuild": "cd frontend && npm install && npm run build"
+    }
+  }
+  

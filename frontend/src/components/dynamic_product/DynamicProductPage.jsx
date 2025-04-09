@@ -9,6 +9,9 @@ import Reviews from "./Reviews";
 import ProductData from "./ProductData";
 import RelatedProducts from "./RelatedProducts";
 import { getOneProduct } from '../routes/ProductRoutes';
+import BestSells from '../front_page/BestSells';
+import ComingSoon from '../front_page/ComingSoon'
+import NewReleases from '../front_page/NewReleases';
 
 const DynamicProductPage = () => {
     const { id } = useParams();
@@ -84,6 +87,9 @@ const DynamicProductPage = () => {
                     )}
                 </div>
             </div>
+                <BestSells />
+                <NewReleases />
+                <ComingSoon />
             </div>
 
             <Footer />

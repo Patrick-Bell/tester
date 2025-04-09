@@ -7,6 +7,7 @@ import { useCart } from '../context/CartContext';
 import { CreditCard, Lock, } from "lucide-react"
 import axios from 'axios'
 import { toast } from 'sonner'
+import { useAuth } from '../context/AuthContext';
 
 
 import ApplePay from '../assets/apple-pay.png'
@@ -14,6 +15,8 @@ import AmericanExpress from '../assets/american-express.png'
 import VisaPay from '../assets/visa.png'
 import MasterCardPay from '../assets/card.png'
 import RelatedProductsModal from './RelatedProductsModal';
+import LoginCheckoutModal from '../modals/LoginCheckoutModal';
+import Register from '../modals/Register';
 
 const paymentMethodImages = [
     ApplePay,
@@ -30,6 +33,9 @@ const CartPage = () => {
     const [code, setCode] = useState('')
     const [activeCode, setActiveCode] = useState(false)
     const [promoValue, setPromoValue] = useState(0)
+    const { user } = useAuth()
+    const [showModal, setShowModal] = useState(false)
+    const [registerModalOpen, setRegisterModalOpen] = useState(false)
 
 
   const calculateSubtotal = () => {
@@ -87,12 +93,42 @@ const CartPage = () => {
   }
   
   const handleCheckout = async () => {
+
+    if (cart.length === 0) {
+      toast.error('Your cart is empty.', {
+        description: 'Please add items to your cart before checking out.'
+      })
+      return
+    }
+
+    if (!user) {
+      setShowModal(true)
+      console.log('opening modla')
+      return
+    }
+
     try {
-      console.log('Checking out...');
-      console.log(cart, 'cart to checkout');
-      console.log(code, 'code to checkout');  
   
-      // Pass cart and promotion as properties inside the data object
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_BASE_URL}/api/create-checkout-session`, 
+        { cart: cart, code: code.code },
+      );
+
+      console.log(cart, code)
+  
+      console.log(response.data);
+  
+      // Redirect to Stripe Checkout session
+      window.location.href = response.data.url;
+    } catch (e) {
+      console.error('Error during checkout:', e);
+    }
+  }
+
+  const handleCheckoutWithoutUser = async () => {
+
+    try {
+  
       const response = await axios.post(
         `${import.meta.env.VITE_API_BASE_URL}/api/create-checkout-session`, 
         { cart: cart, code: code.code },
@@ -147,6 +183,8 @@ const CartPage = () => {
 
   return (
     <>
+    <LoginCheckoutModal isOpen={showModal} setIsOpen={setShowModal} setRegisterModalOpen={setRegisterModalOpen} handleCheckout={handleCheckoutWithoutUser} />
+    <Register isOpen={registerModalOpen} setIsOpen={setRegisterModalOpen} setOpenLogin={setShowModal} />
     <RelatedProductsModal open={open} setOpen={handleClose} product={selectedProduct}/>
     <Navbar />
     <div className='max-w-7xl mx-auto'>

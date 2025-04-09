@@ -25,22 +25,44 @@ class CheckoutController < ApplicationController
                            {
                              shipping_rate_data: {
                                type: "fixed_amount",
-                               fixed_amount: { amount: 500, currency: "gbp" },
-                               display_name: "2-3 Days",
+                               fixed_amount: { amount: 155, currency: "gbp" },
+                               display_name: "Royal Mail 2nd Class",
                                delivery_estimate: {
                                  minimum: { unit: "business_day", value: 2 },
                                  maximum: { unit: "business_day", value: 3 }
                                }
                              }
+                           },
+                           {
+                             shipping_rate_data: {
+                               type: "fixed_amount",
+                               fixed_amount: { amount: 210, currency: "gbp" },
+                               display_name: "Royal Mail 2nd Class (Tracked)",
+                               delivery_estimate: {
+                                 minimum: { unit: "business_day", value: 2 },
+                                 maximum: { unit: "business_day", value: 3 }
+                               }
+                             }
+                           },
+                           {
+                             shipping_rate_data: {
+                               type: "fixed_amount",
+                               fixed_amount: { amount: 270, currency: "gbp" },
+                               display_name: "Royal Mail 1st Class",
+                               delivery_estimate: {
+                                 minimum: { unit: "business_day", value: 1 },
+                                 maximum: { unit: "business_day", value: 2 }
+                               }
+                             }
                            }
                          ]
-                       else
+                        elsif total_weight >= 100
                          # Over 100g, offer the express shipping option
                          [
                            {
                              shipping_rate_data: {
                                type: "fixed_amount",
-                               fixed_amount: { amount: 1500, currency: "gbp" },
+                               fixed_amount: { amount: 210, currency: "gbp" },
                                display_name: "Express (1-2 Days)",
                                delivery_estimate: {
                                  minimum: { unit: "business_day", value: 1 },
