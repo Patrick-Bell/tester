@@ -1,4 +1,4 @@
-class AddFieldsToProducts < ActiveRecord::Migration[8.0]
+class AddFieldsToProducts < ActiveRecord::Migration[7.2]
   def change
     add_column :products, :sale_price, :float
     add_column :products, :height, :float

@@ -1,4 +1,6 @@
 import React, { useState, useEffect, createContext, useContext } from "react";
+import { getOneProduct } from "../routes/ProductRoutes";
+import { toast } from 'sonner'
 
 // Create a context
 const CartContext = createContext();
@@ -11,6 +13,7 @@ export const CartProvider = ({ children }) => {
     return savedCart ? JSON.parse(savedCart) : [];
   });
   const [cartNumber, setCartNumber] = useState(0)
+  const [open, setOpen] = useState(false)
 
   // Save cart state to localStorage whenever it changes
   useEffect(() => {
@@ -18,19 +21,56 @@ export const CartProvider = ({ children }) => {
   }, [cart]);
 
   // Function to add item to cart
-  const addItemToCart = (item) => {
-    const existingProduct = cart.find(c => c.id === item.id);
-  
-    if (existingProduct) {
-      // Update quantity of existing product
-      setCart(cart.map(c => 
+  const addItemToCart = async (item) => {
+  const product = await getOneProduct(item.id);
+
+  if (product.stock === 0) {
+    toast.error('Out of stock', {
+      description: `${item.name} is currently out of stock.`
+    });
+    return;
+  }
+
+  const existingProduct = cart.find(c => c.id === item.id);
+
+  if (existingProduct) {
+    if (existingProduct.quantity < product.stock) {
+      setCart(cart.map(c =>
         c.id === item.id ? { ...c, quantity: c.quantity + 1 } : c
       ));
+
+      toast.success(`Added to Cart`, {
+        description: `You have successfully added ${product.name} to your cart.`,
+        action: {
+          label: 'View Cart',
+          onClick: () => {
+            window.location.href = '/cart';
+          },
+        },
+      });
+
     } else {
-      // Add new product with quantity 1
-      setCart([...cart, { ...item, quantity: 1 }]);
+      toast.error('Maximum stock reached', {
+        description: `You've reached the stock limit for ${product.name}.`
+      });
     }
-  };
+
+  } else {
+    // Add new product with quantity 1
+    setCart([...cart, { ...item, quantity: 1 }]);
+
+    toast.success(`Added to Cart`, {
+      description: `You have successfully added ${product.name} to your cart.`,
+      action: {
+        label: 'View Cart',
+        onClick: () => {
+          window.location.href = '/cart';
+        },
+      },
+    });
+  }
+};
+
   
 
   // Function to remove item from cart
@@ -52,7 +92,15 @@ export const CartProvider = ({ children }) => {
     setCart([]);
   };
 
-  const updateQuantity = (id, newQuantity) => {
+  const updateQuantity = async (id, newQuantity) => {
+    const product = await getOneProduct(id);
+    if (newQuantity > product.stock) {
+      toast.error('Maximum stock reached', {
+        description: `You've reached the stock limit for ${product.name}.`
+      });
+      return;
+    }
+
     setCart(cart.map(item => 
       item.id === id ? { ...item, quantity: Math.max(1, newQuantity) } : item
     ));
@@ -66,7 +114,9 @@ export const CartProvider = ({ children }) => {
     clearCart,
     handleCartNumber,
     cartNumber,
-    updateQuantity
+    updateQuantity,
+    open,
+    setOpen
   };
 
   return (

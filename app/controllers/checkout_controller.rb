@@ -4,7 +4,6 @@ class CheckoutController < ApplicationController
   before_action :set_stripe_key
 
 
-  
 
 
   def create_checkout_session

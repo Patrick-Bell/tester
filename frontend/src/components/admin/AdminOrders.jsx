@@ -12,6 +12,8 @@ import { toast } from 'sonner'
 import masterCardImg from '../assets/card.png'
 import applePay from '../assets/apple-pay.png'
 import { getOrders } from "../routes/OrderRoutes";
+import UserOrderInvoice from "../user_dashboard/UserOrderInvoice"
+import { PDFDownloadLink } from "@react-pdf/renderer";
 
 
 const AdminOrders = () => {
@@ -66,6 +68,10 @@ const AdminOrders = () => {
                 return (
                     <span className="text-red-700 bg-red-200 p-1 rounded-md font-bold text-xs">Cancelled</span>
                 );
+            case "refunded":
+                return (
+                    <span className="text-red-700 bg-red-200 p-1 rounded-md font-bold text-xs">Refunded</span>
+                );
         }
     }
 
@@ -101,7 +107,13 @@ const AdminOrders = () => {
                 <span className="text-indigo-600 font-bold text-2xl">£{(calculateTotal(selectedOrder.line_items) + Number(selectedOrder.shipping_fee)).toFixed(2)}</span>
                 <div className="flex gap-2">
                 <button className="px-4 py-2 rounded-md border mb-4 border-[#e9ebee] hover:bg-gray-50 cursor-pointer"><GrPrint /></button>
-                <button className="px-4 py-2 rounded-md border mb-4 border-[#e9ebee] hover:bg-gray-50 cursor-pointer"><FaRegFilePdf /></button>
+
+                <PDFDownloadLink document={<UserOrderInvoice order={selectedOrder} />} fileName={`order-${selectedOrder?.id}.pdf`}>
+                      <button className="px-4 py-4 rounded-md border mb-4 border-[#e9ebee] hover:bg-gray-50 cursor-pointer">
+                      <FaRegFilePdf className="w-5 h-5 text-gray-600 ml-2" />
+                      </button>
+                </PDFDownloadLink>
+
                 <button onClick={() => setSelectedOrder(null)} className="px-4 py-2 rounded-md border mb-4 border-[#e9ebee] hover:bg-gray-50 cursor-pointer">Back</button>
                 </div>
                 </div>

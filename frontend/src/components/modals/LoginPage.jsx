@@ -3,6 +3,8 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { useAuth } from '../context/AuthContext';
+import { toast } from 'sonner'
+import ResetPasswordModal from './ResetPasswordModal';
 
 
 const LoginPage = ({ isOpen, setIsOpen, setRegisterModalOpen }) => {
@@ -11,22 +13,62 @@ const LoginPage = ({ isOpen, setIsOpen, setRegisterModalOpen }) => {
     email: '',
     password: ''
   })
+  const [showResetModal, setShowResetModal] = useState(false);
   const { login, googleLogin } = useAuth()
+  const [errors, setErrors] = useState({})
 
   const handleOpenRegister = () => {
     setIsOpen(false)
     setRegisterModalOpen(true)
   }
 
+  const validate = () => {
+    let tempErrors = {};
+
+    if (!formData.email.trim()) tempErrors.email = "Email is required";
+    if (formData.password.length === 0) tempErrors.password = "Password is required";
+    
+    setTimeout(() => {
+        setErrors({})
+    }, 3000);
+
+    setErrors(tempErrors);
+    return Object.keys(tempErrors).length === 0;
+  };
+
   const handleLogin = async (e) => {
     console.log(formData)
     e.preventDefault()
+
+    if (!validate()) return;
+
     try{
       const response = await login(formData)
       console.log(response)
+      toast.success('Successfully Logged in', {
+        description: `Welcome back ${response.user.name}!`
+      })
+
+      setIsOpen(false)
+
     }catch(e){
-      console.log(e)
-      console.log('error')
+
+      const tempErrors = {}
+
+      if (e.response.data.error.includes('Email')){
+        tempErrors.email = e.response.data.error
+        toast.error('Incorrect Email', {
+          description: 'Please check your email and try again.'
+        })
+      } else if (e.response.data.error.includes('Password')){
+        tempErrors.password = e.response.data.error
+        toast.error('Incorrect Password', {
+          description: 'Please check your password and try again.'
+        })
+      }
+
+      setErrors(tempErrors)
+
     }
   }
 
@@ -36,6 +78,9 @@ const LoginPage = ({ isOpen, setIsOpen, setRegisterModalOpen }) => {
 
 
   return (
+    <>
+    <ResetPasswordModal isOpen={showResetModal} setIsOpen={setShowResetModal} />
+
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog as="div" className="relative z-50" onClose={setIsOpen}>
         {/* Background Overlay */}
@@ -79,20 +124,32 @@ const LoginPage = ({ isOpen, setIsOpen, setRegisterModalOpen }) => {
                   <label className="block text-gray-700 text-sm">Email</label>
                   <input
                     type="email"
-                    className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
                     onChange={(e) => setFormData({...formData, email: e.target.value})}
                     value={formData.email}
-                  />
+                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 ${
+                      errors.email ? "border-red-500 focus:ring-red-500" : "focus:ring-indigo-500"
+                    }`}
+                    />
+                    {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
                 </div>
 
                 <div className="mb-3">
                   <label className="block text-gray-700 text-sm">Password</label>
                   <input
                     type="password"
-                    className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
                     onChange={(e) => setFormData({...formData, password: e.target.value})}
                     value={formData.password}
+                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 ${
+                      errors.password ? "border-red-500 focus:ring-red-500" : "focus:ring-indigo-500"
+                    }`}
                   />
+                  {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password}</p>}
+                </div>
+
+                <div className='mb-1'>
+                  <p 
+                  onClick={() => setShowResetModal(true)}
+                  className='text-xs text-indigo-500 cursor-pointer hover:text-indigo-600'>Forgot password?</p>
                 </div>
 
                 <button onClick={(e) => handleLogin(e, formData)} className="w-full bg-indigo-600 text-white py-2 rounded-lg mt-2 mb-2 hover:bg-indigo-700 cursor-pointer">
@@ -120,6 +177,7 @@ const LoginPage = ({ isOpen, setIsOpen, setRegisterModalOpen }) => {
         </div>
       </Dialog>
     </Transition>
+    </>
   );
 };
 

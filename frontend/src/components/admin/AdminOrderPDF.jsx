@@ -60,7 +60,7 @@ const AdminOrderPDF = ({ order }) => {
           <Text style={styles.cell}>Quantity</Text>
           <Text style={styles.cell}>Total</Text>
         </View>
-        {order.products.map((product, index) => (
+        {order?.line_items?.map((product, index) => (
           <View key={index} style={styles.row}>
             <View style={[styles.cell, { flexDirection: 'row', alignItems: 'center' }]}>
               <Image src={product.image} style={styles.image} />

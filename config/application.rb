@@ -32,6 +32,11 @@ module Backend
     config.action_dispatch.cookies_same_site_protection = :lax
 
 
+    config.time_zone = 'London'  # Set to London time zone
+    config.active_record.default_timezone = :local
+
+
+
     config.middleware.use ActionDispatch::Cookies
     config.middleware.use ActionDispatch::Session::CookieStore
 

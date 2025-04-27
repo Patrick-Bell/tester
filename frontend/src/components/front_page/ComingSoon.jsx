@@ -41,16 +41,7 @@ const ComingSoon = () => {
 
         <div className='grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6'>
   {products.map((product, i) => (
-    <div key={i} className='border border-gray-200 rounded-lg overflow-hidden'>
-      <img className='w-40 sm:w-32 md:w-60 lg:w-48 xl:w-full object-cover mx-auto' src={product?.images[0]?.url} alt={product.name} />
-      <div className='p-4'>
-        <p className='text-sm font-semibold text-gray-800'>{product.name}</p>
-        <p className='text-sm font-bold text-indigo-600 mt-2'>£{(product.price).toFixed(2)}</p>
-        <button onClick={() => handleClick(product.id)} className='cursor-pointer text-sm w-full p-2 mt-4 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transition-colors'>
-          View Product
-        </button>
-      </div>
-    </div>
+    <ProductCard product={product} />
   ))}
 </div>
 

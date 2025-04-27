@@ -1,4 +1,4 @@
-class Fields < ActiveRecord::Migration[8.0]
+class Fields < ActiveRecord::Migration[7.2]
   def change
    
   end

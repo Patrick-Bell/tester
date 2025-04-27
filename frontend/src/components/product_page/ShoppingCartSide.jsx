@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react'
-import { XMarkIcon } from '@heroicons/react/24/outline'
+import { XMarkIcon, ShoppingCartIcon } from '@heroicons/react/24/outline'
 import { useCart } from '../context/CartContext'
 import axios from 'axios'
+
 
 const ShoppingCartSide = ({ open, setOpen }) => {
 
@@ -16,11 +17,11 @@ const ShoppingCartSide = ({ open, setOpen }) => {
     return (
         <>
 
-    <Dialog open={open} onClose={setOpen} className="relative z-60">
+    <Dialog open={open} onClose={setOpen} className="relative z-90">
       <DialogBackdrop
         transition
-        className="fixed inset-0 bg-gray-500/75 transition-opacity duration-500 ease-in-out data-closed:opacity-0"
-      />
+        className="fixed inset-0 bg-neutral-800/30 backdrop-blur-md transition-opacity duration-500 ease-in-out data-closed:opacity-0"
+        />
 
       <div className="fixed inset-0 overflow-hidden">
         <div className="absolute inset-0 overflow-hidden">
@@ -29,7 +30,7 @@ const ShoppingCartSide = ({ open, setOpen }) => {
               transition
               className="pointer-events-auto w-screen max-w-md transform transition duration-500 ease-in-out data-closed:translate-x-full sm:duration-700"
             >
-              <div className="flex h-full flex-col overflow-y-scroll bg-white shadow-xl">
+              <div className="flex h-full flex-col overflow-y-scroll bg-white">
                 <div className="flex-1 overflow-y-auto px-4 py-6 sm:px-6">
                   <div className="flex items-start justify-between">
                     <DialogTitle className="text-lg font-medium text-gray-900">Shopping cart</DialogTitle>
@@ -48,7 +49,15 @@ const ShoppingCartSide = ({ open, setOpen }) => {
 
                   <div className="mt-8">
                     <div className="flow-root">
-                      <ul role="list" className="-my-6 divide-y divide-gray-200">
+
+                      {cart.length === 0 ? (
+                        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 h-[213px]">
+                        <div><ShoppingCartIcon color='gray' /></div>
+                        <p className='text-gray-400'>Your cart is empty.</p>
+                        <p className='text-gray-400'>Continue Shopping</p>
+                        </div>
+                      ):(
+                        <ul role="list" className="-my-6 divide-y divide-gray-200">
                         {cart.map((product) => (
                           <li key={product.id} className="flex py-6">
                             <div className="size-24 shrink-0 overflow-hidden rounded-md border border-gray-200">
@@ -78,6 +87,8 @@ const ShoppingCartSide = ({ open, setOpen }) => {
                           </li>
                         ))}
                       </ul>
+                      )}
+                     
                     </div>
                   </div>
                 </div>

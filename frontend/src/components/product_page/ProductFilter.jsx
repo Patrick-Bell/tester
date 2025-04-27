@@ -20,10 +20,13 @@ import Footer from '../front_page/Footer'
 import axios from 'axios'
 import ProductCardSkeleton from './ProductCardSkeleton'
 import { useLocation } from 'react-router-dom'
+import { getAllReviews } from '../routes/ReviewRoutes'
 
 
 
 const ProductFilter = () => {
+  const [selectedSortOption, setSelectedSortOption] = useState('Most Popular');
+
 
   const fetchProducts = async () => {
     try{
@@ -69,24 +72,12 @@ const ProductFilter = () => {
   const uniqueTags = [...new Set(allTags)]
 
 
-
-
     const sortOptions = [
-        { name: 'Most Popular', href: '#', current: true },
-        { name: 'Best Rating', href: '#', current: false },
-        { name: 'Newest', href: '#', current: false },
+        { name: 'Newest Arrivals', href: '#', current: false },
         { name: 'Price: Low to High', href: '#', current: false },
         { name: 'Price: High to Low', href: '#', current: false },
       ]
-      const subCategories = [
-        { name: 'Totes', href: '#' },
-        { name: 'Backpacks', href: '#' },
-        { name: 'Travel Bags', href: '#' },
-        { name: 'Hip Bags', href: '#' },
-        { name: 'Laptop Sleeves', href: '#' },
-      ]
-
-
+      
       const filters = [
         {
           id: 'category',
@@ -129,6 +120,27 @@ const ProductFilter = () => {
         setShow((prev) => prev + 20)
       }
 
+      const sortProducts = (products) => {
+
+        switch (selectedSortOption) {
+          case 'Price: Low to High':
+            return products.sort((a, b) => a.price - b.price);
+          case 'Price: High to Low':
+            return products.sort((a, b) => b.price - a.price);
+          case 'Best Rating':
+            return ratings
+          case 'Newest':
+            return products.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+          case 'Most Popular':
+          default:
+            return products; // No sorting or custom logic for popularity
+        }
+      };
+
+      const sortedProducts = sortProducts(filteredProducts);
+
+      
+
 
       const handleFilterChange = (event, filterType) => {
         const { value, checked } = event.target;
@@ -159,7 +171,8 @@ const ProductFilter = () => {
 
 
     return (
-    <div className="bg-white">
+      <>
+    <div>
       <Navbar />
       <div>
         {/* Mobile filter dialog */}
@@ -189,15 +202,7 @@ const ProductFilter = () => {
               {/* Filters */}
               <form className="mt-4 border-t border-gray-200">
                 <h3 className="sr-only">Categories</h3>
-                <ul role="list" className="px-2 py-3 font-medium text-gray-900">
-                  {subCategories.map((category) => (
-                    <li key={category.name}>
-                      <a href={category.href} className="block px-2 py-3">
-                        {category.name}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
+                
 
                 {filters.map((section) => (
                   <Disclosure key={section.id} as="div" className="border-t border-gray-200 px-4 py-6">
@@ -288,25 +293,24 @@ const ProductFilter = () => {
                   <div className="py-1">
                     {sortOptions.map((option) => (
                       <MenuItem key={option.name}>
-                        <a
-                          href={option.href}
+                        <button
+                          onClick={() => setSelectedSortOption(option.name)} // Set the selected sort option
                           className={classNames(
-                            option.current ? 'font-medium text-gray-900' : 'text-gray-500',
-                            'block px-4 py-2 text-sm data-focus:bg-gray-100 data-focus:outline-hidden',
+                            option.name === selectedSortOption
+                              ? 'font-medium text-gray-900'
+                              : 'text-gray-500',
+                            'block px-4 py-2 text-sm data-focus:bg-gray-100 data-focus:outline-hidden w-full cursor-pointer text-left'
                           )}
                         >
                           {option.name}
-                        </a>
+                        </button>
                       </MenuItem>
                     ))}
                   </div>
                 </MenuItems>
               </Menu>
 
-              <button type="button" className="-m-2 ml-5 p-2 text-gray-400 hover:text-gray-500 sm:ml-7">
-                <span className="sr-only">View grid</span>
-                <Squares2X2Icon aria-hidden="true" className="size-5" />
-              </button>
+             
               <button
                 type="button"
                 onClick={() => setMobileFiltersOpen(true)}
@@ -327,13 +331,7 @@ const ProductFilter = () => {
               {/* Filters */}
               <form className="hidden lg:block">
                 <h3 className="sr-only">Categories</h3>
-                <ul role="list" className="space-y-4 border-b border-gray-200 pb-6 text-sm font-medium text-gray-900">
-                  {subCategories.map((category) => (
-                    <li key={category.name}>
-                      <a href={category.href}>{category.name}</a>
-                    </li>
-                  ))}
-                </ul>
+                
 
                 {filters.map((section) => (
                   <Disclosure key={section.id} as="div" className="border-b border-gray-200 py-6">
@@ -430,6 +428,7 @@ const ProductFilter = () => {
       </div>
       <Footer />
     </div>
+    </>
   )
 }
 

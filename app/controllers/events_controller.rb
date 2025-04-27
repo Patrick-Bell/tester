@@ -1,5 +1,6 @@
 class EventsController < ApplicationController
   before_action :set_event, only: %i[ show update destroy ]
+  before_action :authorize_admin
 
   # GET /events
   def index

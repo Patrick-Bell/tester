@@ -2,26 +2,15 @@ import { MinusIcon, PlusIcon, TruckIcon, CheckIcon } from '@heroicons/react/20/s
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react';
 import { useState, useEffect } from 'react';
 import { useCart } from '../context/CartContext'
-import { toast } from 'sonner'
+import ShoppingCartSide from '../product_page/ShoppingCartSide';
 
 const ProductData = ({ product, rating, validReviews, isLoading }) => {
     const [selectedImage, setSelectedImage] = useState('');
+    const [open, setOpen] = useState(false)
 
     const { addItemToCart } = useCart()
 
-    const handleClick = (product) => {
-        addItemToCart(product)
-        toast.success(`Added to Cart`, {
-            description: `You have successfully added ${product.name} to your cart.`,
-            action: {
-              label: 'View Cart', // The label of the action button
-              onClick: () => {
-                // Assuming you have a function to navigate or open the cart
-                setOpen(true);
-              },
-            },
-          });
-    }
+    
 
 useEffect(() => {
     if (product?.images?.length) {
@@ -68,22 +57,22 @@ useEffect(() => {
     const goBack = () => window.history.back();
 
     return (
-        <div className="flex flex-col md:flex-row justify-center p-6 mx-auto gap-6">
+        <div className="flex flex-col md:flex-row justify-center p-6 mx-auto gap-10 w-full">
             {/* Product Images */}
             <div className="flex flex-col items-center md:items-start space-y-4">
                 {isLoading ? (
-                    <div className="w-[300px] h-[300px] bg-gray-300 animate-pulse rounded-lg"></div>
+                    <div className="w-[400px] h-[400px] bg-gray-300 animate-pulse rounded-lg"></div>
                 ) : (
                     <div className="flex flex-col items-center">
                         {/* Main Image */}
                         <img 
-                            className="rounded-lg border border-gray-200 w-100 h-100 object-cover" 
+                            className="rounded-lg border border-gray-200 w-100 h-100 object-cover hover:object-contain transition duration-300 hover:cursor-zoom-out" 
                             src={selectedImage} 
                             alt={product?.name} 
                         />
 
                         {/* Thumbnails */}
-                        <div className="flex gap-2 mt-2">
+                        <div className="flex gap-2 mt-2 max-w-100 overflow-auto">
                             {product?.images.map((img, i) => (
                                 <img 
                                     key={i} 
@@ -100,6 +89,8 @@ useEffect(() => {
 
                 )}
             </div>
+
+            
 
             {/* Product Details */}
             <div className="w-full md:w-1/2 flex flex-col gap-4">
@@ -152,15 +143,17 @@ useEffect(() => {
                 {isLoading ? (
                     <div className="h-12 w-32 bg-gray-300 animate-pulse rounded"></div>
                 ) : (
-                    <button onClick={() => handleClick(product)} className="bg-indigo-600 text-white px-4 py-2 rounded-lg shadow-md hover:bg-indigo-700 transition cursor-pointer">
+                    <button onClick={() => addItemToCart(product)} className="bg-indigo-600 text-white px-4 py-2 rounded-lg shadow-md hover:bg-indigo-700 transition cursor-pointer">
                         Add to Cart
                     </button>
                 )}
 
+                <ShoppingCartSide open={open} setOpen={setOpen} />
+
                 {/* Collapsible Sections */}
                 {isLoading ? (
                     <>
-                    <div className="h-30 w-full bg-gray-300 animate-pulse rounded"></div>
+                    <div className="h-48 w-full bg-gray-300 animate-pulse rounded"></div>
                     </>
                 ):(
                     <form className="mt-4 border-gray-200">

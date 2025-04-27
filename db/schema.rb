@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_04_07_110945) do
+ActiveRecord::Schema[7.2].define(version: 2025_04_24_134928) do
   create_schema "auth"
   create_schema "extensions"
   create_schema "graphql"
@@ -57,6 +57,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_04_07_110945) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "product_id", null: false
+    t.boolean "reviewed", default: false
     t.index ["order_id"], name: "index_line_items_on_order_id"
     t.index ["product_id"], name: "index_line_items_on_product_id"
   end
@@ -79,6 +80,15 @@ ActiveRecord::Schema[7.2].define(version: 2025_04_07_110945) do
     t.string "platform"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "product_wishlists", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "product_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["product_id"], name: "index_product_wishlists_on_product_id"
+    t.index ["user_id"], name: "index_product_wishlists_on_user_id"
   end
 
   create_table "products", force: :cascade do |t|
@@ -110,6 +120,11 @@ ActiveRecord::Schema[7.2].define(version: 2025_04_07_110945) do
     t.integer "redeemed_count", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "title"
+    t.string "description"
+    t.boolean "highlighted", default: false
+    t.decimal "amount_off", precision: 8, scale: 2
+    t.integer "minimum_spend"
   end
 
   create_table "reviews", force: :cascade do |t|
@@ -122,6 +137,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_04_07_110945) do
     t.bigint "product_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -135,6 +151,17 @@ ActiveRecord::Schema[7.2].define(version: 2025_04_07_110945) do
     t.string "name"
     t.string "password_digest"
     t.string "role"
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "city"
+    t.string "state"
+    t.string "postal_code"
+    t.string "country", default: "United Kingdom"
+    t.string "phone_number"
+    t.boolean "order_notifications", default: false
+    t.boolean "promotion_notifications", default: false
+    t.boolean "new_product_notifications", default: false
+    t.boolean "newsletter_notifications", default: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
@@ -142,4 +169,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_04_07_110945) do
   add_foreign_key "images", "products"
   add_foreign_key "line_items", "orders"
   add_foreign_key "line_items", "products"
+  add_foreign_key "product_wishlists", "products"
+  add_foreign_key "product_wishlists", "users"
 end

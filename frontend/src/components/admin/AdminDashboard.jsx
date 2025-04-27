@@ -9,6 +9,8 @@ import { PDFDownloadLink } from "@react-pdf/renderer";
 import AdminLowStockReport from "./reports/AdminLowStockReport";
 import { getOrders } from "../routes/OrderRoutes";
 import { getProducts } from "../routes/ProductRoutes";
+import LowStockReport from "./reports/LowStockReport";
+import CurrentMonthOrder from "./reports/CurrentMonthOrder";
 
 
 const AdminDashboard = () => {
@@ -17,6 +19,7 @@ const AdminDashboard = () => {
     const [products, setProducts] = useState([])
     const [buyValue, setBuyValue] = useState(4.99)
     const [lowStock, setLowStock] = useState([])
+    const [monthOrders, setMonthOrders] = useState([])
 
     const fetchData = async () => {
         try {
@@ -24,14 +27,24 @@ const AdminDashboard = () => {
             const orderRes = await getOrders()
             const productRes = await getProducts()
 
-            console.log(orderRes, 'orders')
-            console.log('line items', orderRes.line_items)
-
-            const lowStockProducts = productRes.filter(product => product.stock <= 2)
+            const lowStockProducts = productRes.filter(product => product.stock <= 5)
             setLowStock(lowStockProducts)
+
+            // filter orders for current month
+            const currentDate = new Date();
+            const currentMnoth = currentDate.getMonth()
+            const currentYear = currentDate.getFullYear()
+            const currentMonthOrders = orderRes.filter(order => {
+              const orderDate = new Date(order.created_at);
+              return orderDate.getMonth() === currentMnoth && orderDate.getFullYear() === currentYear;
+            })
+
+            console.log(currentMonthOrders, 'current month orders')
+
 
             setOrders(orderRes)
             setProducts(productRes)
+            setMonthOrders(currentMonthOrders)
     
         } catch (e) {
             console.error('Error fetching data:', e);
@@ -197,7 +210,7 @@ const AdminDashboard = () => {
 
       <div className="border-t border-[#e9ebee] flex justify-between items-center p-2">
         <p className="text-xs">Low Stock Report</p>
-        <PDFDownloadLink document={<AdminLowStockReport lowStockItems={lowStock} />} fileName="lowstock.pdf">
+        <PDFDownloadLink document={<LowStockReport lowStockItems={lowStock} />} fileName="lowstock.pdf">
                       <button className="text-xs transition text-indigo-500 hover:text-indigo-700 cursor-pointer flex items-center">Download
                       <PaperClipIcon className="w-3 h-3 text-gray-600 ml-2" />
                       </button>
@@ -213,15 +226,18 @@ const AdminDashboard = () => {
       </div>
 
       <div className="border-t border-[#e9ebee] flex justify-between items-center p-2">
-        <p className="text-xs">Users Report</p>
+        <p className="text-xs">Month Order Report</p>
         <div className="flex items-center cursor-pointer">
-          <p className="mr-2 text-indigo-500 hover:text-indigo-600 text-xs">Download</p>
-          <PaperClipIcon className="w-3 h-3 text-gray-600" />
+          <PDFDownloadLink document={<CurrentMonthOrder orders={monthOrders} />} fileName="mothlyorderreport.pdf">
+                      <button className="text-xs transition text-indigo-500 hover:text-indigo-700 cursor-pointer flex items-center">Download
+                      <PaperClipIcon className="w-3 h-3 text-gray-600 ml-2" />
+                      </button>
+          </PDFDownloadLink>
         </div>
       </div>
 
       <div className="border-t border-[#e9ebee] flex justify-between items-center p-2">
-        <p className="text-xs">Month Order Report</p>
+        <p className="text-xs">Users Report</p>
         <div className="flex items-center cursor-pointer">
           <p className="mr-2 text-indigo-500 hover:text-indigo-600 text-xs">Download</p>
           <PaperClipIcon className="w-3 h-3 text-gray-600" />

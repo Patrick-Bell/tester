@@ -19,10 +19,9 @@ export const AuthProvider = ({ children }) => {
                 { user: formData },
                 { withCredentials: true }
             );
-            toast.success('Successfully Logged in');
             setUser(response?.data?.user);
             console.log('user', response.data);
-            window.location.reload()
+            //window.location.reload()
 
             setAuthenticated(true); // ✅ Set authentication state
 
@@ -33,9 +32,12 @@ export const AuthProvider = ({ children }) => {
                 setIsUser(true);
                 setIsAdmin(false);
             }
+
+            return response.data
+            
         } catch (e) {
-            console.error('Login error:', e);
-            toast.error('Login failed. Please try again.');
+            //toast.error('Login failed. Please try again.');
+            throw e
         }
     };
 
@@ -51,8 +53,9 @@ export const AuthProvider = ({ children }) => {
                 autoClose: 3000
             });
         } catch (e) {
-            console.error('Signup error:', e);
-            toast.error('Signup failed. Please try again.');
+            //console.error('Signup error:', e);
+            //toast.error(e.response.data.error);
+            throw e
         }
     };
 
@@ -67,7 +70,7 @@ export const AuthProvider = ({ children }) => {
                 setUser(response.data);
                 setAuthenticated(true); // ✅ Ensure authentication state is updated
 
-                if (response.data.role === 'user') {
+                if (response.data.user.role === 'user') {
                     setIsUser(true);
                     setIsAdmin(false);
                 } else {
@@ -84,6 +87,16 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
+    const updateUser = (newData) => {
+        setUser(prev => ({
+          ...prev,
+          user: {
+            ...prev.user,
+            ...newData
+          }
+        }));
+      };
+
     const logout = async () => {
         try{
             const response = await axios.delete(
@@ -95,6 +108,7 @@ export const AuthProvider = ({ children }) => {
             setIsAdmin(false)
             setIsUser(false)
             setUser(null)
+            window.location.href = '/'
         }catch(e){
             console.log(e)
         }
@@ -105,7 +119,7 @@ export const AuthProvider = ({ children }) => {
     }, [location.pathname]); // ✅ Fix: Ensure it runs when path changes
 
     return (
-        <AuthContext.Provider value={{ user, isAdmin, isUser, authenticated, login, signup }}>
+        <AuthContext.Provider value={{ user, isAdmin, isUser, authenticated, login, signup, updateUser, logout, checkAuth }}>
             {children}
         </AuthContext.Provider>
     );

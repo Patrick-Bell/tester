@@ -3,7 +3,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import axios from "axios";
-import { toast } from 'sonner'
+import { toast, Toaster } from 'sonner'
 import { useAuth } from '../context/AuthContext';
 
 const Register = ({ isOpen, setIsOpen, setOpenLogin }) => {
@@ -51,29 +51,34 @@ const Register = ({ isOpen, setIsOpen, setOpenLogin }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (!validate()) return
+  
+    if (!validate()) return;
   
     try {
-        
-      const response = await signup(formData)
-      setIsOpen(false)
-      setOpenLogin(true)
-  
+
+      const response = await signup(formData);
+    
       console.log("Signup Success:", response.data);
+    
+      // only close the modal and open login if signup actually worked
+      setIsOpen(false);
+      setOpenLogin(true);
+      
     } catch (error) {
-      let tempErrors = {}
-      console.error("Signup failed:", error);
-      if (error && error.response.data.errors[0]){
-        tempErrors.email = 'Email has already been taken'
-        setErrors(tempErrors)
+      const tempErrors = {};
+
+      if(error.response.data.error.includes('Email')){
+        toast.error(error.response.data.error, {
+          description: 'A user with this email alreadt exists. If you have forgotten your password, please reset it.',
+        });
+        tempErrors.email = error.response.data.error;
       }
 
-      setTimeout(() => {
-        setErrors({})
-      }, 3000);
-    }
-  };
+      setErrors(tempErrors);
+      
+  } 
+}
+  
   
 
 
@@ -93,6 +98,7 @@ const Register = ({ isOpen, setIsOpen, setOpenLogin }) => {
         >
           <div className="fixed inset-0 bg-black/50" />
         </Transition.Child>
+
 
         {/* Modal Container */}
         <div className="fixed inset-0 flex items-center justify-center p-4">

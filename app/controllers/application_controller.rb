@@ -14,6 +14,25 @@ class ApplicationController < ActionController::API
         render json: { error: "Not logged in" }, status: :unauthorized
       end
     end
+
+    def authorize_user
+      unless @current_user && @current_user.role == 'user'
+        render json: { error: "Access denied" }, status: :forbidden
+      end
+    end
+  
+    # ✅ Use this in controllers that require admin access
+    def authorize_admin
+      unless @current_user && @current_user.role == 'admin'
+        render json: { error: "Admin access only" }, status: :forbidden
+      end
+    end
+
+    def authorize_user_or_admin
+      unless @current_user.present?
+        render json: { error: "Not authorized" }, status: :unauthorized
+      end
+    end
   
     private
   

@@ -37,7 +37,6 @@ const CartPage = () => {
     const [showModal, setShowModal] = useState(false)
     const [registerModalOpen, setRegisterModalOpen] = useState(false)
 
-
   const calculateSubtotal = () => {
     return cart.reduce((total, item) => total + (item.price * item.quantity), 0).toFixed(2);
   };
@@ -47,11 +46,11 @@ const CartPage = () => {
   }
 
   const calculateWeight = () => {
-    return (cart.reduce((sum, item) => sum + item.quantity * 0.17, 0) * 100).toFixed(0)
+    return (cart.reduce((sum, item) => sum + item.quantity * item.weight, 0)).toFixed(0)
   };
 
   const calculateShipping = () => {
-    const weight = (cart.reduce((sum, item) => sum + item.quantity * 0.17, 0) * 100).toFixed(0)
+    const weight = (cart.reduce((sum, item) => sum + item.quantity * item.weight, 0)).toFixed(0)
 
     if (weight == 0) {
         return 0
@@ -68,9 +67,11 @@ const CartPage = () => {
     const subTotal = calculateSubtotal();
     const shippingTotal = calculateShipping();
 
-    if (activeCode) {
+    if (activeCode && code?.percent_off > 0) {
       const promoValue = subTotal * (code.percent_off / 100)
       return (Number(subTotal) + Number(shippingTotal) - promoValue).toFixed(2);
+    } else if (activeCode && code?.amount_off > 0) {
+      return (Number(subTotal) + Number(shippingTotal) - code.amount_off).toFixed(2);
     }
 
   
@@ -153,12 +154,29 @@ const CartPage = () => {
       const promotions = response.data.filter(promo => promo.active === true)
 
       const promo = promotions.find(promo => promo.code === code)
+
+
       if (promo) {
-        toast.success('Promo code: ' + promo.code + ' applied successfully!')
+        const subtotal = calculateSubtotal()
+
+        if (promo.minimum_spend && subtotal < promo.minimum_spend) {
+          toast.error(`This code requires a minimum spend of £${promo.minimum_spend}.`, {
+            description: `You must spend £${Math.abs(subtotal - promo.minimum_spend).toFixed(2)} more to qualify.`
+          })
+          return
+        }
+
+        toast.success('Promo code: ' + promo.code + ' applied successfully!', {
+          description: `You saved ${promo.amount_off > 0 ? '£' + Number(promo.amount_off).toFixed(2) : promo.percent_off + '%'}`
+        })
         setActiveCode(true)
         setCode(promo)
-      } else {
-        toast.error('Promotion Code not Valid.')
+      }
+
+      else {
+        toast.error('Invalid Promotion Code', {
+          description: 'Please check the code and try again.'
+        })
       }
 
 
@@ -174,10 +192,15 @@ const CartPage = () => {
   }
 
   const calculatePromotion = () => {
-    const total = calculateSubtotal()
-    const promoValue = total * (code.percent_off / 100)
 
-    return promoValue.toFixed(2)
+    if (code?.percent_off > 0) {
+      const total = calculateSubtotal()
+      const promoValue = total * (code.percent_off / 100)
+      return promoValue.toFixed(2)
+    } else if (code?.amount_off > 0) {
+      return Number(code.amount_off).toFixed(2)
+    }
+    
   }
 
 
@@ -213,7 +236,7 @@ const CartPage = () => {
                 <div className="flex-grow text-center md:text-left w-full">
                   <h2 className="text-xl font-bold text-gray-900">{item.name}</h2>
                   <p className="text-sm text-gray-500">Category: {item.category}</p>
-                  <p className="text-sm text-gray-500">Estimated Weight: {17 * item.quantity}g</p>
+                  <p className="text-sm text-gray-500">Estimated Weight: {item.weight * item.quantity}g</p>
                   <p className="text-sm text-gray-500">Quantity: {item.quantity}</p>
                   <p onClick={() => showRelatedProducts(item)} className="text-sm text-indigo-500 cursor-pointer">View Related Products</p>
                 </div>
@@ -240,7 +263,7 @@ const CartPage = () => {
                   </div>
                   
                   <button 
-                    className="text-red-500 hover:text-red-700 transition-colors"
+                    className="text-red-500 hover:text-red-700 transition-colors cursor-pointer"
                     onClick={() => removeItemFromCart(item.id)}
                   >
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -317,7 +340,7 @@ const CartPage = () => {
                  placeholder="Enter promotion code" 
                  className="flex-grow border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" 
                />
-               <button onClick={() => checkPromoCode(code)} className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition-colors">
+               <button onClick={() => checkPromoCode(code)} className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition-colors cursor-pointer">
                  Apply
                </button>
              </div>
@@ -326,7 +349,7 @@ const CartPage = () => {
               <div className='flex justify-between items-center border border-gray-200 rounded-md w-40 p-2'>
                 <div className=''>{code?.code}</div>
                 <button 
-                    className="text-red-500 hover:text-red-700 transition-colors"
+                    className="text-red-500 hover:text-red-700 transition-colors cursor-pointer"
                     onClick={() => removePromoCode()}
                   >
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">

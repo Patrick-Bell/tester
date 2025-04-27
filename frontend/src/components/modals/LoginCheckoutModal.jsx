@@ -35,7 +35,7 @@ const LoginCheckoutModal = ({ isOpen, setIsOpen, setRegisterModalOpen, handleChe
 
   return (
     <Transition appear show={isOpen} as={Fragment}>
-      <Dialog as="div" className="relative z-50" onClose={setIsOpen}>
+      <Dialog as="div" className="relative z-70" onClose={setIsOpen}>
         {/* Background Overlay */}
         <Transition.Child
           as={Fragment}

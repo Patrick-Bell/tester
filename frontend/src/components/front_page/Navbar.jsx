@@ -23,6 +23,8 @@ import { useAuth } from '../context/AuthContext';
 import Register from '../modals/Register'
 import axios from 'axios'
 import { getProducts } from '../routes/ProductRoutes';
+import Logo from '../assets/logo.png'
+
 
 
 const navigation = {
@@ -32,10 +34,10 @@ const navigation = {
       name: 'Products',
       featured: [
         {
-          name: 'New Figures',
-          href: '#',
+          name: 'New Collection - Sonic',
+          href: 'http://localhost:5173/products?category=sonic',
           imageSrc:
-            'https://tailwindui.com/plus-assets/img/ecommerce-images/product-page-04-detail-product-shot-01.jpg',
+            'data:image/png;base64,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',
           imageAlt: 'Drawstring top with elastic loop closure and textured interior padding.',
         },
         {
@@ -78,7 +80,7 @@ const navigation = {
     },
   ],
   pages: [
-    { name: 'Company', href: '#' },
+    { name: 'Company', href: '/about' },
     { name: 'Stores', href: '#' },
   ],
 }
@@ -92,7 +94,7 @@ const Navbar = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [products, setProducts] = useState([])
 
-  const { cart, cartNumber } = useCart()
+  const { cart, cartNumber, } = useCart()
   const { user } = useAuth() || {}
 
   console.log(cart, 'cart', cartNumber)
@@ -134,15 +136,17 @@ const Navbar = () => {
 
   return (
     <>
-    <ShoppingCartSide open={openCart} setOpen={setOpenCart} />
     <LoginPage isOpen={openLoginModal} setIsOpen={setOpenLoginModal} setRegisterModalOpen={setOpenRegisterModal}/>
     <Register isOpen={openRegisterModal} setIsOpen={setOpenRegisterModal} setOpenLogin={setOpenLoginModal} />
-   <div className="bg-white w-full">
+    <ShoppingCartSide open={openCart} setOpen={setOpenCart} />
+
+
+   <div className="w-full">
       {/* Mobile menu */}
       <Dialog open={open} onClose={setOpen} className="relative z-60 lg:hidden">
         <DialogBackdrop
           transition
-          className="fixed inset-0 bg-black/25 transition-opacity duration-300 ease-linear data-closed:opacity-0"
+          className="fixed inset-0 bg-gray-200/10 transition-opacity duration-300 ease-linear data-closed:opacity-0"
         />
 
         <div className="fixed inset-0 z-200 flex">
@@ -223,7 +227,7 @@ const Navbar = () => {
             </TabGroup>
 
 
-            <div className="space-y-6 border-t border-gray-200 px-4 py-6">
+            <div className="space-y-6 border-t border-gray-200 px-4 py-6 z-90 cursor-pointer">
               {navigation.pages.map((page) => (
                 <div key={page.name} className="flow-root">
                   <a href={page.href} className="-m-2 block p-2 font-medium text-gray-900">
@@ -234,6 +238,21 @@ const Navbar = () => {
             </div>
 
             <div className="space-y-6 border-t border-gray-200 px-4 py-6">
+              {user ? (
+                <>
+                <div className="flow-root">
+                <a className="-m-2 block p-2 font-medium text-gray-900">
+                  {user?.user?.name ? `Logged in as ${user?.user?.name}` : 'Welcome back'}
+                </a>
+              </div>
+                <div className="flow-root">
+                <a onClick={() => handleOpenLogin()} href="#" className="-m-2 block p-2 font-medium text-gray-900">
+                  Sign out
+                </a>
+              </div>
+              </>
+              ):(
+                <>
               <div className="flow-root">
                 <a onClick={() => handleOpenLogin()} href="#" className="-m-2 block p-2 font-medium text-gray-900">
                   Sign in
@@ -245,7 +264,9 @@ const Navbar = () => {
                   Create account
                 </a>
               </div>
-            </div>
+            </>
+          )}
+          </div>
 
             <div className="border-t border-gray-200 px-4 py-6">
               <a href="#" className="-m-2 flex items-center p-2">
@@ -262,7 +283,7 @@ const Navbar = () => {
         </div>
       </Dialog>
 
-      <header className="relative bg-white">
+      <header className="relative bg-white z-50">
         <p className="flex h-10 items-center justify-center bg-indigo-600 px-4 text-sm font-medium text-white sm:px-6 lg:px-8">
           Use Promo Code SUMMER25 for 15% of your order!
         </p>
@@ -282,12 +303,12 @@ const Navbar = () => {
 
               {/* Logo */}
               <div className="ml-4 flex lg:ml-0">
-                <a href="#">
+                <a href="/">
                   <span className="sr-only">Your Company</span>
                   <img
                     alt=""
-                    src="https://tailwindui.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
-                    className="h-8 w-auto"
+                    src={Logo}
+                    className="h-15 w-auto"
                   />
                 </a>
               </div>
@@ -366,7 +387,7 @@ const Navbar = () => {
                     <a
                       key={page.name}
                       href={page.href}
-                      className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800"
+                      className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800 cursor-pointer"
                     >
                       {page.name}
                     </a>
@@ -393,7 +414,12 @@ const Navbar = () => {
                   </>
                   ):(
                     <>
-                    <p onClick={() => goToDash()} className='text-sm cursor-pointer'>Hi, <strong>{user?.user?.name}</strong> <span aria-hidden="true">&rarr;</span></p>
+                      <p onClick={() => goToDash()} className="text-sm cursor-pointer">
+                        {user?.user?.name 
+                          ? <strong>Hi, {user.user.name}</strong> 
+                          : <strong>Welcome Back</strong>} 
+                        <span aria-hidden="true"> &rarr;</span>
+                      </p>
                     </>
                   )}
                 </div>
@@ -420,7 +446,7 @@ const Navbar = () => {
 
                 {isSearchOpen && (
   <div 
-    className="fixed inset-0 backdrop-blur-xl flex justify-center items-start pt-10 z-120 transition-all"
+    className="fixed inset-0 backdrop-blur-xl flex justify-center items-start pt-10 z-80 transition-all"
     onClick={() => setIsSearchOpen(false)} // Click outside to close
   >
     {/* Search box */}

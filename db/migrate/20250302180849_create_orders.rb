@@ -1,4 +1,4 @@
-class CreateOrders < ActiveRecord::Migration[8.0]
+class CreateOrders < ActiveRecord::Migration[7.2]
   def change
     create_table :orders do |t|
       t.jsonb :products, default: [] # Array of products with name, quantity, price, image, reviewed

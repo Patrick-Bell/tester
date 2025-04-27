@@ -8,6 +8,11 @@ class SessionsController < ApplicationController
 
     def create
         user = User.find_by(email: params[:user][:email])
+
+        if user.nil?
+          render json: { error: 'Incorrect Email' }, status: :unauthorized
+          return
+        end
     
         if user&.authenticate(params[:user][:password]) # NOT authenticate?
           token = JWT.encode({ user_id: user.id, email: user.email, exp: 1.hour.from_now.to_i }, JWT_SECRET_KEY, 'HS256')
@@ -24,8 +29,13 @@ class SessionsController < ApplicationController
     
           render json: { message: 'Login successful', user: user, exp: 1.hour.from_now, token: token }
         else
-          render json: { error: 'Invalid email or password' }, status: :unauthorized
+          render json: { error: 'Invalid Password' }, status: :unauthorized
         end
+      end
+
+      def destroy
+        cookies.delete(:token)
+        render json: { message: 'Logout successful' }
       end
 
 

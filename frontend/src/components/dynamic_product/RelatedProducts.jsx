@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { getProducts } from "../routes/ProductRoutes";
+import ProductCard from "../product_page/ProductCard";
 
 const RelatedProducts = ({ product, products, handleAddToCart }) => {
   const [relatedProducts, setRelatedProducts] = useState([]);
@@ -41,29 +42,8 @@ const RelatedProducts = ({ product, products, handleAddToCart }) => {
         <p className="mb-3">There are <span className="text-indigo-600 font-bold">{relatedProducts.length}</span> related products.</p>
         <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6">
           {relatedProducts.map((relatedProduct) => (
-            <div key={relatedProduct.id} className="border border-gray-200 rounded-lg overflow-hidden transition-shadow duration-300">
-              <img
-                className="w-40 sm:w-32 md:w-60 lg:w-48 xl:w-full object-cover mx-auto"
-                src={relatedProduct.images[0].url}
-                alt={relatedProduct.name}
-              />
-              <div className="p-4">
-                <p className="text-sm font-semibold text-gray-800">{relatedProduct?.name.length > 16 ? (relatedProduct?.name).slice(0, 16) + '...' : relatedProduct?.name}</p>
-                <p className="text-sm font-bold text-indigo-600 mt-2">
-                  £{(relatedProduct.price).toFixed(2)}
-                </p>
-                <button
-                  onClick={() => handleAddToCart(relatedProduct)} // Handle add to cart
-                  className="cursor-pointer text-sm w-full p-2 mt-4 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transition-colors"
-                >
-                  Add to Cart
-                </button><button
-                  onClick={() => handleView(relatedProduct?.id)} // Handle add to cart
-                  className="cursor-pointer text-sm w-full p-2 mt-1 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transition-colors"
-                >
-                  View Product
-                </button>
-              </div>
+            <div key={relatedProduct.id} className="overflow-hidden transition-shadow duration-300">
+              <ProductCard product={relatedProduct} />
             </div>
           ))}
         </div>

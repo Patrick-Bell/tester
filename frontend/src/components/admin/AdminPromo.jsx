@@ -6,6 +6,7 @@ import { TbShoppingCartCancel, TbLego } from "react-icons/tb";
 import { GrPrint, GrUpdate } from "react-icons/gr";
 import { FaRegFilePdf } from "react-icons/fa6";
 import { toast, Toaster } from 'sonner'
+import { Bell, User } from "lucide-react";
 
 
 
@@ -14,12 +15,19 @@ const AdminPromo = () => {
     const [selectedPromotion, setSelectedPromotion] = useState(null);
     const [reviewedPromotion, setReviewedPromotion] = useState(null);
     const [addPromotionSection, setAddPromotionSection] = useState(false);
+    const [activeTab, setActiveTab] = useState("percent");
+
 
     const openAddPromotion = () => {
         setAddPromotionSection(true);
       }
 
       const [newPromotion, setNewPromotion] = useState({
+        title: '',
+        description: '',
+        minimum_spend: 0,
+        amount_off: 0,
+        highlighted: false,
         code: "",
         percent_off: "",
         duration: "",
@@ -72,10 +80,15 @@ const AdminPromo = () => {
 
     const addPromotion = async () => {
         try{
-          const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/promotions`, newPromotion);
+          const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/promotions`, newPromotion, { withCredentials: true });
           console.log(response.data);
           toast.success('Promotion added successfully');
           setNewPromotion({
+            title: '',
+            description: '',
+            amount_off: 0,
+            minimum_spend: 0,
+            highlighted: false,
             code: "",
             percent_off: "",
             duration: "",
@@ -164,8 +177,70 @@ const AdminPromo = () => {
           <h3 className="text-base/7 font-semibold text-gray-900">Add Promotion</h3>
           <p className="mt-1 max-w-2xl text-sm/6 text-gray-500">Create a new promotion code/coupon.</p>
         </div>
+
+
+        <div className="border-b border-gray-200">
+        <div className="flex">
+          <button
+            onClick={() => setActiveTab("percent")}
+            className={`flex items-center px-6 py-4 text-sm font-medium transition border-b-2 ${
+              activeTab === "percent"
+                ? "border-indigo-600 text-indigo-600"
+                : "border-transparent text-gray-500 hover:text-gray-700"
+            }`}
+          >
+            <User className="w-4 h-4 mr-2" />
+            Percent off Promotion
+          </button>
+          
+          <button
+            onClick={() => setActiveTab("amount")}
+            className={`flex items-center px-6 py-4 text-sm font-medium transition border-b-2 ${
+              activeTab === "amount"
+                ? "border-indigo-600 text-indigo-600"
+                : "border-transparent text-gray-500 hover:text-gray-700"
+            }`}
+          >
+            <Bell className="w-4 h-4 mr-2" />
+            Fixed Amount Promotion
+          </button>
+        </div>
+      </div>
+
+
         <div className="mt-6 border-t border-gray-100">
           <dl className="divide-y divide-gray-100">
+            
+
+          <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+              <p className="text-sm/6 font-medium text-gray-900">Title</p>
+              <input 
+                type="text"
+                className="mt-1 text-sm text-gray-700 sm:col-span-2 sm:mt-0 border border-gray-300 rounded-md p-2"
+                value={newPromotion.title || ''}  // ✅ Ensures it doesn't crash on undefined values
+                onChange={(e) => setNewPromotion({ ...newPromotion, title: e.target.value })}  // ✅ Updates state on change
+              />
+            </div>
+            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+              <p className="text-sm/6 font-medium text-gray-900">Description</p>
+              <input 
+                type="text"
+                className="mt-1 text-sm text-gray-700 sm:col-span-2 sm:mt-0 border border-gray-300 rounded-md p-2"
+                value={newPromotion.description || ''}  // ✅ Ensures it doesn't crash on undefined values
+                onChange={(e) => setNewPromotion({ ...newPromotion, description: e.target.value })}  // ✅ Updates state on change
+              />
+            </div>
+            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+              <p className="text-sm/6 font-medium text-gray-900">Highlighted</p>
+              <input 
+                type="checkbox"
+                className="mt-1 text-sm text-gray-700 sm:col-span-2 sm:mt-0 border border-gray-300 rounded-md"
+                checked={newPromotion.highlighted || false}  // ✅ Reflects actual boolean state
+                onChange={(e) =>
+                  setNewPromotion({ ...newPromotion, highlighted: e.target.checked })
+                }  // ✅ Updates state on change
+              />
+            </div>
             <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
               <p className="text-sm/6 font-medium text-gray-900">Code</p>
               <input 
@@ -175,13 +250,35 @@ const AdminPromo = () => {
                 onChange={(e) => setNewPromotion({ ...newPromotion, code: e.target.value })}  // ✅ Updates state on change
               />
             </div>
-            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+            {activeTab === "percent" && (
+              <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
               <p className="text-sm/6 font-medium text-gray-900">Percentage Off</p>
               <input 
                 type="text"
                 className="mt-1 text-sm text-gray-700 sm:col-span-2 sm:mt-0 border border-gray-300 rounded-md p-2"
                 value={newPromotion.percent_off || ''}  // ✅ Ensures it doesn't crash on undefined values
                 onChange={(e) => setNewPromotion({ ...newPromotion, percent_off: e.target.value })}  // ✅ Updates state on change
+              />
+            </div>
+            )}
+            {activeTab === "amount" && (
+              <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+              <p className="text-sm/6 font-medium text-gray-900">Amount Off</p>
+              <input 
+                type="text"
+                className="mt-1 text-sm text-gray-700 sm:col-span-2 sm:mt-0 border border-gray-300 rounded-md p-2"
+                value={newPromotion.amount_off || ''}  // ✅ Ensures it doesn't crash on undefined values
+                onChange={(e) => setNewPromotion({ ...newPromotion, amount_off: e.target.value })}  // ✅ Updates state on change
+              />
+            </div>
+            )}
+            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+              <p className="text-sm/6 font-medium text-gray-900">Minimum Spend</p>
+              <input 
+                type="text"
+                className="mt-1 text-sm text-gray-700 sm:col-span-2 sm:mt-0 border border-gray-300 rounded-md p-2"
+                value={newPromotion.minimum_spend || ''}  // ✅ Ensures it doesn't crash on undefined values
+                onChange={(e) => setNewPromotion({ ...newPromotion, minimum_spend: e.target.value })}  // ✅ Updates state on change
               />
             </div>
             <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">

@@ -1,4 +1,4 @@
-class RemoveOrdersTable < ActiveRecord::Migration[8.0]
+class RemoveOrdersTable < ActiveRecord::Migration[7.2]
   def change
   end
 end
