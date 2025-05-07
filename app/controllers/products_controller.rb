@@ -3,10 +3,10 @@ class ProductsController < ApplicationController
 
   # GET /products
   def index
-    @products = Product.includes(:images).all
+    @products = Product.includes([:images, :reviews]).all
   
     # You can format the response to include images within the product object if needed
-    render json: @products, include: :images
+    render json: @products, include: [:images, :reviews]
   end
   
 

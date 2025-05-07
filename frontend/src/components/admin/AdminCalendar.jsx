@@ -18,7 +18,7 @@ const AdminCalendar = () => {
   // Fetch orders from API
   const fetchOrders = async () => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/orders`);
+      const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/orders`, { withCredentials: true });
       const fetchedOrders = response.data;  // Assuming response.data is the list of orders
       setOrders(
         fetchedOrders.map(order => ({

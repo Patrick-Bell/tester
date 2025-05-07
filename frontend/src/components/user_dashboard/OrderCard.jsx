@@ -29,6 +29,8 @@ const OrderCard = ({ order, setSelectedOrder }) => {
                 <span className="text-red-700 bg-red-200 p-1 rounded-md font-bold text-xs">Cancelled</span>
             );
         case "refunded":
+        case "returned":
+        case "resolved":
             return (
                 <span className="text-red-700 bg-red-200 p-1 rounded-md font-bold text-xs">Refunded</span>
             );

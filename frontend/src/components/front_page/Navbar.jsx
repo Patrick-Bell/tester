@@ -41,9 +41,9 @@ const navigation = {
           imageAlt: 'Drawstring top with elastic loop closure and textured interior padding.',
         },
         {
-          name: 'Popular Figures',
-          href: '#',
-          imageSrc: 'https://tailwindui.com/plus-assets/img/ecommerce-images/category-page-02-image-card-06.jpg',
+          name: 'Popular Figures - Marvel',
+          href: 'http://localhost:5173/products?category=marvel',
+          imageSrc: 'data:image/png;base64,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',
           imageAlt:
             'Three shirts in gray, white, and blue arranged on table with same line drawing of hands and shapes overlapping on front of shirt.',
         },
@@ -337,7 +337,7 @@ const Navbar = () => {
                             <div className="grid grid-cols-2 gap-x-8 gap-y-10 py-16">
                               <div className="col-start-2 grid grid-cols-2 gap-x-8">
                                 {category.featured.map((item) => (
-                                  <div key={item.name} className="group relative text-base sm:text-sm">
+                                  <div key={item.name} className="group relative text-base sm:text-sm border p-2 border-gray-200 rounded-md">
                                     <img
                                       alt={item.imageAlt}
                                       src={item.imageSrc}
@@ -445,56 +445,56 @@ const Navbar = () => {
                 </div>
 
                 {isSearchOpen && (
-  <div 
-    className="fixed inset-0 backdrop-blur-xl flex justify-center items-start pt-10 z-80 transition-all"
-    onClick={() => setIsSearchOpen(false)} // Click outside to close
-  >
-    {/* Search box */}
-    <div 
-      className="relative bg-white p-6 rounded-lg shadow-lg w-3/4 sm:w-1/2 lg:w-1/3"
-      onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside
-    >
-      {/* Input Field */}
-      <input
-        type="text"
-        value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
-        className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
-        placeholder="Search for products..."
-        autoFocus
-      />
+                  <div 
+                    className="fixed inset-0 backdrop-blur-xl flex justify-center items-start pt-10 z-80 transition-all"
+                    onClick={() => setIsSearchOpen(false)} // Click outside to close
+                  >
+                    {/* Search box */}
+                    <div 
+                      className="relative bg-white p-6 rounded-lg shadow-lg w-3/4 sm:w-1/2 lg:w-1/3"
+                      onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside
+                    >
+                      {/* Input Field */}
+                      <input
+                        type="text"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                        placeholder="Search for products..."
+                        autoFocus
+                      />
 
-      {/* Show products results */}
-      <div className="mt-4 max-h-60 overflow-y-auto">
-        {products.length > 0 ? (
-          products
-          .filter((product) => product.name.toLowerCase().includes(searchQuery.toLowerCase()))
-          .map((product) => (
-            <a 
-              key={product.id} 
-              href={`/products/${product.id}`} 
-              className="block p-3 border-b border-gray-200 hover:bg-gray-100"
-            >
-              <div className="flex items-center">
-                {/* Product Image */}
-                <img className="w-16 h-16 object-cover rounded-md" src={product.images[0].url} alt={product.name} />
+                        {/* Show products results */}
+                        <div className="mt-4 max-h-60 overflow-y-auto">
+                          {products.length > 0 ? (
+                            products
+                            .filter((product) => product.name.toLowerCase().includes(searchQuery.toLowerCase()))
+                            .map((product) => (
+                              <a 
+                                key={product.id} 
+                                href={`/products/${product.id}`} 
+                                className="block p-3 border-b border-gray-200 hover:bg-gray-100"
+                              >
+                                <div className="flex items-center">
+                                  {/* Product Image */}
+                                  <img className="w-16 h-16 object-cover rounded-md" src={product.images[0].url} alt={product.name} />
 
-                {/* Product Details */}
-                <div className="ml-3">
-                  <p className="text-lg font-medium text-gray-800">{product.name}</p>
-                  <p className="text-sm text-gray-600">£{product.price}</p>
-                </div>
-              </div>
-            </a>
-          ))
-        ) : (
-          <p className="text-gray-500 text-center mt-2">No products found.</p>
-        )}
-      </div>
-    </div>
-  </div>
-)}
-        
+                                  {/* Product Details */}
+                                  <div className="ml-3">
+                                    <p className="text-lg font-medium text-gray-800">{product.name}</p>
+                                    <p className="text-sm text-gray-600">£{product.price}</p>
+                                  </div>
+                                </div>
+                              </a>
+                            ))
+                          ) : (
+                            <p className="text-center mt-2">No products found.</p>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                          
                 {/* Cart */}
                 <div className="ml-4 flow-root lg:ml-6 z-60">
                   <a href="#" className="group -m-2 flex items-center p-2" onClick={() => handleOpenCart()}>

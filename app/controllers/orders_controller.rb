@@ -1,6 +1,7 @@
 class OrdersController < ApplicationController
+  before_action :set_current_user
   before_action :set_order, only: %i[ show update destroy ]
-  before_action :authorize_admin, except: [:user_orders, :track_order, :order_refund]
+  before_action :authorize_admin, only: %i[ show update destroy index ]
   before_action :authorize_user, only: [:user_orders, :track_order, :order_refund]
 
   # GET /orders

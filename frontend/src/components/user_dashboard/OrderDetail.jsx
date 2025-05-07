@@ -20,6 +20,12 @@ const OrderDetail = ({ order, setSelectedOrder }) => {
     return ((currentIndex + 1) / statuses.length) * 100;
   };
 
+  const calculateRefundProgress = () => {
+    const statuses = ['refunded', 'returned', 'resolved'];
+    const currentIndex = statuses.indexOf(order.status)
+    return ((currentIndex + 1) / statuses.length) * 100
+  }
+
   const showStaus = (status) => {
     switch (status) {
         case "pending":
@@ -85,10 +91,24 @@ const OrderDetail = ({ order, setSelectedOrder }) => {
 
         {/* Delivery tracking section */}
         <div className="p-4 border-b border-gray-200">
-          <h3 className="text-md font-medium mb-4">Delivery Status</h3>
+        <h3 className="text-md font-medium mb-4">Delivery Status</h3>
 
-          {/* Progress bar */}
-          <div className="mb-6">
+          {order?.status === 'refunded' || 'returned' || 'resolved' ? (
+             <div className="mb-6">
+             <div className="w-full bg-gray-200 rounded-full h-2.5">
+               <div 
+                 className="bg-indigo-600 h-2.5 rounded-full" 
+                 style={{ width: `${calculateRefundProgress()}%` }} 
+               ></div>
+             </div>
+             <div className="flex justify-between mt-2 text-xs text-gray-500">
+               <span>Refund Received</span>
+               <span>Items Returned</span>
+               <span>Refunding Processed</span>
+             </div>
+           </div>
+          ):(
+            <div className="mb-6">
             <div className="w-full bg-gray-200 rounded-full h-2.5">
               <div 
                 className="bg-indigo-600 h-2.5 rounded-full" 
@@ -102,6 +122,8 @@ const OrderDetail = ({ order, setSelectedOrder }) => {
               <span>Delivered</span>
             </div>
           </div>
+          )}
+         
 
           {/* Delivery info */}
           <div className="flex flex-col gap-4">
@@ -141,7 +163,7 @@ const OrderDetail = ({ order, setSelectedOrder }) => {
                 <h4 className="text-sm font-medium">{product.name}</h4>
                 <p className="text-xs text-gray-500 mt-1">Category: {product.category || 'Minifigures'}</p>
                 
-                <div className="flex justify-between items-end mt-2">
+                <div className="flex justify-between items-end">
                   <div>
                     <p className="text-xs text-gray-500">Quantity: {product.quantity}</p>
                   </div>
@@ -194,7 +216,7 @@ const OrderDetail = ({ order, setSelectedOrder }) => {
         {/* Action buttons */}
         <div className="p-4 flex flex-wrap justify-between gap-2">
           <div>
-            {order?.status !== 'refunded' && (
+            {order?.status !== 'refunded' || 'returned' || 'resolved' && (
               <button onClick={() => setOpen(true)} className="px-4 py-2 text-sm text-gray-600 border border-gray-300 rounded hover:bg-gray-100 mr-2 cursor-pointer">
               <svg className="w-4 h-4 inline-block mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />

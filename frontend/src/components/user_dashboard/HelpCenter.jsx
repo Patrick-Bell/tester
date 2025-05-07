@@ -284,15 +284,10 @@ const HelpCenter = () => {
           <div className="flex justify-center space-x-4">
             <a 
               href="/contact" 
+              target="_blank"
               className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
             >
               Contact Support
-            </a>
-            <a 
-              href="/submit-ticket"
-              className="px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-            >
-              Submit a Ticket
             </a>
           </div>
         </div>

@@ -42,25 +42,33 @@ const ProductCard = ({ product }) => {
         addItemToCart(product)
     }
 
+    /*
     const fetchReviews = async () => {
       try{
         const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/reviews`, { withCredentials: true })
-        setReviews(response.data.filter(review => review.product_id === product.id && review.reviewed))
+        setReviews(response.data.filter(review => review.product_id === product.id && review.reviewed === true))
         console.log(response.data)
 
       }catch(e) {
         console.log(e)
       }
     }
+      */
 
-    const averageRating = reviews.length > 0 
-  ? (reviews.reduce((sum, review) => sum + review.rating, 0) / reviews.length).toFixed(1)
+    const validReviews = product.reviews.filter(review => review.reviewed === true)
+    console.log(validReviews, 'valid reviews')
+
+    const averageRating = validReviews.length > 0 
+  ? (validReviews.reduce((sum, review) => sum + review.rating, 0) / validReviews.length).toFixed(1)
   : null;
 
+  console.log('average raring', averageRating)
 
+/*
     useEffect(() => {
       fetchReviews()
     }, [])
+    */
 
     const viewProduct = (id) => {
       window.location.href = `/products/${id}`
@@ -143,7 +151,7 @@ const ProductCard = ({ product }) => {
     onClick={() => isWishlisted(product.id) 
       ? handleRemoveFavourite(product) 
       : handleAddFavourite(product)}
-    className="absolute top-1 left-1 z-40 bg-white rounded-lg p-1 hover:text-gray-500 transition cursor-pointer"
+    className="absolute top-0 p-1 left-0 z-40 bg-white rounded-lg hover:text-gray-500 transition cursor-pointer"
   >
     {isWishlisted(product.id) ? (
       <Heart className="text-red-500 fill-current" />
@@ -192,7 +200,7 @@ const ProductCard = ({ product }) => {
                     className={i <= Math.round(averageRating) ? "fill-yellow-400 stroke-yellow-400" : "stroke-gray-300"}
                   />
                 ))}
-                <span className="text-sm text-gray-600 ml-1">({reviews.length})</span>
+                <span className="text-sm text-gray-600 ml-1">({validReviews.length})</span>
               </>
             ) : (
               <>

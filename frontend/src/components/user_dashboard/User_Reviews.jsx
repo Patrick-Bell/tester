@@ -164,10 +164,10 @@ const UserReviews = () => {
           Review Guidelines
         </h3>
         <ul className="mt-3 text-gray-600 text-sm space-y-2">
-          <li>• Be honest and specific about your experience with the product</li>
-          <li>• Focus on the product and service</li>
-          <li>• Keep your review constructive and respectful</li>
-          <li>• Products that are not reviewed after 30 days will be automated</li>
+          <li>• Be honest and specific about your experience with the product.</li>
+          <li>• Focus on the product and service.</li>
+          <li>• Keep your review constructive and respectful.</li>
+          <li>• Products that are not reviewed after 30 days will be automatically reviewed with 5 star ratings.</li>
         </ul>
       </div>
 

@@ -91,7 +91,7 @@ const AdminOrders = () => {
 
     const editOneOrder = async (id) => {
         try {
-            const response = await axios.put(`${import.meta.env.VITE_API_BASE_URL}/api/orders/${id}`,  { order: updatedOrder } )
+            const response = await axios.put(`${import.meta.env.VITE_API_BASE_URL}/api/orders/${id}`,  { order: updatedOrder }, { withCredentials: true } )
             toast.success('Order successfully updated!')
         }catch(e){
             console.log(e)

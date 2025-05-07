@@ -29,6 +29,11 @@ const UserOrders = () => {
         setActiveTab(tab)
         if (tab === 'all-orders') {
             setFilteredOrders(orders)
+        } else if (['refunded', 'returned', 'resolved'].includes(tab)) {
+            const filtered = orders.filter(order =>
+                ['refunded', 'returned', 'resolved'].includes(order.status)
+            )
+            setFilteredOrders(filtered)
         } else {
             const filtered = orders.filter(order => order.status === tab)
             setFilteredOrders(filtered)
@@ -58,7 +63,7 @@ const UserOrders = () => {
                                     Completed ({ orders.filter(order => order.status === 'delivered').length })
                                 </div>
                                 <div onClick={() => handleTabChange('refunded')} className={`px-4 py-3 text-sm font-medium ${activeTab === 'refunded' ? 'text-indigo-500' : 'text-gray-500'} ${activeTab === 'refunded' ? 'border-b-2' : 'border-b-0'} cursor-pointer`}>
-                                    Refunded ({ orders.filter(order => order.status === 'refunded').length })
+                                    Refunded ({ orders.filter(order => ['refunded', 'returned', 'resolved'].includes(order.status)).length })
                                 </div>
                             </div>
                         </div>

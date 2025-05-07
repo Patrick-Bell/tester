@@ -19,6 +19,7 @@ const BestSells = () => {
     const fetchProducts = async () => {
         try{
             const response = await getProducts()
+            console.log(response, 'products')
             setProducts(response.filter(item => item.active).slice(0, 6))
                             
         }catch(e){
@@ -29,6 +30,7 @@ const BestSells = () => {
     useEffect(() => {
         fetchProducts()
     }, [])
+
 
     return (
         <>

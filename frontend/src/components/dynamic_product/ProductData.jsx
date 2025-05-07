@@ -10,6 +10,11 @@ const ProductData = ({ product, rating, validReviews, isLoading }) => {
 
     const { addItemToCart } = useCart()
 
+    const today = new Date();
+    const fiveDaysFromNow = new Date();
+    fiveDaysFromNow.setDate(today.getDate() + 5);
+
+
     
 
 useEffect(() => {
@@ -38,7 +43,7 @@ useEffect(() => {
             name: 'Shipping',
             icon: <TruckIcon />,
             message: [
-                'Order now and receive by Sunday 2nd March', 
+                `Order now and receive by ${new Date(fiveDaysFromNow).toLocaleDateString()}`, 
                 'Shipping costs depend on number of minifigures/weight', 
                 'Shipping may change during public holidays'
             ]
@@ -160,7 +165,7 @@ useEffect(() => {
                     {filters.map((section) => (
                         <Disclosure key={section.id} as="div" className="border-t border-gray-200 px-4 py-6">
                             <h3 className="-mx-2 -my-3 flow-root">
-                                <DisclosureButton className="group flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-indigo-500">
+                                <DisclosureButton className="group flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-indigo-500 cursor-pointer">
                                     <span className="font-medium text-gray-400 text-sm">{section.name}</span>
                                     <span className="ml-6 flex items-center">
                                         <PlusIcon aria-hidden="true" className="size-5 group-data-open:hidden" />

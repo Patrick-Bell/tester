@@ -3,7 +3,7 @@ class ReviewsController < ApplicationController
   before_action :set_current_user
 
   # 🔐 Admin-only actions
-  before_action :authorize_admin, only: %i[ index show update destroy ]
+  before_action :authorize_admin, only: %i[ show update destroy ]
 
   # 🔐 Users (and admins) can create reviews
   before_action :authorize_user_or_admin, only: %i[ create ]

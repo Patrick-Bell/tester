@@ -21,6 +21,7 @@ import axios from 'axios'
 import ProductCardSkeleton from './ProductCardSkeleton'
 import { useLocation } from 'react-router-dom'
 import { getAllReviews } from '../routes/ReviewRoutes'
+import { ToyBrick } from 'lucide-react'
 
 
 
@@ -127,9 +128,7 @@ const ProductFilter = () => {
             return products.sort((a, b) => a.price - b.price);
           case 'Price: High to Low':
             return products.sort((a, b) => b.price - a.price);
-          case 'Best Rating':
-            return ratings
-          case 'Newest':
+          case 'Newest Arrivals':
             return products.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
           case 'Most Popular':
           default:
@@ -168,7 +167,6 @@ const ProductFilter = () => {
         setShowMoreBtn('Show more'); // Reset button text
       }, [allFilters, products]);
       
-
 
     return (
       <>
@@ -400,25 +398,43 @@ const ProductFilter = () => {
                 {/* Your content */}
                 {isLoading ? (
                 <div className="mx-auto max-w-2xl py-6 px-4 sm:px-6 lg:max-w-7xl">
-                  <ProductCardSkeleton times={filteredProducts?.length} />
-                  </div>
-                ): (
-              <div className="bg-white">
-                  <div className="mx-auto max-w-2xl py-6 px-4 sm:px-6 lg:max-w-7xl">
-                    <div className="mt-6 grid grid-cols-2 gap-x-5 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8 h-auto pointer-events-auto">
-                      {filteredProducts
-                      .slice(0,show)
-                      .map((product) => (
-                        <ProductCard key={product.id} product={product} />
-                      ))}
-                    </div>
-                  </div>
-                  <div className="w-full bg-gray-200 rounded-full h-1">
-                      <div className="bg-indigo-500 h-1 rounded-full"   style={{ width: Math.min((show / products.length) * 100, 100) + '%' }}></div>
-                    </div>
-                    <button onClick={() => handleShowMore()} className='bg-indigo-500 mt-2 flex justify-center align-middle m-auto p-2 text-sm rounded-sm text-white cursor-pointer hover:bg-indigo-600'>{showMoreBtn}</button>
+                  <ProductCardSkeleton times={show} />
                 </div>
-                )}
+              ) : (
+                filteredProducts.length === 0 ? (
+                  <div className="min-h-50 flex flex-col justify-center items-center text-center py-12 space-y-4">
+                  <ToyBrick className="text-gray-400 w-12 h-12" />
+                  <p className="text-gray-600 text-2xl font-semibold">No Products Found</p>
+                  <p className="text-gray-500 text-sm">It looks like no products match your filters.</p>
+                </div>
+                
+                ) : (
+                  <div className="bg-white">
+                    <div className="mx-auto max-w-2xl py-6 px-4 sm:px-6 lg:max-w-7xl">
+                      <div className="mt-6 grid grid-cols-2 gap-x-5 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8 h-auto pointer-events-auto">
+                        {filteredProducts.slice(0, show).map((product) => (
+                          <ProductCard key={product.id} product={product} />
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="w-full bg-gray-200 rounded-full h-1">
+                      <div
+                        className="bg-indigo-500 h-1 rounded-full"
+                        style={{ width: Math.min((show / products.length) * 100, 100) + "%" }}
+                      />
+                    </div>
+
+                    <button
+                      onClick={handleShowMore}
+                      className="bg-indigo-500 mt-2 flex justify-center align-middle m-auto p-2 text-sm rounded-sm text-white cursor-pointer hover:bg-indigo-600"
+                    >
+                      {showMoreBtn}
+                    </button>
+                  </div>
+                )
+              )}
+
                 
 
               </div>
