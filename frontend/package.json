@@ -60,5 +60,9 @@
     "tailwindcss": "^4.0.7",
     "vite": "^6.1.0"
   },
+  "engines": {
+  "node": "22.x",
+  "npm": "10.x"
+},
   "proxy": "http://localhost:3000"
 }
