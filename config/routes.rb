@@ -1,7 +1,5 @@
 Rails.application.routes.draw do
 
-  root 'home#index'  
-
   scope '/api' do
     
     # Auth Routes
@@ -43,8 +41,10 @@ Rails.application.routes.draw do
 
   end
 
+  root 'home#index'  
+
   # Catch-all for React Frontend Routing
-  get '*path', to: 'home#index', constraints: ->(req) { req.format.html? && !req.path.starts_with?('/api') }
+  get '*path', to: 'home#index', constraints: ->(req) { req.format.html? }
 
 
   
