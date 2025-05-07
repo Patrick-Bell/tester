@@ -12,17 +12,12 @@ export default defineConfig({
     tailwindcss(),
     svgr(),
   ], 
-  base: '/assets/',
   build: {
     outDir: '../public',
     assetsDir: 'assets',
     emptyOutDir: true
   },
   server: {
-    historyApiFallback: true,
-    proxy: {
-      '/api': process.env.VITE_RAILS_ENV === 'development' ? 'http://localhost:3000' : 'https://minifigs-mania-47c93479337f.herokuapp.com',
-    },
     historyApiFallback: true,
   },
   base: '/'
