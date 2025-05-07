@@ -1,8 +1,6 @@
 Rails.application.routes.draw do
 
-  root 'home#index'  # or any other controller you want to load first
-  get 'home/index'
-
+  root 'home#index'  
 
   scope '/api' do
     
