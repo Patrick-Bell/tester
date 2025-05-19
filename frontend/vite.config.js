@@ -20,5 +20,5 @@ export default defineConfig({
   server: {
     historyApiFallback: true,
   },
-  base: '/'
+  base: process.env.VITE_API_BASE_URL || '/'
 });
