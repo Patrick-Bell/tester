@@ -20,7 +20,7 @@ const ShoppingCartSide = ({ open, setOpen }) => {
     <Dialog open={open} onClose={setOpen} className="relative z-90">
       <DialogBackdrop
         transition
-        className="fixed inset-0 bg-neutral-800/30 backdrop-blur-md transition-opacity duration-500 ease-in-out data-closed:opacity-0"
+        className="fixed inset-0 bg-neutral-800/30 transition-opacity duration-500 ease-in-out data-closed:opacity-0"
         />
 
       <div className="fixed inset-0 overflow-hidden">

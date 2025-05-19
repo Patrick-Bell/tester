@@ -12,7 +12,11 @@ const NewReleases = () => {
     const fetchProducts = async () => {
         try{
             const response = await getProducts()
-            setProducts(response.filter(item => item.active).slice(2, 7))
+            const validProducts = response.filter(item => item.active)
+
+            const newRelease = validProducts.sort((a, b) => new Date(b.created_at) - new Date(a.created_at)).slice(0, 6)
+            setProducts(newRelease)
+
         }catch(e){
             console.log(e)
         }
@@ -25,7 +29,7 @@ const NewReleases = () => {
     return (
         <>
         <ShoppingCartSide open={open} setOpen={setOpen} />
-        <UseShowProducts title={'New Releases'} products={products} />
+        <UseShowProducts title={'New Releases'} products={products} category={''} tag={'new'} />
         </>
     )
 }

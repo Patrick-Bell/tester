@@ -3,10 +3,14 @@ import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react
 import { useState, useEffect } from 'react';
 import { useCart } from '../context/CartContext'
 import ShoppingCartSide from '../product_page/ShoppingCartSide';
+import ConditionModal from './ConditionModal';
+import { XMarkIcon, InformationCircleIcon } from "@heroicons/react/24/outline";
+
 
 const ProductData = ({ product, rating, validReviews, isLoading }) => {
     const [selectedImage, setSelectedImage] = useState('');
     const [open, setOpen] = useState(false)
+    const [openConditions, setOpenConditions] = useState(false)
 
     const { addItemToCart } = useCart()
 
@@ -65,9 +69,7 @@ useEffect(() => {
         <div className="flex flex-col md:flex-row justify-center p-6 mx-auto gap-10 w-full">
             {/* Product Images */}
             <div className="flex flex-col items-center md:items-start space-y-4">
-                {isLoading ? (
-                    <div className="w-[400px] h-[400px] bg-gray-300 animate-pulse rounded-lg"></div>
-                ) : (
+                
                     <div className="flex flex-col items-center">
                         {/* Main Image */}
                         <img 
@@ -91,8 +93,6 @@ useEffect(() => {
                             ))}
                         </div>
                     </div>
-
-                )}
             </div>
 
             
@@ -101,11 +101,8 @@ useEffect(() => {
             <div className="w-full md:w-1/2 flex flex-col gap-4">
                 {/* Title & Back Button */}
                 <div className="flex justify-between items-center">
-                    {isLoading ? (
-                        <div className="h-12 w-2/3 bg-gray-300 animate-pulse rounded"></div>
-                    ) : (
+                    
                         <h1 className="text-3xl font-bold">{product?.name}</h1>
-                    )}
 
                     <button 
                         onClick={goBack} 
@@ -116,9 +113,7 @@ useEffect(() => {
                 </div>
 
                 {/* Price Section */}
-                {isLoading ? (
-                    <div className="h-6 w-1/4 bg-gray-300 animate-pulse rounded"></div>
-                ) : product?.sale_price > 0 ? (
+                 {product?.sale_price > 0 ? (
                     <div className="flex">
                         <p className="text-2xl font-medium line-through text-red-500">£{product.sale_price}</p>
                         <p className="text-2xl ml-3 font-medium text-gray-900">£{product?.price}</p>
@@ -129,38 +124,37 @@ useEffect(() => {
 
                 {/* Star Rating */}
                 <div className="flex items-center">
-                    {isLoading ? (
-                        <div className="h-5 w-32 bg-gray-300 animate-pulse rounded"></div>
-                    ) : (
-                        [...Array(5)].map((_, i) => (
+                    
+                        {[...Array(5)].map((_, i) => (
                             <svg key={i} xmlns="http://www.w3.org/2000/svg" 
                                 className={`h-5 w-5 ${i < Math.floor(rating) ? 'text-yellow-400' : 'text-gray-300'}`} 
                                 viewBox="0 0 20 20" fill="currentColor"
                             >
                                 <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                             </svg>
-                        ))
-                    )}
-                    {!isLoading && <p className="ml-2 text-sm text-gray-600">({validReviews.length})</p>}
+                            
+                        ))}
                 </div>
 
+                <div onClick={() => setOpenConditions(true)}>
+                    <span className='flex items-center to-black cursor-pointer'>
+                    <InformationCircleIcon className='h-4' />
+                    <p className='text-sm ml-1'>Condition: <strong>{product.condition}</strong></p>
+                    </span>
+                </div>
+
+                <ConditionModal isOpen={openConditions} setIsOpen={setOpenConditions} product={product} />
+
                 {/* Add to Cart */}
-                {isLoading ? (
-                    <div className="h-12 w-32 bg-gray-300 animate-pulse rounded"></div>
-                ) : (
+                
                     <button onClick={() => addItemToCart(product)} className="bg-indigo-600 text-white px-4 py-2 rounded-lg shadow-md hover:bg-indigo-700 transition cursor-pointer">
                         Add to Cart
                     </button>
-                )}
 
                 <ShoppingCartSide open={open} setOpen={setOpen} />
 
                 {/* Collapsible Sections */}
-                {isLoading ? (
-                    <>
-                    <div className="h-48 w-full bg-gray-300 animate-pulse rounded"></div>
-                    </>
-                ):(
+                
                     <form className="mt-4 border-gray-200">
                     {filters.map((section) => (
                         <Disclosure key={section.id} as="div" className="border-t border-gray-200 px-4 py-6">
@@ -184,7 +178,6 @@ useEffect(() => {
                         </Disclosure>
                     ))}
                 </form>
-                )}
                 
             </div>
         </div>

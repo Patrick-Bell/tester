@@ -43,7 +43,7 @@ const AdminReviews = () => {
 
     const handleReviewStatusChange = async (reviewId, newStatus) => {
         try {
-            await axios.put(`${import.meta.env.VITE_API_BASE_URL}/api/reviews/${reviewId}`, { reviewed: newStatus });
+            await axios.put(`${import.meta.env.VITE_API_BASE_URL}/api/reviews/${reviewId}`, { reviewed: newStatus }, { withCredentials: true });
 
             setReviews((prevReviews) => 
                 prevReviews.map((review) => 

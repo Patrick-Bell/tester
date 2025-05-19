@@ -12,6 +12,10 @@ import { getOneProduct } from '../routes/ProductRoutes';
 import BestSells from '../front_page/BestSells';
 import ComingSoon from '../front_page/ComingSoon'
 import NewReleases from '../front_page/NewReleases';
+import NoProduct from './NoProduct';
+import SaleItems from '../front_page/SaleItems'
+import ProductLoading from '../dynamic_product/ProductLoading'
+import SignInPromo from '../front_page/SignInPromo'
 
 const DynamicProductPage = () => {
     const { id } = useParams();
@@ -40,23 +44,43 @@ const DynamicProductPage = () => {
         ? validReviews.reduce((acc, item) => acc + item.rating, 0) / validReviews.length
         : 0;
 
+
+    if (pageLoading) {
+        return (
+            <>
+            <ProductLoading />
+            </>
+        )
+    }    
+
+    if (!product) {
+        return (
+            <>
+            <Navbar />
+            <div className='max-w-7xl mx-auto'>
+            <NoProduct />
+            <BestSells />
+            <SaleItems />
+            <NewReleases />
+            </div>
+            <Footer />
+            </>
+        )
+    }
+    
+    
     return (
         <>
             <Navbar />
 
             <div className="max-w-7xl mx-auto">
+            <div>
               <ProductData product={product} rating={rating} validReviews={validReviews} isLoading={pageLoading} />
 
             {/* Tabs & Content */}
             <div className="p-6">
                 {/* Tabs Navigation Skeleton */}
-                {pageLoading ? (
-                    <div className="flex space-x-6">
-                        <div className="h-10 w-24 bg-gray-300 rounded"></div>
-                        <div className="h-10 w-24 bg-gray-300 rounded"></div>
-                        <div className="h-10 w-24 bg-gray-300 rounded"></div>
-                    </div>
-                ) : (
+                
                     <div className={`flex space-x-6 border-b border-gray-300`}>
                         {["Reviews", "FAQ", "Related Products"].map((tab) => (
                             <button
@@ -72,25 +96,24 @@ const DynamicProductPage = () => {
                             </button>
                         ))}
                     </div>
-                )}
 
                 {/* Tab Content Skeleton */}
                 <div className="mt-4">
-                    {pageLoading ? (
-                        <div className="h-40 bg-gray-300 animate-pulse rounded"></div>
-                    ) : (
+                    
                         <>
                             {activeTab === "Reviews" && <Reviews product={product} />}
                             {activeTab === "FAQ" && <FAQSection />}
                             {activeTab === "Related Products" && <RelatedProducts product={product} />}
                         </>
-                    )}
                 </div>
             </div>
+            </div>
+                <SignInPromo />
                 <BestSells />
                 <NewReleases />
                 <ComingSoon />
             </div>
+
 
             <Footer />
         </>

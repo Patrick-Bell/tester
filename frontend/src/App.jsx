@@ -21,6 +21,8 @@ import { Helmet } from 'react-helmet'
 import { useAuth } from "./components/context/AuthContext"
 import ChangePassword from "./components/modals/ChangePassword"
 import ProtectedRoute from "./components/app/ProtectedRoute"
+import ChatBotBtn from "./components/chatbot/ChatBotBtn"
+import ProductLoading from './components/dynamic_product/ProductLoading'
 
 const App = () => {
 
@@ -65,7 +67,7 @@ const App = () => {
       case '/reset-password':
         return { title: 'Reset Password | MinifigsMania' };
       default:
-        return { title: 'Page Not Found | Fiortech Recruitment Group' };
+        return { title: 'Page Not Found | MinifigsMania' };
     }
   };
   
@@ -78,6 +80,8 @@ const App = () => {
   <title>{title}</title>
 
 </Helmet>
+
+<ChatBotBtn />
 
 
 <Toaster />
@@ -96,6 +100,7 @@ const App = () => {
     <Route path="/shipping" element={<ShippingPage />}></Route>
     <Route path="/privacy-policy" element={<PrivacyPolicy />}></Route>
     <Route path="/reset-password" element={<ChangePassword />}></Route>
+    <Route path="/loading" element={<ProductLoading />}></Route>
 
 
     <Route path="/admin"

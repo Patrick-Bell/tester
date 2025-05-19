@@ -50,19 +50,19 @@ const UserOrders = () => {
                         {/* Order Tabs */}
                         <div className="bg-white rounded-lg mb-4 border border-gray-200">
                             <div className="flex">
-                                <div onClick={() => handleTabChange('all-orders')} className={`px-4 py-3 text-sm font-medium ${activeTab === 'all-orders' ? 'text-indigo-500' : 'text-gray-500'} ${activeTab === 'all-orders' ? 'border-b-2' : 'border-b-0'} cursor-pointer rounded-bl-lg`}>
+                                <div onClick={() => handleTabChange('all-orders')} className={`px-4 py-3 text-sm font-medium ${activeTab === 'all-orders' ? 'text-indigo-500' : 'text-gray-500'} ${activeTab === 'all-orders' ? 'border-b-2' : 'border-b-0'} hover:border-b-2 cursor-pointer rounded-bl-lg`}>
                                     All Orders ({ orders.length })
                                 </div>
-                                <div onClick={() => handleTabChange('processing')} className={`px-4 py-3 text-sm font-medium ${activeTab === 'processing' ? 'text-indigo-500' : 'text-gray-500'} ${activeTab === 'processing' ? 'border-b-2' : 'border-b-0'} cursor-pointer`}>
+                                <div onClick={() => handleTabChange('processing')} className={`px-4 py-3 text-sm font-medium ${activeTab === 'processing' ? 'text-indigo-500' : 'text-gray-500'} ${activeTab === 'processing' ? 'border-b-2' : 'border-b-0'} hover:border-b-2 cursor-pointer`}>
                                     Awaiting Shipment ({ orders.filter(order => order.status === 'processing').length })
                                 </div>
-                                <div onClick={() => handleTabChange('shipped')} className={`px-4 py-3 text-sm font-medium ${activeTab === 'shipped' ? 'text-indigo-500' : 'text-gray-500'} ${activeTab === 'shipped' ? 'border-b-2' : 'border-b-0'} cursor-pointer`}>
+                                <div onClick={() => handleTabChange('shipped')} className={`px-4 py-3 text-sm font-medium ${activeTab === 'shipped' ? 'text-indigo-500' : 'text-gray-500'} ${activeTab === 'shipped' ? 'border-b-2' : 'border-b-0'} hover:border-b-2 cursor-pointer`}>
                                     Shipped ({ orders.filter(order => order.status === 'shipped').length })
                                 </div>
-                                <div onClick={() => handleTabChange('delivered')} className={`px-4 py-3 text-sm font-medium ${activeTab === 'delivered' ? 'text-indigo-500' : 'text-gray-500'} ${activeTab === 'delivered' ? 'border-b-2' : 'border-b-0'} cursor-pointer`}>
+                                <div onClick={() => handleTabChange('delivered')} className={`px-4 py-3 text-sm font-medium ${activeTab === 'delivered' ? 'text-indigo-500' : 'text-gray-500'} ${activeTab === 'delivered' ? 'border-b-2' : 'border-b-0'} hover:border-b-2 cursor-pointer`}>
                                     Completed ({ orders.filter(order => order.status === 'delivered').length })
                                 </div>
-                                <div onClick={() => handleTabChange('refunded')} className={`px-4 py-3 text-sm font-medium ${activeTab === 'refunded' ? 'text-indigo-500' : 'text-gray-500'} ${activeTab === 'refunded' ? 'border-b-2' : 'border-b-0'} cursor-pointer`}>
+                                <div onClick={() => handleTabChange('refunded')} className={`px-4 py-3 text-sm font-medium ${activeTab === 'refunded' ? 'text-indigo-500' : 'text-gray-500'} ${activeTab === 'refunded' ? 'border-b-2' : 'border-b-0'} hover:border-b-2 cursor-pointer`}>
                                     Refunded ({ orders.filter(order => ['refunded', 'returned', 'resolved'].includes(order.status)).length })
                                 </div>
                             </div>

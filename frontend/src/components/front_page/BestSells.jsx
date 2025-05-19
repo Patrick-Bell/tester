@@ -35,7 +35,7 @@ const BestSells = () => {
     return (
         <>
         <ShoppingCartSide open={open} setOpen={setOpen} />
-        <UseShowProducts title={'Best Sellers'} products={products}  />
+        <UseShowProducts title={'Best Sellers'} products={products} category={''} tag={'popular'} stock={''}  />
         </>
     )
 }

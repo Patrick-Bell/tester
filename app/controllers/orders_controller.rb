@@ -71,6 +71,17 @@ class OrdersController < ApplicationController
     end
 
   end
+
+
+
+  def chatbot_order
+    @order = Order.find_by(tracking_id: params[:tracking_id])
+    if @order
+      render json: @order.to_json(include: :line_items)
+    else
+      render json: { error: "Order not found" }, status: :not_found
+    end
+  end
   
 
 

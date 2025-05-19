@@ -112,7 +112,7 @@ const LoginPage = ({ isOpen, setIsOpen, setRegisterModalOpen }) => {
               <div className="flex justify-between items-center">
                 <Dialog.Title className="text-xl font-semibold text-gray-800">Log In</Dialog.Title>
                 <button onClick={() => setIsOpen(false)}>
-                  <XMarkIcon className="w-5 text-gray-500 hover:text-gray-700" />
+                  <XMarkIcon className="w-5 text-gray-500 hover:text-gray-700 cursor-pointer" />
                 </button>
               </div>
 

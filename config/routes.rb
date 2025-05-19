@@ -13,6 +13,7 @@ Rails.application.routes.draw do
     get 'my-orders', to: 'orders#user_orders', as: 'user_orders'
     get 'my-reviews', to: 'reviews#user_reviews', as: 'user_reviews'
     get 'track-order/:tracking_id', to: 'orders#track_order', as: 'track_order'
+    get 'chatbot-order-status/:tracking_id', to: 'orders#chatbot_order', as: 'chatbot_order'
 
     get 'my-wishlist', to: 'product_wishlists#my_wishlist', as: 'my_wishlist'
     post 'order-refund/:id', to: 'orders#order_refund', as: 'order_refund'

@@ -10,6 +10,8 @@ import NewReleases from "./NewReleases"
 import Offer from "./Offer"
 import { getProducts } from "../routes/ProductRoutes"
 import UseShowProducts from "./UseShowProducts"
+import SaleItems from "./SaleItems"
+import SignInPromo from "./SignInPromo"
 
 const MainPage = () => {
 
@@ -20,6 +22,8 @@ const MainPage = () => {
         <Hero />
         <FeaturedCategories />
         <BestSells />
+        <SaleItems />
+        <SignInPromo />
         <NewReleases />
         <ComingSoon />
         <Offer />

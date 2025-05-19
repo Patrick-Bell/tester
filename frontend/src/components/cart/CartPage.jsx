@@ -17,6 +17,7 @@ import MasterCardPay from '../assets/card.png'
 import RelatedProductsModal from './RelatedProductsModal';
 import LoginCheckoutModal from '../modals/LoginCheckoutModal';
 import Register from '../modals/Register';
+import SignInPromo from '../front_page/SignInPromo';
 
 const paymentMethodImages = [
     ApplePay,
@@ -238,7 +239,7 @@ const CartPage = () => {
                   <p className="text-sm text-gray-500">Category: {item.category}</p>
                   <p className="text-sm text-gray-500">Estimated Weight: {item.weight * item.quantity}g</p>
                   <p className="text-sm text-gray-500">Quantity: {item.quantity}</p>
-                  <p onClick={() => showRelatedProducts(item)} className="text-sm text-indigo-500 cursor-pointer">View Related Products</p>
+                  <p onClick={() => showRelatedProducts(item)} className="text-sm text-indigo-600 cursor-pointer hover:text-indigo-700">View Related Products</p>
                 </div>
                 
                 <div className="flex items-center space-x-4">
@@ -405,17 +406,11 @@ const CartPage = () => {
                 </div>
                     <p className='mt-1 text-sm text-gray-400'>Shipped within 24 hours and delivered within 5 working days!</p>
              </div>
-
-
-    
-          
-
           </div>
         </div>
-
-        
       </div>
     </div>
+    <SignInPromo />
     <BestSells />
     <NewReleases />
     </div>

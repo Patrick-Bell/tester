@@ -66,7 +66,7 @@ const LoginCheckoutModal = ({ isOpen, setIsOpen, setRegisterModalOpen, handleChe
                 <div className="flex justify-between items-center">
                   <Dialog.Title className="text-xl font-semibold text-gray-800">Log In</Dialog.Title>
                   <button onClick={() => setIsOpen(false)}>
-                    <XMarkIcon className="w-5 text-gray-500 hover:text-gray-700" />
+                    <XMarkIcon className="w-5 text-gray-500 hover:text-gray-700 cursor-pointer" />
                   </button>
                 </div>
 
@@ -120,7 +120,7 @@ const LoginCheckoutModal = ({ isOpen, setIsOpen, setRegisterModalOpen, handleChe
               </div>
 
               {/* Right Side - Benefits */}
-              <div className="lg:w-72 p-4 bg-gray-50 border border-gray-200 rounded-xl">
+              <div className="lg:w-1/2 p-4 bg-gray-50 border border-gray-200 rounded-xl">
                 <h3 className="text-xl font-semibold text-gray-800 mb-4">Why Log In?</h3>
                 <ul className="space-y-2 text-sm text-gray-600">
                   <li className="flex items-center gap-2">
@@ -134,6 +134,9 @@ const LoginCheckoutModal = ({ isOpen, setIsOpen, setRegisterModalOpen, handleChe
                   </li>
                   <li className="flex items-center gap-2">
                     <span className="text-indigo-600">✔</span> Save items to your wishlist for future purchases
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="text-indigo-600">✔</span> Be first to know when new products are available
                   </li>
                 </ul>
               </div>

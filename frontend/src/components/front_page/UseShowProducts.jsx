@@ -9,7 +9,7 @@ import ProductCard from '../product_page/ProductCard'
 
 
 
-const useShowProducts = ({ title, products }) => {
+const useShowProducts = ({ title, products, category, tag, text, stock }) => {
 
     const { addItemToCart, open, setOpen } = useCart()
 
@@ -19,14 +19,15 @@ const useShowProducts = ({ title, products }) => {
         <ShoppingCartSide open={open} setOpen={setOpen} />
 
         <div className='w-auto m-8 mt-16'>
-        <div className="flex justify-between items-center mb-6">
+        <div className='flex justify-between items-center w-full'>
           <h2 className="text-xl font-semibold">{title}</h2>
-          <p className='cursor-pointer font-bold flex'>View all
+          <p onClick={() => window.open(`/products?category=${category}&tag=${tag}&stock=${stock}`, '_blank')} className='cursor-pointer font-bold flex'>View all
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 ml-2">
             <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
           </svg>
           </p>
-        </div>
+          </div>
+          <p className='mb-6 text-gray-500 text-sm'>{text}</p>
 
         <div className='grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6'>
             {products.map((product, i) => (

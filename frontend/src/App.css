@@ -29,3 +29,7 @@
     box-shadow: none !important;
   }
 
+.custom-tooltip {
+  font-size: 10px !important;
+  padding: 4px !important;
+}

@@ -143,10 +143,10 @@ const Navbar = () => {
 
    <div className="w-full">
       {/* Mobile menu */}
-      <Dialog open={open} onClose={setOpen} className="relative z-60 lg:hidden">
+      <Dialog open={open} onClose={setOpen} className="relative z-40 lg:hidden">
         <DialogBackdrop
           transition
-          className="fixed inset-0 bg-gray-200/10 transition-opacity duration-300 ease-linear data-closed:opacity-0"
+          className="fixed inset-0 bg-gray-500/20 blur-md transition-opacity duration-300 ease-linear data-closed:opacity-0"
         />
 
         <div className="fixed inset-0 z-200 flex">
@@ -169,16 +169,7 @@ const Navbar = () => {
             {/* Links */}
             <TabGroup className="mt-2">
               <div className="border-b border-gray-200">
-                <TabList className="-mb-px flex space-x-8 px-4">
-                  {navigation.categories.map((category) => (
-                    <Tab
-                      key={category.name}
-                      className="flex-1 border-b-2 border-transparent px-1 py-4 text-base font-medium whitespace-nowrap text-gray-900 data-selected:border-indigo-600 data-selected:text-indigo-600"
-                    >
-                      {category.name}
-                    </Tab>
-                  ))}
-                </TabList>
+                
               </div>
               <TabPanels as={Fragment}>
                 {navigation.categories.map((category) => (
@@ -446,12 +437,12 @@ const Navbar = () => {
 
                 {isSearchOpen && (
                   <div 
-                    className="fixed inset-0 backdrop-blur-xl flex justify-center items-start pt-10 z-80 transition-all"
+                    className="fixed inset-0 bg-neutral-800/30 duration-500 ease-in-out data-closed:opacity-0 flex justify-center items-start pt-10 z-80 transition-all"
                     onClick={() => setIsSearchOpen(false)} // Click outside to close
                   >
                     {/* Search box */}
                     <div 
-                      className="relative bg-white p-6 rounded-lg shadow-lg w-3/4 sm:w-1/2 lg:w-1/3"
+                      className="relative bg-white p-6 rounded-lg w-3/4 sm:w-1/2 lg:w-1/3 border border-gray-200"
                       onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside
                     >
                       {/* Input Field */}
@@ -459,7 +450,7 @@ const Navbar = () => {
                         type="text"
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
-                        className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                        className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"
                         placeholder="Search for products..."
                         autoFocus
                       />

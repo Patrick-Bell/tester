@@ -56,13 +56,11 @@ const ProductCard = ({ product }) => {
       */
 
     const validReviews = product.reviews.filter(review => review.reviewed === true)
-    console.log(validReviews, 'valid reviews')
 
     const averageRating = validReviews.length > 0 
   ? (validReviews.reduce((sum, review) => sum + review.rating, 0) / validReviews.length).toFixed(1)
   : null;
 
-  console.log('average raring', averageRating)
 
 /*
     useEffect(() => {

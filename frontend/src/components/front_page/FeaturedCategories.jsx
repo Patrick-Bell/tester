@@ -45,7 +45,7 @@ const FeaturedCategories = () => {
         >
           {categories.map((category, index) => (
             <SwiperSlide key={index}>
-              <div className="flex flex-col items-center border border-gray-100 ml-2 hover:border-indigo-300 transition-all rounded-md cursor-pointer">
+              <div onClick={() => window.open(`/products?category=${category.link}`)} className="flex flex-col items-center border border-gray-100 ml-2 hover:border-indigo-300 transition-all rounded-md cursor-pointer">
                 <img
                   src={category.image}
                   alt={category.name}

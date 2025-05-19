@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_05_02_111120) do
+ActiveRecord::Schema[7.2].define(version: 2025_05_14_122303) do
   create_schema "auth"
   create_schema "extensions"
   create_schema "graphql"
@@ -107,6 +107,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_05_02_111120) do
     t.string "notes"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "condition"
   end
 
   create_table "promotions", force: :cascade do |t|

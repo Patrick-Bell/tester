@@ -56,20 +56,31 @@ class PasswordsController < ApplicationController
     def reset_password
       current_password = params[:password][:current]
       new_password = params[:password][:new]
+      confirm_password = params[:password][:confirm]
     
-      if @current_user.authenticate(current_password)
-        if @current_user.authenticate(new_password)
-          render json: { error: "New password cannot be the same as the old password" }, status: :unprocessable_entity
-        elsif @current_user.update(password: new_password)
-          # Optionally send email here
-          render json: { message: "Password updated successfully" }, status: :ok
-        else
-          render json: { error: @current_user.errors.full_messages }, status: :unprocessable_entity
-        end
+      # Check if current password is correct
+      unless @current_user.authenticate(current_password)
+        return render json: { error: "Current password is incorrect" }, status: :unauthorized
+      end
+    
+      # Check if new and confirm match
+      if new_password != confirm_password
+        return render json: { error: "New password and confirmation do not match" }, status: :unprocessable_entity
+      end
+    
+      # Check if new password is the same as the old one
+      if @current_user.authenticate(new_password)
+        return render json: { error: "New password cannot be the same as the old password" }, status: :unprocessable_entity
+      end
+    
+      # Attempt update
+      if @current_user.update(password: new_password)
+        render json: { message: "Password updated successfully" }, status: :ok
       else
-        render json: { error: "Current password is incorrect" }, status: :unauthorized
+        render json: { error: @current_user.errors.full_messages }, status: :unprocessable_entity
       end
     end
+    
     
 
 

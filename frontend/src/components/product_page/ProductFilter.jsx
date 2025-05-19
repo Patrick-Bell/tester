@@ -17,7 +17,7 @@ import ProductCard from './ProductCard'
 import Navbar from '../front_page/Navbar'
 import ShoppingCartSide from './ShoppingCartSide'
 import Footer from '../front_page/Footer'
-import axios from 'axios'
+import axios, { all } from 'axios'
 import ProductCardSkeleton from './ProductCardSkeleton'
 import { useLocation } from 'react-router-dom'
 import { getAllReviews } from '../routes/ReviewRoutes'
@@ -53,14 +53,17 @@ const ProductFilter = () => {
   }
   const query = useQuery()
   const category = query.get("category") // Get the 'category' query param
-  console.log("Category:", category)
+  const tag = query.get('tag')
+  const stock = query.get('stock')
 
 
   const [products, setProducts] = useState([])
-  const [show, setShow] = useState(20)
+  const [show, setShow] = useState(4)
   const [allFilters, setAllFilters] = useState({
     category: category ? [category] : [], // Corrected
-    tag: [],
+    tag: tag ? [tag] : [],
+    stock: stock ? [stock] : [],
+    rating: []
   })
 
 
@@ -71,6 +74,8 @@ const ProductFilter = () => {
 
   const allTags = products.map(product => product.tag)
   const uniqueTags = [...new Set(allTags)]
+
+  const uniqueStock = ['in stock', 'out of stock']
 
 
     const sortOptions = [
@@ -102,6 +107,28 @@ const ProductFilter = () => {
             })),
           ],
         },
+        {
+          id: 'rating',
+          name: 'Rating',
+          options: [
+            ...[0, 1, 2, 3, 4, 5].map((rating) => ({
+              value: Number(rating),
+              label: rating,
+              checked: allFilters.rating.map(Number).includes(rating), // Convert once
+            })),
+          ],
+        },
+        {
+          id: 'stock',
+          name: 'Stock',
+          options: [
+            ...uniqueStock.map((stock) => ({
+              value: stock?.toLowerCase(),
+              label: stock,
+              checked: allFilters.stock.includes(stock?.toLowerCase()), // Keep checked state
+            })),
+          ],
+        },
       ]
       
       function classNames(...classes) {
@@ -115,10 +142,17 @@ const ProductFilter = () => {
 
 
       const handleShowMore = () => {
-        if (show + 8 >= products.length) {
+        if (show + 4 >= filteredProducts.length) {
           setShowMoreBtn('Back to top')
         }
-        setShow((prev) => prev + 20)
+        setShow((prev) => prev + 4)
+      }
+
+      const backToTop = () => {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        })
       }
 
       const sortProducts = (products) => {
@@ -143,11 +177,15 @@ const ProductFilter = () => {
 
       const handleFilterChange = (event, filterType) => {
         const { value, checked } = event.target;
-        
+      
+        // Convert value to number for known numeric filters
+        const isNumericFilter = ['rating', 'price'].includes(filterType);
+        const parsedValue = isNumericFilter ? Number(value) : value.toLowerCase();
+      
         setAllFilters(prevFilters => {
           const updatedFilters = checked
-            ? [...prevFilters[filterType], value?.toLowerCase()] // Add item
-            : prevFilters[filterType].filter(item => item !== value?.toLowerCase()); // Remove item
+            ? [...prevFilters[filterType], parsedValue] // Add item
+            : prevFilters[filterType].filter(item => item !== parsedValue); // Remove item
       
           console.log(`Updated ${filterType}:`, updatedFilters);
           
@@ -155,17 +193,56 @@ const ProductFilter = () => {
         });
       };
       
+
+      const resetFilters = (e) => {
+        e.preventDefault();
+
+        setAllFilters({
+          category: [],
+          tag: [],
+          stock: [],
+          rating: []
+        });
+        setFilteredProducts(products);
+        setShow(4); // Reset show to initial value
+        setShowMoreBtn('Show more'); // Reset button text
+      }
+      
       
 
       useEffect(() => {
-        const filtered = products.filter(product =>
-          (allFilters.category.length === 0 || allFilters.category.includes(product.category?.toLowerCase())) &&
-          (allFilters.tag.length === 0 || allFilters.tag.includes(product.tag?.toLowerCase()))
-        );
+        const filtered = products
+          .map(product => {
+            // Check if there are reviews
+            const validRatings = product?.reviews.filter(review => review.reviewed === true)
+            const ratings = validRatings.length;
+            const averageRating = ratings > 0
+            ? Math.round(validRatings.reduce((acc, review) => acc + review.rating, 0) / ratings)
+            : 0; // If no reviews, set averageRating to 0
+            
+
+            console.log(averageRating, 'averageRating')
+            console.log(allFilters.rating, 'allFilters.rating')
+            return { ...product, averageRating: Number(averageRating) };
+          })
+          .filter(product =>
+            (allFilters.category.length === 0 || allFilters.category.includes(product.category?.toLowerCase())) &&
+            (allFilters.tag.length === 0 || allFilters.tag.includes(product.tag?.toLowerCase())) &&
+            (allFilters.stock.length === 0 ||
+              (allFilters.stock.includes('in stock') && product.stock > 0) ||
+              (allFilters.stock.includes('out of stock') && product.stock === 0)) &&
+            (allFilters.rating.length === 0 || allFilters.rating.includes(product.averageRating))
+          );
+      
         setFilteredProducts(filtered);
-        setShow(20); // Reset show to initial value
+        setShow(4); // Reset show to initial value
         setShowMoreBtn('Show more'); // Reset button text
       }, [allFilters, products]);
+      
+      
+      
+      
+      
       
 
     return (
@@ -275,7 +352,7 @@ const ProductFilter = () => {
             <div className="flex items-center">
               <Menu as="div" className="relative inline-block text-left">
                 <div>
-                  <MenuButton className="z-100 group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900">
+                  <MenuButton className="z-100 group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900 cursor-pointer">
                     Sort
                     <ChevronDownIcon
                       aria-hidden="true"
@@ -334,7 +411,7 @@ const ProductFilter = () => {
                 {filters.map((section) => (
                   <Disclosure key={section.id} as="div" className="border-b border-gray-200 py-6">
                     <h3 className="-my-3 flow-root">
-                      <DisclosureButton className="group flex w-full items-center justify-between bg-white py-3 text-sm text-gray-400 hover:text-gray-500">
+                      <DisclosureButton className="group flex w-full items-center justify-between bg-white py-3 text-sm text-gray-400 hover:text-gray-500 cursor-pointer">
                         <span className="font-medium text-gray-900">{section.name}</span>
                         <span className="ml-6 flex items-center">
                           <PlusIcon aria-hidden="true" className="size-5 group-data-open:hidden" />
@@ -388,6 +465,7 @@ const ProductFilter = () => {
                     </DisclosurePanel>
                   </Disclosure>
                 ))}
+                <button onClick={(e) => resetFilters()} className='mt-4 bg-indigo-600 hover:bg-indigo-700 cursor-pointer w-full p-2 text-white rounded-md'>Reset</button>
               </form>
 
               {/* Product grid */}
@@ -421,22 +499,19 @@ const ProductFilter = () => {
                     <div className="w-full bg-gray-200 rounded-full h-1">
                       <div
                         className="bg-indigo-500 h-1 rounded-full"
-                        style={{ width: Math.min((show / products.length) * 100, 100) + "%" }}
+                        style={{ width: Math.min((show / filteredProducts.length) * 100, 100) + "%" }}
                       />
                     </div>
 
                     <button
-                      onClick={handleShowMore}
-                      className="bg-indigo-500 mt-2 flex justify-center align-middle m-auto p-2 text-sm rounded-sm text-white cursor-pointer hover:bg-indigo-600"
+                      onClick={show >= filteredProducts.length ? backToTop : handleShowMore}
+                      className="bg-indigo-600 mt-2 flex justify-center align-middle m-auto p-2 text-sm rounded-sm text-white cursor-pointer hover:bg-indigo-700 transition-colors"
                     >
                       {showMoreBtn}
                     </button>
                   </div>
                 )
               )}
-
-                
-
               </div>
             </div>
           </section>
